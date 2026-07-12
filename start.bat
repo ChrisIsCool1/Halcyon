@@ -1,0 +1,1 @@
+python -m forge_content_manager
