@@ -8,7 +8,7 @@ a = Analysis(
     ["src/forge_content_manager/main.py"],
     pathex=["src"],
     binaries=[],
-    datas=[],
+    datas=[("scripting_docs/*.md", "scripting_docs")],
     hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},

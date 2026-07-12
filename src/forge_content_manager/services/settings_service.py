@@ -27,9 +27,14 @@ class SettingsService:
         appearance_mode = data.get("appearance_mode", "System")
         if appearance_mode not in APPEARANCE_MODES:
             appearance_mode = "System"
-        return AppSettings(appearance_mode=appearance_mode)
+        reference_value = data.get("reference_cards_dir")
+        reference_cards_dir = Path(reference_value) if isinstance(reference_value, str) and reference_value else None
+        return AppSettings(appearance_mode=appearance_mode, reference_cards_dir=reference_cards_dir)
 
     def save(self, settings: AppSettings) -> None:
         """Persist application settings to disk."""
         self._paths.settings_file.parent.mkdir(parents=True, exist_ok=True)
-        self._paths.settings_file.write_text(json.dumps(asdict(settings), indent=2), encoding="utf-8")
+        data = asdict(settings)
+        if settings.reference_cards_dir is not None:
+            data["reference_cards_dir"] = str(settings.reference_cards_dir)
+        self._paths.settings_file.write_text(json.dumps(data, indent=2), encoding="utf-8")

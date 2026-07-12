@@ -11,6 +11,7 @@ Desktop application for managing custom Magic: The Gathering cards and sets for 
 - Create timestamped backups before edition, script, or image changes.
 - Import and export `.forgepkg.zip` packages with collision handling.
 - Switch between system, light, and dark appearance modes.
+- Draft Forge card scripts with syntax highlighting, keyword help, completion, and optional reference-card search.
 
 ## Requirements
 
@@ -48,6 +49,9 @@ pyinstaller ForgeContentManager.spec
 ```
 
 The bundled executable will be created under `dist/ForgeContentManager/`.
+
+The Script Editor bundles the Forge scripting Markdown guides. To search full reference
+card scripts in a packaged build, choose a local Forge `cardsfolder` directory in Settings.
 
 ## Project Structure
 

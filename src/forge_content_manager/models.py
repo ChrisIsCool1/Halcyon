@@ -132,3 +132,4 @@ class AppSettings:
     """Persisted UI settings for the desktop application."""
 
     appearance_mode: AppearanceMode = "System"
+    reference_cards_dir: Path | None = None

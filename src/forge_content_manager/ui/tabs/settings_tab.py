@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+from tkinter import filedialog
+
 import customtkinter as ctk
 
 from forge_content_manager.constants import APPEARANCE_MODES
@@ -19,12 +22,14 @@ class SettingsTab(ctk.CTkFrame):
         settings_service: SettingsService,
         current_settings: AppSettings,
         on_appearance_changed: callable,
+        on_reference_cards_changed: callable,
     ) -> None:
         """Build the settings view and wire the appearance mode selector."""
         super().__init__(master)
         self._settings_service = settings_service
         self._settings = current_settings
         self._on_appearance_changed = on_appearance_changed
+        self._on_reference_cards_changed = on_reference_cards_changed
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -73,8 +78,32 @@ class SettingsTab(ctk.CTkFrame):
             widget = LabeledValue(path_frame, label=label, value=value)
             widget.grid(row=row, column=0, sticky="ew", padx=16, pady=8)
 
+        reference_frame = ctk.CTkFrame(self)
+        reference_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
+        reference_frame.grid_columnconfigure(0, weight=1)
+        ctk.CTkLabel(reference_frame, text="Script Editor Reference Cards", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(16, 4))
+        self._reference_label = ctk.CTkLabel(reference_frame, text=self._reference_text(), anchor="w", justify="left", wraplength=720)
+        self._reference_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
+        ctk.CTkButton(reference_frame, text="Choose cardsfolder", command=self._choose_reference_cards).grid(row=1, column=1, padx=16, pady=(0, 10))
+
     def _change_appearance(self, appearance_mode: str) -> None:
         """Apply the selected appearance mode and persist it."""
         self._settings.appearance_mode = appearance_mode  # type: ignore[assignment]
         self._settings_service.save(self._settings)
         self._on_appearance_changed(appearance_mode)
+
+    def _choose_reference_cards(self) -> None:
+        """Persist an optional Forge cardsfolder used by Script Editor search."""
+        directory = filedialog.askdirectory(title="Choose Forge cardsfolder")
+        if not directory:
+            return
+        path = Path(directory)
+        self._settings.reference_cards_dir = path
+        self._settings_service.save(self._settings)
+        self._reference_label.configure(text=self._reference_text())
+        self._on_reference_cards_changed(path)
+
+    def _reference_text(self) -> str:
+        if self._settings.reference_cards_dir is None:
+            return "No optional cardsfolder configured. Packaged builds still include keyword documentation."
+        return f"Reference cards folder: {self._settings.reference_cards_dir}"
