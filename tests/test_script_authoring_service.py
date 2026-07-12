@@ -23,13 +23,14 @@ class ScriptAuthoringServiceTests(unittest.TestCase):
             folder = Path(temporary_directory)
             script = folder / "sample.txt"
             script.write_text("Name:Sample Adept\nTypes:Creature Wizard\n", encoding="utf-8")
-            service = ScriptAuthoringService(reference_cards_dir=folder)
+            service = ScriptAuthoringService(reference_cards_dir=folder, database_path=folder / "cards.sqlite3")
+            self.assertTrue(service.wait_until_ready())
             cards = service.search_reference_cards("adept")
             self.assertEqual([card.name for card in cards], ["Sample Adept"])
             self.assertEqual(service.load_reference_card(cards[0]), script.read_text(encoding="utf-8"))
 
     def test_missing_reference_folder_is_safe(self) -> None:
-        service = ScriptAuthoringService(reference_cards_dir=Path("does-not-exist"))
+        service = ScriptAuthoringService(reference_cards_dir=Path("does-not-exist"), database_path=Path("does-not-exist.sqlite3"))
         self.assertEqual(service.search_reference_cards("anything"), [])
         self.assertIn("unavailable", service.reference_status())
 

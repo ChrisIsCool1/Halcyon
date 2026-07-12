@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+import os
 import re
+import sqlite3
 import sys
+import threading
+from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -31,7 +35,8 @@ class ReferenceCard:
     """A searchable script from an optional Forge cardsfolder."""
 
     name: str
-    path: Path
+    script_id: int
+    source_path: str
 
 
 class ScriptAuthoringService:
@@ -56,10 +61,17 @@ class ScriptAuthoringService:
         "Loyalty": "Starting loyalty counters.", "AI": "AI deck-building directive.",
     }
 
-    def __init__(self, reference_cards_dir: Path | None = None) -> None:
+    def __init__(self, reference_cards_dir: Path | None = None, database_path: Path | None = None) -> None:
         self._reference_cards_dir = reference_cards_dir or self._bundled_reference_directory()
+        self._database_path = database_path or Path.home() / ".forge_content_manager_reference_cards.sqlite3"
         self._catalog = self._load_catalog()
-        self._reference_cards: list[ReferenceCard] | None = None
+        self._state_lock = threading.Lock()
+        self._indexing = False
+        self._pending_reindex = False
+        self._index_error: str | None = None
+        self._ready = self._database_matches_reference()
+        if self._reference_directory_available() and not self._ready:
+            self.start_indexing()
 
     @property
     def reference_cards_dir(self) -> Path | None:
@@ -67,9 +79,45 @@ class ScriptAuthoringService:
         return self._reference_cards_dir
 
     def set_reference_cards_dir(self, directory: Path | None) -> None:
-        """Change the optional reference directory and discard its index."""
+        """Change the reference source and build its SQLite index in the background."""
         self._reference_cards_dir = directory
-        self._reference_cards = None
+        self._ready = self._database_matches_reference()
+        self._index_error = None
+        if self._reference_directory_available() and not self._ready:
+            self.start_indexing()
+
+    def start_indexing(self) -> bool:
+        """Start a background rebuild when a valid source folder is configured."""
+        if not self._reference_directory_available():
+            return False
+        with self._state_lock:
+            if self._indexing:
+                self._pending_reindex = True
+                return False
+            self._indexing = True
+            self._ready = False
+            self._index_error = None
+        directory = self._reference_cards_dir
+        threading.Thread(target=self._build_index, args=(directory,), name="Forge reference index", daemon=True).start()
+        return True
+
+    def wait_until_ready(self, timeout: float = 10) -> bool:
+        """Wait for a background index only when callers explicitly need to do so."""
+        import time
+
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            with self._state_lock:
+                if not self._indexing:
+                    return self._ready
+            time.sleep(0.01)
+        return False
+
+    @property
+    def is_indexing(self) -> bool:
+        """Report whether a background database rebuild is currently running."""
+        with self._state_lock:
+            return self._indexing
 
     def complete(self, prefix: str, limit: int = 20) -> list[ScriptDocumentation]:
         """Return case-insensitive documentation matches for a token prefix."""
@@ -86,36 +134,101 @@ class ScriptAuthoringService:
     def search_reference_cards(self, query: str, limit: int = 100) -> list[ReferenceCard]:
         """Search optional reference scripts by display name."""
         needle = query.strip().casefold()
-        if not self._reference_directory_available():
+        with self._state_lock:
+            ready = self._ready
+        if not ready:
             return []
-        if self._reference_cards is None:
-            self._reference_cards = self._index_reference_cards()
-        return [card for card in self._reference_cards if needle in card.name.casefold()][:limit]
+        connection = sqlite3.connect(self._database_path)
+        try:
+            rows = connection.execute(
+                "SELECT id, name, source_path FROM cards WHERE name LIKE ? COLLATE NOCASE ORDER BY name LIMIT ?",
+                (f"%{needle}%", limit),
+            ).fetchall()
+        finally:
+            connection.close()
+        return [ReferenceCard(name=row[1], script_id=row[0], source_path=row[2]) for row in rows]
 
     def load_reference_card(self, card: ReferenceCard) -> str:
         """Load a reference script exactly as UTF-8 text."""
-        return card.path.read_text(encoding="utf-8")
+        connection = sqlite3.connect(self._database_path)
+        try:
+            row = connection.execute("SELECT script_text FROM cards WHERE id = ?", (card.script_id,)).fetchone()
+        finally:
+            connection.close()
+        if row is None:
+            raise ValueError("The selected reference script is no longer in the index.")
+        return row[0]
 
     def reference_status(self) -> str:
         """Return a concise user-facing reference-library state."""
-        if self._reference_directory_available():
-            return f"Reference library: {self._reference_cards_dir}"
+        with self._state_lock:
+            indexing, ready, error = self._indexing, self._ready, self._index_error
+        if indexing:
+            return "Building reference database… searches will be available when indexing finishes."
+        if error:
+            return f"Reference database failed: {error}"
+        if ready:
+            return "Reference database ready."
         return "Reference library unavailable. Choose a Forge cardsfolder in Settings."
 
     def _reference_directory_available(self) -> bool:
         return self._reference_cards_dir is not None and self._reference_cards_dir.is_dir()
 
-    def _index_reference_cards(self) -> list[ReferenceCard]:
-        assert self._reference_cards_dir is not None
-        cards: list[ReferenceCard] = []
-        for path in self._reference_cards_dir.rglob("*.txt"):
+    def _database_matches_reference(self) -> bool:
+        if not self._reference_directory_available() or not self._database_path.exists():
+            return False
+        try:
+            connection = sqlite3.connect(self._database_path)
             try:
-                first_line = path.read_text(encoding="utf-8").splitlines()[0]
-            except (OSError, UnicodeError, IndexError):
-                continue
-            name = first_line.removeprefix("Name:").strip() if first_line.startswith("Name:") else path.stem
-            cards.append(ReferenceCard(name=name, path=path))
-        return sorted(cards, key=lambda card: card.name.casefold())
+                row = connection.execute("SELECT value FROM metadata WHERE key = 'source_dir'").fetchone()
+            finally:
+                connection.close()
+            return row is not None and row[0] == str(self._reference_cards_dir.resolve())
+        except sqlite3.Error:
+            return False
+
+    def _build_index(self, source_directory: Path) -> None:
+        """Recursively store source scripts in a replacement SQLite database."""
+        temporary_path = self._database_path.with_suffix(".building.sqlite3")
+        try:
+            self._database_path.parent.mkdir(parents=True, exist_ok=True)
+            temporary_path.unlink(missing_ok=True)
+            connection = sqlite3.connect(temporary_path)
+            try:
+                connection.execute("CREATE TABLE metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+                connection.execute("CREATE TABLE cards (id INTEGER PRIMARY KEY, name TEXT NOT NULL, source_path TEXT NOT NULL, script_text TEXT NOT NULL)")
+                connection.execute("CREATE INDEX cards_name_index ON cards(name COLLATE NOCASE)")
+                connection.execute("INSERT INTO metadata(key, value) VALUES ('source_dir', ?)", (str(source_directory.resolve()),))
+                for path in source_directory.rglob("*.txt"):
+                    try:
+                        script_text = path.read_text(encoding="utf-8")
+                    except (OSError, UnicodeError):
+                        continue
+                    first_line = script_text.splitlines()[0] if script_text else ""
+                    name = first_line.removeprefix("Name:").strip() if first_line.startswith("Name:") else path.stem
+                    connection.execute(
+                        "INSERT INTO cards(name, source_path, script_text) VALUES (?, ?, ?)",
+                        (name, str(path), script_text),
+                    )
+                connection.commit()
+            finally:
+                connection.close()
+            os.replace(temporary_path, self._database_path)
+            with self._state_lock:
+                self._ready = True
+        except (OSError, sqlite3.Error) as exc:
+            with suppress(OSError):
+                temporary_path.unlink(missing_ok=True)
+            with self._state_lock:
+                self._index_error = str(exc)
+                self._ready = False
+        finally:
+            with self._state_lock:
+                self._indexing = False
+                restart = self._pending_reindex
+                self._pending_reindex = False
+            if restart:
+                self.start_indexing()
 
     def _load_catalog(self) -> dict[str, ScriptDocumentation]:
         catalog: dict[str, ScriptDocumentation] = {}

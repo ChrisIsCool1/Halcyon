@@ -27,7 +27,8 @@ class ForgeContentManagerApp(ctk.CTk):
         self._content_service = content_service
         self._settings_service = settings_service
         self._settings = settings_service.load()
-        self._authoring_service = ScriptAuthoringService(self._settings.reference_cards_dir)
+        reference_database = settings_service._paths.settings_file.parent / "script_reference_cards.sqlite3"
+        self._authoring_service = ScriptAuthoringService(self._settings.reference_cards_dir, reference_database)
 
         self.title(APP_NAME)
         self.geometry("1360x900")
@@ -126,4 +127,5 @@ class ForgeContentManagerApp(ctk.CTk):
     def _handle_reference_cards_changed(self, directory) -> None:
         """Apply the optional Script Editor reference-card location."""
         self._authoring_service.set_reference_cards_dir(directory)
+        self.script_editor_tab.refresh_reference_cards()
 

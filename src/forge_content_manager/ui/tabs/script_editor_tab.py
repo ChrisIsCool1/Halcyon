@@ -89,7 +89,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.reference_status = ctk.CTkLabel(reference_buttons, text="", anchor="e")
         self.reference_status.pack(side="right", fill="x", expand=True, padx=(8, 0))
         self.refresh_sets()
-        self._refresh_references()
+        self.refresh_reference_cards()
 
     def refresh_sets(self) -> None:
         """Reload destination set choices."""
@@ -271,6 +271,16 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.reference_list.delete(0, "end")
         for card in self._reference_cards:
             self.reference_list.insert("end", card.name)
+
+    def refresh_reference_cards(self) -> None:
+        """Refresh reference results and poll only while a database build is active."""
+        self._refresh_references()
+        if self._authoring_service.is_indexing:
+            self.after(500, self._poll_reference_index)
+
+    def _poll_reference_index(self) -> None:
+        """Refresh the status and active search after asynchronous indexing completes."""
+        self.refresh_reference_cards()
 
     def _show_reference(self) -> None:
         selection = self.reference_list.curselection()

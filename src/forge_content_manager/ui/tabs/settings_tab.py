@@ -106,4 +106,4 @@ class SettingsTab(ctk.CTkFrame):
     def _reference_text(self) -> str:
         if self._settings.reference_cards_dir is None:
             return "No optional cardsfolder configured. Packaged builds still include keyword documentation."
-        return f"Reference cards folder: {self._settings.reference_cards_dir}"
+        return f"Reference cards folder: {self._settings.reference_cards_dir}\nA background SQLite index is rebuilt after you choose a folder."
