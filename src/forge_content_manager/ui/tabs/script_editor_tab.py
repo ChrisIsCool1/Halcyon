@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 import re
 import tkinter as tk
 from pathlib import Path
@@ -23,8 +24,16 @@ class ScriptEditorTab(ctk.CTkFrame):
         master: ctk.CTkBaseClass,
         content_service: ForgeContentService,
         authoring_service: ScriptAuthoringService,
-        on_import_complete: callable,
+        on_import_complete: Callable[[], None],
     ) -> None:
+        """Build the non-validating Forge script editor.
+
+        Args:
+            master: Parent CustomTkinter widget.
+            content_service: Service used to list sets and import drafts.
+            authoring_service: Completion, documentation, and reference provider.
+            on_import_complete: Callback invoked after a successful import.
+        """
         super().__init__(master)
         self._content_service = content_service
         self._authoring_service = authoring_service
@@ -40,6 +49,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.grid_columnconfigure(1, weight=2)
         self.grid_rowconfigure(1, weight=1)
 
+        # Build the toolbar with draft management buttons, set selection, and status.
         toolbar = ctk.CTkFrame(self)
         toolbar.grid(row=0, column=0, columnspan=2, sticky="ew", padx=16, pady=(16, 8))
         toolbar.grid_columnconfigure(6, weight=1)
@@ -51,6 +61,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._status = ctk.CTkLabel(toolbar, text="Untitled draft", anchor="e")
         self._status.grid(row=0, column=6, sticky="ew", padx=12)
 
+        # Build the main editor frame with syntax highlighting and autocompletion.
         editor_frame = ctk.CTkFrame(self)
         editor_frame.grid(row=1, column=0, sticky="nsew", padx=(16, 8), pady=(0, 16))
         editor_frame.grid_columnconfigure(0, weight=1)
@@ -70,6 +81,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.editor.bind("<Up>", lambda _event: self._move_completion(-1))
         self.editor.bind("<Escape>", lambda _event: self._close_completion())
 
+        # Build the side frame with documentation and reference cards.
         side = ctk.CTkFrame(self)
         side.grid(row=1, column=1, sticky="nsew", padx=(8, 16), pady=(0, 16))
         side.grid_columnconfigure(0, weight=1)
@@ -327,6 +339,11 @@ class ScriptEditorTab(ctk.CTkFrame):
         ctk.CTkButton(buttons, text="Insert Selection", command=lambda: self._insert_preview_selection(preview)).pack(side="right", padx=(0, 8))
 
     def copy_reference(self) -> None:
+        """Insert the selected reference card script at the editor caret.
+
+        If no reference is selected or the indexed script is unavailable, an
+        error dialog is shown and the editor is left unchanged.
+        """
         selection = self.reference_list.curselection()
         if not selection:
             show_error("Reference Selection", "Select a reference card first.")

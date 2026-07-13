@@ -98,6 +98,17 @@ def terminal_progress(completed: int, total: int) -> None:
 
 
 def write_discoveries(destination: Path, terms: list[str], title: str, scope: str = "*") -> None:
+    """Write placeholder Markdown entries for terms found during extraction.
+
+    Args:
+        destination: Markdown file to create or replace.
+        terms: Discovered names that need authored documentation.
+        title: Heading written at the top of the file.
+        scope: Forge script prefix associated with the entries.
+
+    Raises:
+        OSError: If the destination cannot be created or written.
+    """
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(f"## `{term}`\n\nTODO: Write documentation." for term in terms) + ("\n" if terms else ""), encoding="utf-8")
 
@@ -142,6 +153,15 @@ def sync_catalog(discoveries: Path, catalog: Path) -> int:
 
 
 def main(argv: list[str] | None = None) -> None:
+    """Run the documentation discovery command-line interface.
+
+    Args:
+        argv: Optional argument vector; when omitted, uses ``sys.argv``.
+
+    Raises:
+        SystemExit: If argument parsing fails or a command reports an error.
+        ValueError: If a discovery pattern or catalog has an invalid scope.
+    """
     parser = argparse.ArgumentParser(prog="forge-content-manager docs")
     commands = parser.add_subparsers(dest="command", required=True)
     extract = commands.add_parser("extract")

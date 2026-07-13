@@ -13,7 +13,14 @@ MULTI_UNDERSCORE = re.compile(r"_+")
 
 
 def extract_metadata_fields(script_text: str) -> dict[str, str]:
-    """Extract only selected metadata fields from a Forge script without parsing gameplay logic."""
+    """Extract selected metadata without interpreting gameplay logic.
+
+    Args:
+        script_text: Complete Forge script text.
+
+    Returns:
+        The first value found for each supported metadata field.
+    """
     fields: dict[str, str] = {}
     for line in script_text.splitlines():
         if ":" not in line:
@@ -25,7 +32,14 @@ def extract_metadata_fields(script_text: str) -> dict[str, str]:
 
 
 def extract_card_name(script_text: str) -> str | None:
-    """Extract the card name from the first Name field in a Forge script."""
+    """Extract the first ``Name`` field from a Forge script.
+
+    Args:
+        script_text: Complete Forge script text.
+
+    Returns:
+        The card name, or ``None`` when the field is absent.
+    """
     return extract_metadata_fields(script_text).get("Name")
 
 
@@ -34,7 +48,16 @@ def validate_script(
     destination_set: str | None,
     image_source: Path | None,
 ) -> list[ValidationMessage]:
-    """Perform basic structural validation for a Forge script import."""
+    """Perform metadata and file checks before importing a card.
+
+    Args:
+        script_text: Complete Forge script text to inspect.
+        destination_set: Selected set name, or ``None`` when no set is selected.
+        image_source: Optional source image that will be installed.
+
+    Returns:
+        Errors and warnings suitable for display in the import workflow.
+    """
     fields = extract_metadata_fields(script_text)
     messages: list[ValidationMessage] = []
     card_name = fields.get("Name")
@@ -64,35 +87,79 @@ def validate_script(
 
 
 def normalize_card_name(card_name: str) -> str:
-    """Convert a card name into the standard Forge custom script filename stem."""
+    """Convert a display name to Forge's canonical filename stem.
+
+    Args:
+        card_name: Display name from the script's ``Name`` field.
+
+    Returns:
+        A lowercase, underscore-separated stem; ``"card"`` for an empty result.
+    """
     stem = NON_ALNUM.sub("_", card_name.casefold()).strip("_")
     normalized = MULTI_UNDERSCORE.sub("_", stem)
     return normalized or "card"
 
 
 def make_script_filename(card_name: str) -> str:
-    """Build the on-disk filename for a custom Forge script."""
+    """Build the canonical ``.txt`` filename for a custom card script.
+
+    Args:
+        card_name: Display name of the card.
+
+    Returns:
+        A normalized filename ending in ``.txt``.
+    """
     return f"{normalize_card_name(card_name)}.txt"
 
 
 def resolve_script_path(cards_dir: Path, card_name: str) -> Path:
-    """Resolve the canonical Forge path for a custom card script."""
+    """Resolve the canonical nested path for a custom card script.
+
+    Args:
+        cards_dir: Root of Forge's custom cards directory.
+        card_name: Display name of the card.
+
+    Returns:
+        The path under the filename's first-character folder.
+    """
     filename = make_script_filename(card_name)
+    # Forge groups scripts by the first filename character rather than a flat directory.
     folder_name = filename[0] if filename and filename[0].isalnum() else "_"
     return cards_dir / folder_name / filename
 
 
 def sanitize_display_filename(value: str) -> str:
-    """Remove Windows-invalid filename characters while keeping readable names."""
+    """Remove Windows-invalid characters while retaining a readable name.
+
+    Args:
+        value: Name to use in a Windows filename.
+
+    Returns:
+        A safe non-empty filename component.
+    """
     sanitized = INVALID_FILENAME_CHARS.sub("", value).strip().rstrip(".")
     return sanitized or "Unnamed"
 
 
 def make_image_filename(card_name: str) -> str:
-    """Build the Forge fullborder image filename for a card."""
+    """Build Forge's ``.fullborder.jpg`` filename for a card.
+
+    Args:
+        card_name: Display name of the card.
+
+    Returns:
+        A sanitized image filename.
+    """
     return f"{sanitize_display_filename(card_name)}.fullborder.jpg"
 
 
 def make_set_filename(set_name: str) -> str:
-    """Build a safe edition filename for the provided set name."""
+    """Build a safe ``.txt`` edition filename.
+
+    Args:
+        set_name: Display name of the set.
+
+    Returns:
+        A sanitized edition filename.
+    """
     return f"{sanitize_display_filename(set_name)}.txt"

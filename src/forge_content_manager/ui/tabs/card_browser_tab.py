@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 from tkinter import filedialog
 from tkinter import ttk
@@ -16,7 +17,7 @@ from forge_content_manager.ui.dialogs import confirm_action, show_error, show_in
 class CardBrowserTab(ctk.CTkFrame):
     """Browse, edit, replace, and delete installed custom cards."""
 
-    def __init__(self, master: ctk.CTkBaseClass, content_service: ForgeContentService, on_cards_changed: callable) -> None:
+    def __init__(self, master: ctk.CTkBaseClass, content_service: ForgeContentService, on_cards_changed: Callable[[], None]) -> None:
         """Build the browser layout with a card table and script editor."""
         super().__init__(master)
         self._content_service = content_service

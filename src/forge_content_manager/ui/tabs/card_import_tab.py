@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import customtkinter as ctk
 
 from forge_content_manager.services.content_service import ForgeContentService
@@ -12,7 +14,7 @@ from forge_content_manager.ui.widgets import CardImportEntryFrame
 class CardImportTab(ctk.CTkFrame):
     """Batch import tab for custom card scripts and associated images."""
 
-    def __init__(self, master: ctk.CTkBaseClass, content_service: ForgeContentService, on_import_complete: callable) -> None:
+    def __init__(self, master: ctk.CTkBaseClass, content_service: ForgeContentService, on_import_complete: Callable[[], None]) -> None:
         """Build the batch import layout and initial empty card list."""
         super().__init__(master)
         self._content_service = content_service

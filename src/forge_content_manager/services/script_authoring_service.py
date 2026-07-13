@@ -64,6 +64,13 @@ class ScriptAuthoringService:
     }
 
     def __init__(self, reference_cards_dir: Path | None = None, database_path: Path | None = None, documentation_path: Path | None = None) -> None:
+        """Initialize documentation lookup and optional reference indexing.
+
+        Args:
+            reference_cards_dir: Optional Forge ``cardsfolder`` source directory.
+            database_path: SQLite path used for the searchable reference index.
+            documentation_path: Optional compiled documentation pack path.
+        """
         self._reference_cards_dir = reference_cards_dir or self._bundled_reference_directory()
         self._database_path = database_path or Path.home() / ".forge_content_manager_reference_cards.sqlite3"
         self._documentation_path = documentation_path or self._bundled_documentation_path()

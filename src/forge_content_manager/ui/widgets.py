@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 from tkinter import filedialog
 
@@ -31,7 +32,7 @@ class LabeledValue(ctk.CTkFrame):
 class CardImportEntryFrame(ctk.CTkFrame):
     """UI block for entering a single card script, image, and rarity."""
 
-    def __init__(self, master: ctk.CTkBaseClass, index: int, on_remove: callable) -> None:
+    def __init__(self, master: ctk.CTkBaseClass, index: int, on_remove: Callable[[CardImportEntryFrame], None]) -> None:
         """Build the input controls used for one card import row."""
         super().__init__(master)
         self._on_remove = on_remove

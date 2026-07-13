@@ -26,7 +26,17 @@ class DocumentationRecord:
 
 
 def validate_pack(path: Path) -> str:
-    """Return a pack's display version or raise ValueError when it is invalid."""
+    """Validate a documentation pack's schema and metadata.
+
+    Args:
+        path: SQLite documentation pack to inspect.
+
+    Returns:
+        The pack's content version, or ``"unversioned"`` when omitted.
+
+    Raises:
+        ValueError: If the file is unreadable or uses an incompatible format.
+    """
     try:
         connection = sqlite3.connect(f"file:{path.resolve().as_posix()}?mode=ro", uri=True)
         try:
@@ -45,7 +55,18 @@ def validate_pack(path: Path) -> str:
 
 
 def load_pack(path: Path) -> list[DocumentationRecord]:
-    """Load all records from a validated pack."""
+    """Load all documentation records from a validated SQLite pack.
+
+    Args:
+        path: SQLite documentation pack to read.
+
+    Returns:
+        Records in the pack's stored order.
+
+    Raises:
+        ValueError: If the pack fails :func:`validate_pack`.
+        sqlite3.Error: If the validated file cannot be queried.
+    """
     validate_pack(path)
     connection = sqlite3.connect(path)
     try:
@@ -62,7 +83,17 @@ def load_pack(path: Path) -> list[DocumentationRecord]:
 
 
 def parse_markdown_catalog(root: Path) -> list[DocumentationRecord]:
-    """Read authored category Markdown files using compact heading-based entries."""
+    """Read authored category Markdown files using heading-based entries.
+
+    Args:
+        root: Directory containing category ``.md`` files.
+
+    Returns:
+        Parsed records, or an empty list when ``root`` is not a directory.
+
+    Raises:
+        OSError: If a catalog file cannot be read.
+    """
     records: list[DocumentationRecord] = []
     if not root.is_dir():
         return records
@@ -83,7 +114,17 @@ def parse_markdown_catalog(root: Path) -> list[DocumentationRecord]:
 
 
 def parse_legacy_guides(root: Path) -> list[DocumentationRecord]:
-    """Preserve the existing bundled guide headings in compiled packs."""
+    """Convert the bundled legacy guide headings into documentation records.
+
+    Args:
+        root: Directory containing the legacy Forge Markdown guides.
+
+    Returns:
+        Records extracted from available guides; missing guides are skipped.
+
+    Raises:
+        OSError: If an existing guide cannot be read.
+    """
     guide_names = ("Card-scripting-API.md", "AbilityFactory.md", "Triggers.md", "Targeting.md", "Statics.md", "Replacements.md", "Costs.md")
     records: list[DocumentationRecord] = [
         DocumentationRecord(name, "Card property", description)
@@ -124,7 +165,18 @@ def _parameters(body: str) -> tuple[list[str], list[str]]:
 
 
 def compile_pack(destination: Path, records: list[DocumentationRecord], content_version: str = "1") -> None:
-    """Validate records and write a deterministic standalone SQLite pack."""
+    """Validate records and atomically write a deterministic SQLite pack.
+
+    Args:
+        destination: Output SQLite file.
+        records: Documentation entries to compile.
+        content_version: Version label shown to pack consumers.
+
+    Raises:
+        ValueError: If a record is incomplete or duplicated by scope and name.
+        OSError: If the destination cannot be created or replaced.
+        sqlite3.Error: If SQLite cannot create or populate the pack.
+    """
     seen: set[tuple[str, str]] = set()
     for record in records:
         key = (record.scope, record.name)
@@ -134,6 +186,7 @@ def compile_pack(destination: Path, records: list[DocumentationRecord], content_
             raise ValueError(f"Duplicate documentation entry: {record.scope}: {record.name}")
         seen.add(key)
     destination.parent.mkdir(parents=True, exist_ok=True)
+    # Build beside the final file so a failed compile never leaves a partial pack in use.
     temporary = destination.with_suffix(destination.suffix + ".building")
     temporary.unlink(missing_ok=True)
     connection = sqlite3.connect(temporary)

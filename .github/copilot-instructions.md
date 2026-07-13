@@ -19,7 +19,8 @@ Keep UI code focused on display, event handling, and user feedback. Put file ope
 - Target Python 3.12 and use built-in generic types such as `list[str]`, `dict[str, str]`, and `Path | None`.
 - Include `from __future__ import annotations` in modules that use forward references or modern annotations, matching the existing project style.
 - Use `pathlib.Path` rather than string-based path manipulation.
-- Add concise docstrings to public classes and methods. Use clear, typed signatures and small helpers for repeated logic.
+- Write code that tells a story and is easy to read. Add comments for non-obvious logic, but avoid redundant comments that restate the code.
+- Add docstrings to all public classes and methods that explain their purpose and usage. Describe parameters, return values, and any exceptions raised on functions you write. Use clear, typed signatures and small helpers for repeated logic.
 - Use `logging` for operational details; do not add `print()` calls to application code.
 - Surface expected user-facing failures as clear `ValueError` messages where that matches existing service behavior; UI code should present those errors to the user.
 - Avoid adding dependencies unless they materially benefit the application. If one is needed, update `pyproject.toml`.

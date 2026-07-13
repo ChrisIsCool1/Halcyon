@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 from tkinter import filedialog
 
@@ -21,10 +22,10 @@ class SettingsTab(ctk.CTkFrame):
         master: ctk.CTkBaseClass,
         settings_service: SettingsService,
         current_settings: AppSettings,
-        on_appearance_changed: callable,
-        on_reference_cards_changed: callable,
-        on_documentation_pack_imported: callable,
-        on_documentation_pack_reset: callable,
+        on_appearance_changed: Callable[[str], None],
+        on_reference_cards_changed: Callable[[Path | None], None],
+        on_documentation_pack_imported: Callable[[Path], bool],
+        on_documentation_pack_reset: Callable[[], None],
     ) -> None:
         """Build the settings view and wire the appearance mode selector."""
         super().__init__(master)

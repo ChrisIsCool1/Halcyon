@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import date
 from pathlib import Path
 from tkinter import filedialog
@@ -16,7 +17,7 @@ from forge_content_manager.ui.dialogs import SetMetadataDialog, confirm_action, 
 class SetManagerTab(ctk.CTkFrame):
     """Display and manage Forge custom set edition files."""
 
-    def __init__(self, master: ctk.CTkBaseClass, content_service: ForgeContentService, on_sets_changed: callable) -> None:
+    def __init__(self, master: ctk.CTkBaseClass, content_service: ForgeContentService, on_sets_changed: Callable[[], None]) -> None:
         """Build the set manager layout and initial controls."""
         super().__init__(master)
         self._content_service = content_service
