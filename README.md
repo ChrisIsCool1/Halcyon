@@ -59,6 +59,9 @@ The editor ships with a compact SQLite documentation pack and can import a repla
 pack from Settings. Maintainers can discover Forge terms and rebuild that pack without
 shipping any reference card scripts:
 
+For command options, preset behavior, catalog format, and the full authoring workflow,
+see [the documentation CLI reference](docs/docs-cli.md).
+
 ```powershell
 forge-content-manager docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
 forge-content-manager docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
