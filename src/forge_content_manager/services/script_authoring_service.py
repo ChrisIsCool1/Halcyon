@@ -11,7 +11,7 @@ from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 
-from forge_content_manager.services.documentation_pack import load_pack, parse_legacy_guides
+from forge_content_manager.services.documentation_pack import LEGACY_GUIDE_NAMES, load_pack, parse_legacy_guides
 
 
 @dataclass(frozen=True, slots=True)
@@ -44,24 +44,7 @@ class ReferenceCard:
 class ScriptAuthoringService:
     """Loads bundled Forge documentation and optional reference-card scripts."""
 
-    _GUIDE_NAMES = (
-        "Card-scripting-API.md",
-        "AbilityFactory.md",
-        "Triggers.md",
-        "Targeting.md",
-        "Statics.md",
-        "Replacements.md",
-        "Costs.md",
-    )
-    _METADATA = {
-        "Name": "Card display name.", "ManaCost": "Mana cost shown in mana shards.",
-        "Types": "Space-separated card types and subtypes.", "PT": "Power and toughness.",
-        "Oracle": "Oracle text displayed by Forge.", "Colors": "Color indicator for cards without a mana cost.",
-        "K": "Keyword ability; use one K: line per keyword.", "A": "Spell or activated ability.",
-        "T": "Triggered ability.", "S": "Static ability.", "R": "Replacement effect.",
-        "SVar": "Named script variable or reusable sub-ability.", "Text": "Additional displayed card text.",
-        "Loyalty": "Starting loyalty counters.", "AI": "AI deck-building directive.",
-    }
+    _GUIDE_NAMES = LEGACY_GUIDE_NAMES
 
     def __init__(self, reference_cards_dir: Path | None = None, database_path: Path | None = None, documentation_path: Path | None = None) -> None:
         """Initialize documentation lookup and optional reference indexing.

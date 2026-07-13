@@ -25,6 +25,32 @@ class DocumentationRecord:
     scope: str = "*"
 
 
+LEGACY_GUIDE_NAMES = (
+    "Card-scripting-API.md",
+    "AbilityFactory.md",
+    "Triggers.md",
+    "Targeting.md",
+    "Statics.md",
+    "Replacements.md",
+    "Costs.md",
+)
+
+# These entries are part of the legacy guide format even though they are not
+# represented by headings in a guide file.
+LEGACY_CARD_PROPERTIES = tuple(
+    DocumentationRecord(name, "Card property", description)
+    for name, description in {
+        "Name": "Card display name.", "ManaCost": "Mana cost shown in mana shards.",
+        "Types": "Space-separated card types and subtypes.", "PT": "Power and toughness.",
+        "Oracle": "Oracle text displayed by Forge.", "Colors": "Color indicator for cards without a mana cost.",
+        "K": "Keyword ability; use one K: line per keyword.", "A": "Spell or activated ability.",
+        "T": "Triggered ability.", "S": "Static ability.", "R": "Replacement effect.",
+        "SVar": "Named script variable or reusable sub-ability.", "Text": "Additional displayed card text.",
+        "Loyalty": "Starting loyalty counters.", "AI": "AI deck-building directive.",
+    }.items()
+)
+
+
 def validate_pack(path: Path) -> str:
     """Validate a documentation pack's schema and metadata.
 
@@ -125,20 +151,8 @@ def parse_legacy_guides(root: Path) -> list[DocumentationRecord]:
     Raises:
         OSError: If an existing guide cannot be read.
     """
-    guide_names = ("Card-scripting-API.md", "AbilityFactory.md", "Triggers.md", "Targeting.md", "Statics.md", "Replacements.md", "Costs.md")
-    records: list[DocumentationRecord] = [
-        DocumentationRecord(name, "Card property", description)
-        for name, description in {
-            "Name": "Card display name.", "ManaCost": "Mana cost shown in mana shards.",
-            "Types": "Space-separated card types and subtypes.", "PT": "Power and toughness.",
-            "Oracle": "Oracle text displayed by Forge.", "Colors": "Color indicator for cards without a mana cost.",
-            "K": "Keyword ability; use one K: line per keyword.", "A": "Spell or activated ability.",
-            "T": "Triggered ability.", "S": "Static ability.", "R": "Replacement effect.",
-            "SVar": "Named script variable or reusable sub-ability.", "Text": "Additional displayed card text.",
-            "Loyalty": "Starting loyalty counters.", "AI": "AI deck-building directive.",
-        }.items()
-    ]
-    for filename in guide_names:
+    records: list[DocumentationRecord] = list(LEGACY_CARD_PROPERTIES)
+    for filename in LEGACY_GUIDE_NAMES:
         path = root / filename
         if not path.exists():
             continue
