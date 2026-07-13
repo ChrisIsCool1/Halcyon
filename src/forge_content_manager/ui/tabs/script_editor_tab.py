@@ -33,6 +33,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._dirty = False
         self._completion: tk.Toplevel | None = None
         self._completion_items: list[ScriptDocumentation] = []
+        self._completion_just_accepted = False
         self._reference_cards: list[ReferenceCard] = []
 
         self.grid_columnconfigure(0, weight=3)
@@ -64,6 +65,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.editor.bind("<KeyRelease>", self._handle_editor_change)
         self.editor.bind("<ButtonRelease-1>", self._handle_editor_change)
         self.editor.bind("<Tab>", self._accept_completion)
+        self.editor.bind("<Return>", self._accept_completion)
         self.editor.bind("<Down>", lambda _event: self._move_completion(1))
         self.editor.bind("<Up>", lambda _event: self._move_completion(-1))
         self.editor.bind("<Escape>", lambda _event: self._close_completion())
@@ -176,6 +178,9 @@ class ScriptEditorTab(ctk.CTkFrame):
         line = self.editor.get("insert linestart", "insert lineend")
         cursor = len(self.editor.get("insert linestart", "insert"))
         self._update_documentation(self._authoring_service.lookup_context(line, cursor))
+        if self._completion_just_accepted and _event is not None and _event.keysym in {"Return", "Tab"}:
+            self._completion_just_accepted = False
+            return
         if token and len(token) >= 2:
             self._show_completion(token)
         else:
@@ -215,10 +220,16 @@ class ScriptEditorTab(ctk.CTkFrame):
             self._completion_list.pack(fill="both", expand=True)
             self._completion_list.bind("<Double-Button-1>", self._accept_completion)
             self._completion_list.bind("<Return>", self._accept_completion)
+            self._completion_list.bind("<<ListboxSelect>>", self._update_completion_documentation)
+        selection = self._completion_list.curselection()
+        selected_name = self._completion_list.get(selection[0]) if selection else None
         self._completion_list.delete(0, "end")
         for item in self._completion_items:
             self._completion_list.insert("end", item.name)
-        self._completion_list.selection_set(0)
+        selected_index = next((index for index, item in enumerate(self._completion_items) if item.name == selected_name), 0)
+        self._completion_list.selection_set(selected_index)
+        self._completion_list.see(selected_index)
+        self._update_documentation(self._completion_items[selected_index])
         bbox = self.editor.bbox("insert")
         if bbox:
             self._completion.geometry(f"300x160+{self.editor.winfo_rootx() + bbox[0]}+{self.editor.winfo_rooty() + bbox[1] + bbox[3]}")
@@ -234,6 +245,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.editor.delete(f"insert-{len(token)}c", "insert")
         self.editor.insert("insert", item.name)
         self._update_documentation(item)
+        self._completion_just_accepted = True
         self._close_completion()
         self._highlight()
         return "break"
@@ -250,6 +262,12 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._completion_list.see(target)
         self._update_documentation(self._completion_items[target])
         return "break"
+
+    def _update_completion_documentation(self, _event=None) -> None:
+        """Show help for the popup's active option while completion is visible."""
+        selection = self._completion_list.curselection()
+        if selection:
+            self._update_documentation(self._completion_items[selection[0]])
 
     def _close_completion(self):
         if self._completion is not None:
