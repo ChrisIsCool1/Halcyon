@@ -3,6 +3,11 @@
 Each `##` heading is the exact script term shown by the editor. Add a short paragraph,
 then optional `**Signature:**` and `**Example:**` lines. Use the developer commands:
 
+Add `<!-- forge-doc-scope: K: -->` near the top of each category file. Valid scopes
+are the Forge line prefixes such as `K:`, `A:`, `T:`, `S:`, and `R:`; the editor only
+uses entries from the scope matching the current line. Headings are case-sensitive,
+so distinct Forge spellings such as `TapOrUntapAll` and `TaporUntapAll` remain separate.
+
 `forge-content-manager docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md`
 
 `forge-content-manager docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md`

@@ -127,20 +127,25 @@ class ScriptAuthoringService:
         with self._state_lock:
             return self._indexing
 
-    def complete(self, prefix: str, limit: int = 20) -> list[ScriptDocumentation]:
+    def complete(self, prefix: str, limit: int = 20, scope: str | None = None) -> list[ScriptDocumentation]:
         """Return case-insensitive documentation matches for a token prefix."""
         needle = prefix.strip().casefold()
-        values = self._catalog.values()
+        values = [item for (item_scope, _name), item in self._catalog.items() if scope is None or item_scope in {scope, "*"}]
         matches = [item for item in values if not needle or item.name.casefold().startswith(needle)]
         matches.sort(key=lambda item: (not item.name.casefold().startswith(needle), item.name.casefold()))
         return matches[:limit]
 
-    def lookup(self, token: str) -> ScriptDocumentation | None:
-        """Find documentation for an exact scripting token."""
-        return self._catalog.get(token.strip().casefold())
+    def lookup(self, token: str, scope: str | None = None) -> ScriptDocumentation | None:
+        """Find documentation for an exact, case-sensitive term in the relevant scope."""
+        name = token.strip()
+        if scope is not None:
+            return self._catalog.get((scope, name)) or (self._catalog.get(("*", name)) if scope != "*" else None)
+        matches = [item for (item_scope, item_name), item in self._catalog.items() if item_name == name]
+        return matches[0] if len(matches) == 1 else None
 
     def lookup_context(self, line: str, cursor: int) -> ScriptDocumentation | None:
         """Resolve the most specific Forge expression containing the caret."""
+        scope = self.scope_for_line(line)
         candidates: list[str] = []
         for match in re.finditer(r"\b([A-Za-z][\w]*)\$\s*([^|\r\n]+)", line):
             if match.start() <= cursor <= match.end():
@@ -153,7 +158,18 @@ class ScriptAuthoringService:
         word = self._current_word(line, cursor)
         if word:
             candidates.append(word)
-        return next((item for candidate in candidates if (item := self.lookup(candidate)) is not None), None)
+        return next((item for candidate in candidates if (item := self.lookup(candidate, scope)) is not None), None)
+
+    @staticmethod
+    def scope_for_line(line: str) -> str:
+        """Determine the relevant documentation category from a Forge script line."""
+        match = re.match(r"\s*(K|A|T|S|R|SVar):", line)
+        if match is None:
+            return "*"
+        prefix = match.group(1)
+        if prefix == "SVar":
+            return "T" if re.search(r"\bMode\$", line) else "A" if re.search(r"\b(?:DB|SP|AB)\$", line) else "SVar"
+        return prefix
 
     def search_reference_cards(self, query: str, limit: int = 100) -> list[ReferenceCard]:
         """Search optional reference scripts by display name."""
@@ -255,14 +271,14 @@ class ScriptAuthoringService:
                 self.start_indexing()
 
     def _load_catalog(self) -> dict[str, ScriptDocumentation]:
-        catalog: dict[str, ScriptDocumentation] = {}
+        catalog: dict[tuple[str, str], ScriptDocumentation] = {}
         try:
             records = load_pack(self._documentation_path)
         except ValueError:
             root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3])) / "scripting_docs"
             records = parse_legacy_guides(root)
         for record in records:
-            self._add(catalog, ScriptDocumentation(record.name, record.category, record.description, record.parameters, record.optional_parameters, record.example))
+            self._add(catalog, record.scope, ScriptDocumentation(record.name, record.category, record.description, record.parameters, record.optional_parameters, record.example))
         return catalog
 
     @staticmethod
@@ -321,5 +337,5 @@ class ScriptAuthoringService:
         return required, optional
 
     @staticmethod
-    def _add(catalog: dict[str, ScriptDocumentation], item: ScriptDocumentation) -> None:
-        catalog.setdefault(item.name.casefold(), item)
+    def _add(catalog: dict[tuple[str, str], ScriptDocumentation], scope: str, item: ScriptDocumentation) -> None:
+        catalog.setdefault((scope, item.name), item)

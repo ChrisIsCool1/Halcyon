@@ -20,6 +20,14 @@ PRESETS = {
     "replacement-mode": r"(?m)^R:Event\$\s*([^|\r\n]+)",
     "parameter": r"\|\s*([A-Za-z][\w]*\$)",
 }
+PRESET_SCOPES = {
+    "keyword": "K",
+    "ability-mode": "A",
+    "trigger-mode": "T",
+    "static-mode": "S",
+    "replacement-mode": "R",
+    "parameter": "*",
+}
 
 
 def extract_terms(cards_dir: Path, pattern: str, progress: Callable[[int, int], None] | None = None) -> list[str]:
@@ -68,7 +76,7 @@ def extract_keyword_families(cards_dir: Path, progress: Callable[[int, int], Non
             if not parts or not parts[0]:
                 continue
             title, values = parts[0], parts[1:]
-            family = families.setdefault(title.casefold(), KeywordFamily(title, []))
+            family = families.setdefault(title, KeywordFamily(title, []))
             while len(family.arguments) < len(values):
                 family.arguments.append(set())
             for argument_index, value in enumerate(values):
@@ -89,12 +97,12 @@ def terminal_progress(completed: int, total: int) -> None:
         print(file=sys.stderr)
 
 
-def write_discoveries(destination: Path, terms: list[str], title: str) -> None:
+def write_discoveries(destination: Path, terms: list[str], title: str, scope: str = "*") -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(f"# {title}\n\n" + "\n\n".join(f"## `{term}`\n\nTODO: Write documentation." for term in terms) + ("\n" if terms else ""), encoding="utf-8")
+    destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(f"## `{term}`\n\nTODO: Write documentation." for term in terms) + ("\n" if terms else ""), encoding="utf-8")
 
 
-def write_keyword_discoveries(destination: Path, families: list[KeywordFamily], title: str) -> None:
+def write_keyword_discoveries(destination: Path, families: list[KeywordFamily], title: str, scope: str = "K") -> None:
     """Write one editable Markdown entry per keyword family and its argument slots."""
     entries: list[str] = []
     for family in families:
@@ -109,16 +117,24 @@ def write_keyword_discoveries(destination: Path, families: list[KeywordFamily], 
                 lines.extend((f"- **{label}:** TODO: Describe this argument.", f"  Observed values: {observed}"))
         entries.append("\n".join(lines))
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(f"# {title}\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
+    destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
 
 
 def sync_catalog(discoveries: Path, catalog: Path) -> int:
     """Append complete missing discovery entries without touching authored entries."""
-    sections = re.split(r"(?m)^##\s+`?(.+?)`?\s*$", discoveries.read_text(encoding="utf-8"))
+    source = discoveries.read_text(encoding="utf-8")
+    source_scope_match = re.search(r"(?mi)^<!--\s*forge-doc-scope:\s*([A-Za-z]+):?\s*-->\s*$", source)
+    source_scope = source_scope_match.group(1) if source_scope_match else "*"
+    sections = re.split(r"(?m)^##\s+`?(.+?)`?\s*$", source)
     found = [(sections[index].strip(), sections[index + 1].strip()) for index in range(1, len(sections), 2)]
     current = catalog.read_text(encoding="utf-8") if catalog.exists() else f"# {catalog.stem.replace('-', ' ').title()}\n"
-    existing = {value.casefold() for value in re.findall(r"(?m)^##\s+`?(.+?)`?\s*$", current)}
-    additions = [(name, body) for name, body in found if name.casefold() not in existing]
+    catalog_scope_match = re.search(r"(?mi)^<!--\s*forge-doc-scope:\s*([A-Za-z]+):?\s*-->\s*$", current)
+    if catalog_scope_match and catalog_scope_match.group(1) != source_scope:
+        raise ValueError(f"Catalog scope {catalog_scope_match.group(1)} does not match discovery scope {source_scope}.")
+    if not catalog_scope_match and source_scope != "*":
+        current = re.sub(r"(?m)^(# .+\n)", rf"\1\n<!-- forge-doc-scope: {source_scope}: -->\n", current, count=1)
+    existing = set(re.findall(r"(?m)^##\s+`?(.+?)`?\s*$", current))
+    additions = [(name, body) for name, body in found if name not in existing]
     if additions:
         catalog.parent.mkdir(parents=True, exist_ok=True)
         catalog.write_text(current.rstrip() + "\n\n" + "\n\n".join(f"## `{name}`\n\n{body}" for name, body in additions) + "\n", encoding="utf-8")
@@ -134,6 +150,7 @@ def main(argv: list[str] | None = None) -> None:
     extract.add_argument("--pattern")
     extract.add_argument("--output", type=Path, required=True)
     extract.add_argument("--title", default="Discovered Forge Terms")
+    extract.add_argument("--scope", help="Documentation scope for a custom pattern, such as K or A.")
     sync = commands.add_parser("sync")
     sync.add_argument("--discoveries", type=Path, required=True)
     sync.add_argument("--catalog", type=Path, required=True)
@@ -146,22 +163,23 @@ def main(argv: list[str] | None = None) -> None:
     if args.command == "extract":
         if bool(args.preset) == bool(args.pattern):
             parser.error("choose exactly one of --preset or --pattern")
+        scope = PRESET_SCOPES.get(args.preset, args.scope or "*").removesuffix(":")
         print(f"Finding Forge scripts in {args.cards_dir}…", file=sys.stderr)
         if args.preset == "keyword":
             families = extract_keyword_families(args.cards_dir, terminal_progress)
-            write_keyword_discoveries(args.output, families, args.title)
+            write_keyword_discoveries(args.output, families, args.title, scope)
             print(f"Wrote {len(families):,} keyword families to {args.output}", file=sys.stderr)
         else:
             terms = extract_terms(args.cards_dir, PRESETS.get(args.preset, args.pattern), terminal_progress)
-            write_discoveries(args.output, terms, args.title)
+            write_discoveries(args.output, terms, args.title, scope)
             print(f"Wrote {len(terms):,} discovered terms to {args.output}", file=sys.stderr)
     elif args.command == "sync":
         print(f"Added {sync_catalog(args.discoveries, args.catalog)} documentation stubs.")
     else:
         records = parse_legacy_guides(args.guides_dir) if args.guides_dir else []
         authored = parse_markdown_catalog(args.catalog_dir)
-        authored_names = {record.name.casefold() for record in authored}
-        compile_pack(args.output, [record for record in records if record.name.casefold() not in authored_names] + authored, args.version)
+        authored_keys = {(record.scope, record.name) for record in authored}
+        compile_pack(args.output, [record for record in records if (record.scope, record.name) not in authored_keys] + authored, args.version)
 
 
 if __name__ == "__main__":

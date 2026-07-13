@@ -1,5 +1,7 @@
 # Keywords
 
+<!-- forge-doc-scope: K: -->
+
 ## `K:Vigilance`
 
 Attacking doesn't cause this creature to tap.

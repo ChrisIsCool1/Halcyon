@@ -46,6 +46,13 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertIn("## `Affinity:<Selector>:[<Label>]`", content)
             self.assertIn("Observed values: `Bird`, `Creature.Artifact`", content)
             self.assertIn("## `etbCounter:<Selector>:[<Label>]:[<Argument 3>]:[<Argument 4>]`", content)
+            self.assertIn("<!-- forge-doc-scope: K: -->", content)
+
+    def test_keyword_case_variants_remain_separate_families(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "keywords.txt").write_text("K:TapOrUntapAll\nK:TaporUntapAll\n", encoding="utf-8")
+            self.assertEqual([family.title for family in extract_keyword_families(root)], ["TapOrUntapAll", "TaporUntapAll"])
 
     def test_sync_preserves_existing_authored_entry(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -66,22 +73,34 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertEqual(sync_catalog(discoveries, catalog), 1)
             self.assertIn("**Arguments:**", catalog.read_text(encoding="utf-8"))
 
+    def test_sync_copies_discovery_scope_to_new_catalog(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            discoveries, catalog = root / "found.md", root / "abilities.md"
+            discoveries.write_text("# Found\n\n<!-- forge-doc-scope: A: -->\n\n## `AssembleContraption`\n\nDocumentation.\n", encoding="utf-8")
+            sync_catalog(discoveries, catalog)
+            self.assertIn("<!-- forge-doc-scope: A: -->", catalog.read_text(encoding="utf-8"))
+
     def test_compiled_pack_validates_and_resolves_context(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             pack = Path(directory) / "documentation.sqlite3"
             compile_pack(pack, [
                 DocumentationRecord("K:Vigilance", "Keywords", "Attacks without tapping."),
                 DocumentationRecord("Affinity:<Selector>:[<Label>]", "Keywords", "Reduces costs for matching permanents."),
+                DocumentationRecord("AssembleContraption", "Ability modes", "Creates a Contraption.", scope="A"),
+                DocumentationRecord("AssembleContraption", "Replacement modes", "Replaces a Contraption event.", scope="R"),
                 DocumentationRecord("Mode$ Attacks", "Trigger modes", "Triggers when this attacks."),
                 DocumentationRecord("ValidTgts$", "Parameters", "Defines legal targets."),
             ], "test-1")
             self.assertEqual(validate_pack(pack), "test-1")
-            self.assertEqual(len(load_pack(pack)), 4)
+            self.assertEqual(len(load_pack(pack)), 6)
             service = ScriptAuthoringService(Path("missing"), Path(directory) / "cards.sqlite3", pack)
             self.assertEqual(service.lookup_context("K:Vigilance", 6).description, "Attacks without tapping.")
             self.assertEqual(service.lookup_context("K:Affinity:Creature.Artifact:artifact creature", 16).description, "Reduces costs for matching permanents.")
             self.assertEqual(service.lookup_context("T:Mode$ Attacks | Execute$ X", 12).description, "Triggers when this attacks.")
             self.assertEqual(service.lookup_context("A:SP$ Pump | ValidTgts$ Creature", 23).description, "Defines legal targets.")
+            self.assertEqual(service.lookup_context("A:SP$ AssembleContraption", 15).description, "Creates a Contraption.")
+            self.assertEqual(service.lookup_context("R:Event$ AssembleContraption", 17).description, "Replaces a Contraption event.")
 
     def test_invalid_pack_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

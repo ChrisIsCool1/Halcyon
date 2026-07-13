@@ -202,7 +202,8 @@ class ScriptEditorTab(ctk.CTkFrame):
         return match.group(1).strip() if match else ""
 
     def _show_completion(self, token: str) -> None:
-        self._completion_items = self._authoring_service.complete(token)
+        line = self.editor.get("insert linestart", "insert lineend")
+        self._completion_items = self._authoring_service.complete(token, scope=self._authoring_service.scope_for_line(line))
         if not self._completion_items:
             self._close_completion()
             return
