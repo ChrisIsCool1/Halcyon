@@ -9,5 +9,6 @@ __pycache__/
 build/
 scripting_docs/cards/*
 dist/
+doc_packs/*
 *.spec.bak
 discoveries.md
