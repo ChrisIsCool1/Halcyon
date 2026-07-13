@@ -149,7 +149,7 @@ class ScriptAuthoringService:
         for match in re.finditer(r"(?:^|\s)K:\s*([^|\r\n]+)", line):
             if match.start() <= cursor <= match.end():
                 value = match.group(1).strip()
-                candidates.extend((f"K:{value}", value, "K"))
+                candidates.extend((f"K:{value}", value, *self._keyword_templates(value), "K"))
         word = self._current_word(line, cursor)
         if word:
             candidates.append(word)
@@ -271,6 +271,15 @@ class ScriptAuthoringService:
             if match.start() <= cursor <= match.end():
                 return match.group()
         return ""
+
+    @staticmethod
+    def _keyword_templates(value: str) -> list[str]:
+        """Return authored family-template names for a concrete colon-delimited keyword."""
+        parts = value.split(":")
+        if len(parts) < 2 or not parts[0]:
+            return []
+        placeholders = ["<Selector>", "[<Label>]", *[f"[<Argument {index}>]" for index in range(3, len(parts))]]
+        return [":".join([parts[0], *placeholders])]
 
     def _guide_paths(self) -> list[Path]:
         root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3]))

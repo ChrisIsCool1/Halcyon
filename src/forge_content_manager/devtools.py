@@ -5,8 +5,9 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from pathlib import Path
 from collections.abc import Callable
+from dataclasses import dataclass
+from pathlib import Path
 
 from forge_content_manager.services.documentation_pack import compile_pack, parse_legacy_guides, parse_markdown_catalog
 
@@ -43,6 +44,41 @@ def extract_terms(cards_dir: Path, pattern: str, progress: Callable[[int, int], 
     return sorted(values, key=str.casefold)
 
 
+@dataclass(slots=True)
+class KeywordFamily:
+    """A keyword title and the concrete values seen in each colon-delimited slot."""
+
+    title: str
+    arguments: list[set[str]]
+
+
+def extract_keyword_families(cards_dir: Path, progress: Callable[[int, int], None] | None = None) -> list[KeywordFamily]:
+    """Group K declarations by title while retaining every observed argument value."""
+    paths = list(cards_dir.rglob("*.txt"))
+    families: dict[str, KeywordFamily] = {}
+    if progress:
+        progress(0, len(paths))
+    for index, path in enumerate(paths, start=1):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError):
+            text = ""
+        for match in re.finditer(PRESETS["keyword"], text):
+            parts = [part.strip() for part in match.group(1).split(":")]
+            if not parts or not parts[0]:
+                continue
+            title, values = parts[0], parts[1:]
+            family = families.setdefault(title.casefold(), KeywordFamily(title, []))
+            while len(family.arguments) < len(values):
+                family.arguments.append(set())
+            for argument_index, value in enumerate(values):
+                if value:
+                    family.arguments[argument_index].add(value)
+        if progress:
+            progress(index, len(paths))
+    return sorted(families.values(), key=lambda item: item.title.casefold())
+
+
 def terminal_progress(completed: int, total: int) -> None:
     """Render extraction progress without mixing status text into command output."""
     width = 30
@@ -58,15 +94,34 @@ def write_discoveries(destination: Path, terms: list[str], title: str) -> None:
     destination.write_text(f"# {title}\n\n" + "\n\n".join(f"## `{term}`\n\nTODO: Write documentation." for term in terms) + ("\n" if terms else ""), encoding="utf-8")
 
 
+def write_keyword_discoveries(destination: Path, families: list[KeywordFamily], title: str) -> None:
+    """Write one editable Markdown entry per keyword family and its argument slots."""
+    entries: list[str] = []
+    for family in families:
+        placeholders = ["<Selector>", "[<Label>]", *[f"[<Argument {index}>]" for index in range(3, len(family.arguments) + 1)]]
+        signature = ":".join([family.title, *placeholders[:len(family.arguments)]])
+        lines = [f"## `{signature}`", "", "TODO: Write documentation."]
+        if family.arguments:
+            lines.extend(("", "**Arguments:**"))
+            for index, values in enumerate(family.arguments, start=1):
+                label = "Selector" if index == 1 else "Label (optional)" if index == 2 else f"Argument {index} (optional)"
+                observed = ", ".join(f"`{value}`" for value in sorted(values, key=str.casefold)) or "_No values observed_"
+                lines.extend((f"- **{label}:** TODO: Describe this argument.", f"  Observed values: {observed}"))
+        entries.append("\n".join(lines))
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(f"# {title}\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
+
+
 def sync_catalog(discoveries: Path, catalog: Path) -> int:
-    """Append missing discovery headings as editable stubs without touching entries."""
-    found = re.findall(r"(?m)^##\s+`?(.+?)`?\s*$", discoveries.read_text(encoding="utf-8"))
+    """Append complete missing discovery entries without touching authored entries."""
+    sections = re.split(r"(?m)^##\s+`?(.+?)`?\s*$", discoveries.read_text(encoding="utf-8"))
+    found = [(sections[index].strip(), sections[index + 1].strip()) for index in range(1, len(sections), 2)]
     current = catalog.read_text(encoding="utf-8") if catalog.exists() else f"# {catalog.stem.replace('-', ' ').title()}\n"
     existing = {value.casefold() for value in re.findall(r"(?m)^##\s+`?(.+?)`?\s*$", current)}
-    additions = [value for value in found if value.casefold() not in existing]
+    additions = [(name, body) for name, body in found if name.casefold() not in existing]
     if additions:
         catalog.parent.mkdir(parents=True, exist_ok=True)
-        catalog.write_text(current.rstrip() + "\n\n" + "\n\n".join(f"## `{value}`\n\nTODO: Write documentation." for value in additions) + "\n", encoding="utf-8")
+        catalog.write_text(current.rstrip() + "\n\n" + "\n\n".join(f"## `{name}`\n\n{body}" for name, body in additions) + "\n", encoding="utf-8")
     return len(additions)
 
 
@@ -92,9 +147,14 @@ def main(argv: list[str] | None = None) -> None:
         if bool(args.preset) == bool(args.pattern):
             parser.error("choose exactly one of --preset or --pattern")
         print(f"Finding Forge scripts in {args.cards_dir}…", file=sys.stderr)
-        terms = extract_terms(args.cards_dir, PRESETS.get(args.preset, args.pattern), terminal_progress)
-        write_discoveries(args.output, terms, args.title)
-        print(f"Wrote {len(terms):,} discovered terms to {args.output}", file=sys.stderr)
+        if args.preset == "keyword":
+            families = extract_keyword_families(args.cards_dir, terminal_progress)
+            write_keyword_discoveries(args.output, families, args.title)
+            print(f"Wrote {len(families):,} keyword families to {args.output}", file=sys.stderr)
+        else:
+            terms = extract_terms(args.cards_dir, PRESETS.get(args.preset, args.pattern), terminal_progress)
+            write_discoveries(args.output, terms, args.title)
+            print(f"Wrote {len(terms):,} discovered terms to {args.output}", file=sys.stderr)
     elif args.command == "sync":
         print(f"Added {sync_catalog(args.discoveries, args.catalog)} documentation stubs.")
     else:

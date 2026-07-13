@@ -66,6 +66,10 @@ forge-content-manager docs compile --guides-dir scripting_docs --catalog-dir scr
 ```
 
 `extract` also accepts `--pattern <regex>` with one capture group for custom term families.
+The `keyword` preset groups colon-delimited keyword forms into one Markdown entry per
+keyword title, listing the observed values for each argument slot. For example,
+`Affinity:Bird` and `Affinity:Creature.Artifact:artifact creature` become one editable
+`Affinity:<Selector>:[<Label>]` entry. Other presets continue to list exact terms.
 
 ## Project Structure
 
