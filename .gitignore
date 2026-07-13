@@ -10,3 +10,4 @@ build/
 scripting_docs/cards/*
 dist/
 *.spec.bak
+discoveries.md
