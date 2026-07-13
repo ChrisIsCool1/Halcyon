@@ -173,7 +173,9 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._update_status()
         self._highlight()
         token = self._current_token()
-        self._update_documentation(self._authoring_service.lookup(token))
+        line = self.editor.get("insert linestart", "insert lineend")
+        cursor = len(self.editor.get("insert linestart", "insert"))
+        self._update_documentation(self._authoring_service.lookup_context(line, cursor))
         if token and len(token) >= 2:
             self._show_completion(token)
         else:

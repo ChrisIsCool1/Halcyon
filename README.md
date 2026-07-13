@@ -53,6 +53,20 @@ The bundled executable will be created under `dist/ForgeContentManager/`.
 The Script Editor bundles the Forge scripting Markdown guides. To search full reference
 card scripts in a packaged build, choose a local Forge `cardsfolder` directory in Settings.
 
+## Maintaining Script Documentation
+
+The editor ships with a compact SQLite documentation pack and can import a replacement
+pack from Settings. Maintainers can discover Forge terms and rebuild that pack without
+shipping any reference card scripts:
+
+```powershell
+forge-content-manager docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
+forge-content-manager docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
+forge-content-manager docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
+```
+
+`extract` also accepts `--pattern <regex>` with one capture group for custom term families.
+
 ## Project Structure
 
 ```text

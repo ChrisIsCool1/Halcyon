@@ -23,6 +23,8 @@ class SettingsTab(ctk.CTkFrame):
         current_settings: AppSettings,
         on_appearance_changed: callable,
         on_reference_cards_changed: callable,
+        on_documentation_pack_imported: callable,
+        on_documentation_pack_reset: callable,
     ) -> None:
         """Build the settings view and wire the appearance mode selector."""
         super().__init__(master)
@@ -30,6 +32,8 @@ class SettingsTab(ctk.CTkFrame):
         self._settings = current_settings
         self._on_appearance_changed = on_appearance_changed
         self._on_reference_cards_changed = on_reference_cards_changed
+        self._on_documentation_pack_imported = on_documentation_pack_imported
+        self._on_documentation_pack_reset = on_documentation_pack_reset
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -86,6 +90,17 @@ class SettingsTab(ctk.CTkFrame):
         self._reference_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
         ctk.CTkButton(reference_frame, text="Choose cardsfolder", command=self._choose_reference_cards).grid(row=1, column=1, padx=16, pady=(0, 10))
 
+        documentation_frame = ctk.CTkFrame(self)
+        documentation_frame.grid(row=2, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
+        documentation_frame.grid_columnconfigure(0, weight=1)
+        ctk.CTkLabel(documentation_frame, text="Script Documentation Pack", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(16, 4))
+        self._documentation_label = ctk.CTkLabel(documentation_frame, text=self._documentation_text(), anchor="w", justify="left", wraplength=620)
+        self._documentation_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
+        controls = ctk.CTkFrame(documentation_frame, fg_color="transparent")
+        controls.grid(row=1, column=1, padx=16, pady=(0, 10))
+        ctk.CTkButton(controls, text="Import pack", command=self._import_documentation_pack).pack(side="left")
+        ctk.CTkButton(controls, text="Use bundled", command=self._reset_documentation_pack).pack(side="left", padx=(8, 0))
+
     def _change_appearance(self, appearance_mode: str) -> None:
         """Apply the selected appearance mode and persist it."""
         self._settings.appearance_mode = appearance_mode  # type: ignore[assignment]
@@ -107,3 +122,17 @@ class SettingsTab(ctk.CTkFrame):
         if self._settings.reference_cards_dir is None:
             return "No optional cardsfolder configured. Packaged builds still include keyword documentation."
         return f"Reference cards folder: {self._settings.reference_cards_dir}\nA background SQLite index is rebuilt after you choose a folder."
+
+    def _import_documentation_pack(self) -> None:
+        filename = filedialog.askopenfilename(title="Import Script Documentation Pack", filetypes=[("Documentation Packs", "*.sqlite3 *.db"), ("All Files", "*.*")])
+        if filename and self._on_documentation_pack_imported(Path(filename)):
+            self._documentation_label.configure(text=self._documentation_text())
+
+    def _reset_documentation_pack(self) -> None:
+        self._on_documentation_pack_reset()
+        self._documentation_label.configure(text=self._documentation_text())
+
+    def _documentation_text(self) -> str:
+        if self._settings.documentation_pack_source is None:
+            return "Using the documentation pack bundled with this application."
+        return f"Using imported documentation pack:\n{self._settings.documentation_pack_source}"

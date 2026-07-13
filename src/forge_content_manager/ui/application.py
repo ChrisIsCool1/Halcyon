@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import logging
+import os
+import shutil
+from pathlib import Path
 
 import customtkinter as ctk
 
@@ -10,11 +13,13 @@ from forge_content_manager.constants import APP_NAME
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.services.settings_service import SettingsService
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
+from forge_content_manager.services.documentation_pack import validate_pack
 from forge_content_manager.ui.tabs.card_browser_tab import CardBrowserTab
 from forge_content_manager.ui.tabs.card_import_tab import CardImportTab
 from forge_content_manager.ui.tabs.settings_tab import SettingsTab
 from forge_content_manager.ui.tabs.set_manager_tab import SetManagerTab
 from forge_content_manager.ui.tabs.script_editor_tab import ScriptEditorTab
+from forge_content_manager.ui.dialogs import show_error
 
 
 class ForgeContentManagerApp(ctk.CTk):
@@ -28,7 +33,9 @@ class ForgeContentManagerApp(ctk.CTk):
         self._settings_service = settings_service
         self._settings = settings_service.load()
         reference_database = settings_service._paths.settings_file.parent / "script_reference_cards.sqlite3"
-        self._authoring_service = ScriptAuthoringService(self._settings.reference_cards_dir, reference_database)
+        self._documentation_database = settings_service._paths.settings_file.parent / "script_documentation.sqlite3"
+        active_documentation = self._documentation_database if self._settings.documentation_pack_source and self._documentation_database.exists() else None
+        self._authoring_service = ScriptAuthoringService(self._settings.reference_cards_dir, reference_database, active_documentation)
 
         self.title(APP_NAME)
         self.geometry("1360x900")
@@ -100,6 +107,8 @@ class ForgeContentManagerApp(ctk.CTk):
             current_settings=self._settings,
             on_appearance_changed=self._handle_appearance_mode_change,
             on_reference_cards_changed=self._handle_reference_cards_changed,
+            on_documentation_pack_imported=self._handle_documentation_pack_imported,
+            on_documentation_pack_reset=self._handle_documentation_pack_reset,
         )
         self.settings_tab.grid(row=0, column=0, sticky="nsew")
 
@@ -128,4 +137,29 @@ class ForgeContentManagerApp(ctk.CTk):
         """Apply the optional Script Editor reference-card location."""
         self._authoring_service.set_reference_cards_dir(directory)
         self.script_editor_tab.refresh_reference_cards()
+
+    def _handle_documentation_pack_imported(self, source: Path) -> bool:
+        """Validate and atomically install a user-selected documentation pack."""
+        try:
+            validate_pack(source)
+            temporary = self._documentation_database.with_suffix(".building.sqlite3")
+            self._documentation_database.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, temporary)
+            validate_pack(temporary)
+            os.replace(temporary, self._documentation_database)
+        except (OSError, ValueError) as exc:
+            show_error("Documentation Pack", str(exc))
+            return False
+        self._settings.documentation_pack_source = source
+        self._settings_service.save(self._settings)
+        self._authoring_service.set_documentation_path(self._documentation_database)
+        self.script_editor_tab._handle_editor_change()
+        return True
+
+    def _handle_documentation_pack_reset(self) -> None:
+        """Return to the documentation bundled with the application."""
+        self._settings.documentation_pack_source = None
+        self._settings_service.save(self._settings)
+        self._authoring_service.set_documentation_path(None)
+        self.script_editor_tab._handle_editor_change()
 

@@ -3,6 +3,7 @@ pyproject.toml
 src/forge_content_manager/__init__.py
 src/forge_content_manager/__main__.py
 src/forge_content_manager/constants.py
+src/forge_content_manager/devtools.py
 src/forge_content_manager/logging_config.py
 src/forge_content_manager/main.py
 src/forge_content_manager/models.py
@@ -15,10 +16,12 @@ src/forge_content_manager.egg-info/top_level.txt
 src/forge_content_manager/services/__init__.py
 src/forge_content_manager/services/backup_service.py
 src/forge_content_manager/services/content_service.py
+src/forge_content_manager/services/documentation_pack.py
 src/forge_content_manager/services/edition_service.py
 src/forge_content_manager/services/forge_paths.py
 src/forge_content_manager/services/image_service.py
 src/forge_content_manager/services/package_service.py
+src/forge_content_manager/services/script_authoring_service.py
 src/forge_content_manager/services/script_service.py
 src/forge_content_manager/services/settings_service.py
 src/forge_content_manager/ui/__init__.py
@@ -28,5 +31,8 @@ src/forge_content_manager/ui/widgets.py
 src/forge_content_manager/ui/tabs/__init__.py
 src/forge_content_manager/ui/tabs/card_browser_tab.py
 src/forge_content_manager/ui/tabs/card_import_tab.py
+src/forge_content_manager/ui/tabs/script_editor_tab.py
 src/forge_content_manager/ui/tabs/set_manager_tab.py
 src/forge_content_manager/ui/tabs/settings_tab.py
+tests/test_documentation_pack.py
+tests/test_script_authoring_service.py

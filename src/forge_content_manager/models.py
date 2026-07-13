@@ -133,3 +133,4 @@ class AppSettings:
 
     appearance_mode: AppearanceMode = "System"
     reference_cards_dir: Path | None = None
+    documentation_pack_source: Path | None = None

@@ -11,6 +11,8 @@ from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 
+from forge_content_manager.services.documentation_pack import load_pack, parse_legacy_guides
+
 
 @dataclass(frozen=True, slots=True)
 class ScriptDocumentation:
@@ -61,9 +63,10 @@ class ScriptAuthoringService:
         "Loyalty": "Starting loyalty counters.", "AI": "AI deck-building directive.",
     }
 
-    def __init__(self, reference_cards_dir: Path | None = None, database_path: Path | None = None) -> None:
+    def __init__(self, reference_cards_dir: Path | None = None, database_path: Path | None = None, documentation_path: Path | None = None) -> None:
         self._reference_cards_dir = reference_cards_dir or self._bundled_reference_directory()
         self._database_path = database_path or Path.home() / ".forge_content_manager_reference_cards.sqlite3"
+        self._documentation_path = documentation_path or self._bundled_documentation_path()
         self._catalog = self._load_catalog()
         self._state_lock = threading.Lock()
         self._indexing = False
@@ -85,6 +88,11 @@ class ScriptAuthoringService:
         self._index_error = None
         if self._reference_directory_available() and not self._ready:
             self.start_indexing()
+
+    def set_documentation_path(self, path: Path | None) -> None:
+        """Reload documentation from a bundled or user-installed pack."""
+        self._documentation_path = path or self._bundled_documentation_path()
+        self._catalog = self._load_catalog()
 
     def start_indexing(self) -> bool:
         """Start a background rebuild when a valid source folder is configured."""
@@ -130,6 +138,22 @@ class ScriptAuthoringService:
     def lookup(self, token: str) -> ScriptDocumentation | None:
         """Find documentation for an exact scripting token."""
         return self._catalog.get(token.strip().casefold())
+
+    def lookup_context(self, line: str, cursor: int) -> ScriptDocumentation | None:
+        """Resolve the most specific Forge expression containing the caret."""
+        candidates: list[str] = []
+        for match in re.finditer(r"\b([A-Za-z][\w]*)\$\s*([^|\r\n]+)", line):
+            if match.start() <= cursor <= match.end():
+                key, value = match.group(1), match.group(2).strip()
+                candidates.extend((f"{key}$ {value}", value, f"{key}$"))
+        for match in re.finditer(r"(?:^|\s)K:\s*([^|\r\n]+)", line):
+            if match.start() <= cursor <= match.end():
+                value = match.group(1).strip()
+                candidates.extend((f"K:{value}", value, "K"))
+        word = self._current_word(line, cursor)
+        if word:
+            candidates.append(word)
+        return next((item for candidate in candidates if (item := self.lookup(candidate)) is not None), None)
 
     def search_reference_cards(self, query: str, limit: int = 100) -> list[ReferenceCard]:
         """Search optional reference scripts by display name."""
@@ -232,12 +256,21 @@ class ScriptAuthoringService:
 
     def _load_catalog(self) -> dict[str, ScriptDocumentation]:
         catalog: dict[str, ScriptDocumentation] = {}
-        for name, description in self._METADATA.items():
-            self._add(catalog, ScriptDocumentation(name, "Card property", description))
-        for path in self._guide_paths():
-            if path.exists():
-                self._parse_guide(path.read_text(encoding="utf-8"), path.stem, catalog)
+        try:
+            records = load_pack(self._documentation_path)
+        except ValueError:
+            root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3])) / "scripting_docs"
+            records = parse_legacy_guides(root)
+        for record in records:
+            self._add(catalog, ScriptDocumentation(record.name, record.category, record.description, record.parameters, record.optional_parameters, record.example))
         return catalog
+
+    @staticmethod
+    def _current_word(line: str, cursor: int) -> str:
+        for match in re.finditer(r"[A-Za-z][\w]*", line):
+            if match.start() <= cursor <= match.end():
+                return match.group()
+        return ""
 
     def _guide_paths(self) -> list[Path]:
         root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3]))
@@ -248,6 +281,11 @@ class ScriptAuthoringService:
         root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3]))
         directory = root / "scripting_docs" / "cards" / "cardsfolder"
         return directory if directory.is_dir() else None
+
+    @staticmethod
+    def _bundled_documentation_path() -> Path:
+        root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3]))
+        return root / "scripting_docs" / "script_documentation.sqlite3"
 
     def _parse_guide(self, text: str, category: str, catalog: dict[str, ScriptDocumentation]) -> None:
         sections = re.split(r"(?m)^#{2,3} (.+?)\s*$", text)

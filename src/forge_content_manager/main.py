@@ -1,4 +1,6 @@
-"""Application bootstrap for Forge Custom Content Manager."""
+"""Application bootstrap and developer documentation command dispatch."""
+
+import sys
 
 from forge_content_manager.constants import LOG_FILENAME
 from forge_content_manager.logging_config import configure_logging
@@ -14,6 +16,11 @@ from forge_content_manager.ui.application import ForgeContentManagerApp
 
 def main() -> None:
     """Start the desktop application."""
+    if len(sys.argv) > 1 and sys.argv[1] == "docs":
+        from forge_content_manager.devtools import main as documentation_main
+
+        documentation_main(sys.argv[2:])
+        return
     paths = get_forge_paths()
     configure_logging(paths.logs_dir / LOG_FILENAME)
     backup_service = BackupService(paths)

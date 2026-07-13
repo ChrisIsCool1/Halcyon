@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import asdict
+from pathlib import Path
 
 from forge_content_manager.constants import APPEARANCE_MODES
 from forge_content_manager.models import AppSettings, ForgePaths
@@ -29,7 +30,9 @@ class SettingsService:
             appearance_mode = "System"
         reference_value = data.get("reference_cards_dir")
         reference_cards_dir = Path(reference_value) if isinstance(reference_value, str) and reference_value else None
-        return AppSettings(appearance_mode=appearance_mode, reference_cards_dir=reference_cards_dir)
+        documentation_value = data.get("documentation_pack_source")
+        documentation_pack_source = Path(documentation_value) if isinstance(documentation_value, str) and documentation_value else None
+        return AppSettings(appearance_mode=appearance_mode, reference_cards_dir=reference_cards_dir, documentation_pack_source=documentation_pack_source)
 
     def save(self, settings: AppSettings) -> None:
         """Persist application settings to disk."""
@@ -37,4 +40,6 @@ class SettingsService:
         data = asdict(settings)
         if settings.reference_cards_dir is not None:
             data["reference_cards_dir"] = str(settings.reference_cards_dir)
+        if settings.documentation_pack_source is not None:
+            data["documentation_pack_source"] = str(settings.documentation_pack_source)
         self._paths.settings_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
