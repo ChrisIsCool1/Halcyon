@@ -206,9 +206,9 @@ class ScriptEditorTab(ctk.CTkFrame):
 
     def _configure_tags(self) -> None:
         self.editor.tag_configure("field", foreground="#4c9aff")
-        self.editor.tag_configure("prefix", foreground="#c586c0")
+        self.editor.tag_configure("prefix", foreground="#86c599")
         self.editor.tag_configure("mode", foreground="#4ec9b0")
-        self.editor.tag_configure("parameter", foreground="#dcdcaa")
+        self.editor.tag_configure("parameter", foreground="#f070f0")
         self.editor.tag_configure("svar", foreground="#ce9178")
         self.editor.tag_configure("svar-reference", foreground="#569cd6", underline=True)
         self.editor.tag_configure("invalid-svar-reference", foreground="#f14c4c", underline=True)
