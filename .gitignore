@@ -7,8 +7,8 @@ __pycache__/
 .ruff_cache/
 .venv/
 build/
-scripting_docs/*
+scripting_docs/
 dist/
-doc_packs/*
+doc_packs/
 *.spec.bak
 discoveries.md
