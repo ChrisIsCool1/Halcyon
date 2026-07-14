@@ -94,8 +94,12 @@ class CardBrowserTab(ctk.CTkFrame):
 
         self.refresh()
 
-    def refresh(self) -> None:
-        """Reload the custom card scan results into the browser table."""
+    def refresh(self, selected_script_path: Path | None = None) -> None:
+        """Reload the custom card scan results while keeping the current card selected."""
+        if selected_script_path is None:
+            selection = self.tree.selection()
+            if selection:
+                selected_script_path = Path(selection[0])
         self._clear_image_preview()
         self._records.clear()
         for item in self.tree.get_children():
@@ -109,6 +113,9 @@ class CardBrowserTab(ctk.CTkFrame):
                 iid=item_id,
                 values=(record.name, record.set_name, str(record.script_path), "Yes" if record.image_present else "No"),
             )
+        if selected_script_path is not None and str(selected_script_path) in self._records:
+            self.tree.selection_set(str(selected_script_path))
+            self.tree.focus(str(selected_script_path))
 
     def open_selected_script(self) -> None:
         """Load the selected script into the in-app editor."""
@@ -135,7 +142,7 @@ class CardBrowserTab(ctk.CTkFrame):
             show_error("Save Failed", str(exc))
             return
         show_info("Script Saved", f"Saved script for '{updated_record.name}'.")
-        self.refresh()
+        self.refresh(selected_script_path=updated_record.script_path)
         self._on_cards_changed()
 
     def replace_image(self) -> None:
@@ -185,7 +192,10 @@ class CardBrowserTab(ctk.CTkFrame):
 
     def _handle_selection_changed(self, _event) -> None:
         """Keep the editor synchronized with the current table selection."""
-        record = self._selected_record()
+        selection = self.tree.selection()
+        if not selection:
+            return
+        record = self._records.get(selection[0])
         if record is None:
             return
         self.script_editor.delete("1.0", "end")

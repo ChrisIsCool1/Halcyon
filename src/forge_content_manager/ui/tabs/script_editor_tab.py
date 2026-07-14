@@ -16,6 +16,68 @@ from forge_content_manager.services.script_authoring_service import ReferenceCar
 from forge_content_manager.ui.dialogs import show_error, show_info
 
 
+class _LineNumberGutter(tk.Canvas):
+    """Draw source line numbers alongside a scrolling Text widget."""
+
+    def __init__(self, master: tk.Misc, editor: tk.Text, **kwargs) -> None:
+        super().__init__(master, width=42, highlightthickness=0, **kwargs)
+        self._editor = editor
+        self._font = editor.cget("font")
+        editor.bind("<<Modified>>", self._handle_modified, add="+")
+        editor.bind("<Configure>", lambda _event: self.redraw(), add="+")
+        self.bind("<Configure>", lambda _event: self.redraw(), add="+")
+        self.redraw()
+
+    def redraw(self) -> None:
+        """Refresh visible line numbers, accounting for wrapped source lines."""
+        self.delete("all")
+        try:
+            last_line = int(self._editor.index("end-1c").split(".", maxsplit=1)[0])
+        except tk.TclError:
+            return
+
+        number_width = max(42, len(str(last_line)) * 9 + 14)
+        if self.cget("width") != number_width:
+            self.configure(width=number_width)
+
+        try:
+            first_line = int(self._editor.index("@0,0").split(".", maxsplit=1)[0])
+        except tk.TclError:
+            first_line = 1
+
+        line = max(1, first_line)
+        while line <= last_line:
+            info = self._editor.dlineinfo(f"{line}.0")
+            if info is None:
+                if line > first_line + 1:
+                    break
+                line += 1
+                continue
+            _, y, _, height, *_ = info
+            if y > self.winfo_height():
+                break
+            if y + height >= 0:
+                self.create_text(
+                    number_width - 8,
+                    y + height / 2,
+                    text=str(line),
+                    anchor="e",
+                    fill="#858585",
+                    font=self._font,
+                )
+            line += 1
+
+    def set_scrollbar(self, first: float, last: float, scrollbar: tk.Scrollbar) -> None:
+        """Forward Text scrolling to the scrollbar and redraw the gutter."""
+        scrollbar.set(first, last)
+        self.redraw()
+
+    def _handle_modified(self, _event=None) -> None:
+        if self._editor.edit_modified():
+            self.redraw()
+            self._editor.edit_modified(False)
+
+
 class ScriptEditorTab(ctk.CTkFrame):
     """Draft Forge scripts with completion, highlighting, documentation, and references."""
 
@@ -64,14 +126,16 @@ class ScriptEditorTab(ctk.CTkFrame):
         # Build the main editor frame with syntax highlighting and autocompletion.
         editor_frame = ctk.CTkFrame(self)
         editor_frame.grid(row=1, column=0, sticky="nsew", padx=(16, 8), pady=(0, 16))
-        editor_frame.grid_columnconfigure(0, weight=1)
+        editor_frame.grid_columnconfigure(1, weight=1)
         editor_frame.grid_rowconfigure(1, weight=1)
-        ctk.CTkLabel(editor_frame, text="Forge Script", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, sticky="w", padx=12, pady=(12, 6))
-        self.editor = tk.Text(editor_frame, undo=True, wrap="none", font=("Cascadia Mono", 11), relief="flat", borderwidth=0)
-        self.editor.grid(row=1, column=0, sticky="nsew", padx=(12, 0), pady=(0, 12))
+        ctk.CTkLabel(editor_frame, text="Forge Script", font=ctk.CTkFont(size=18, weight="bold")).grid(row=0, column=0, columnspan=2, sticky="w", padx=12, pady=(12, 6))
+        self.editor = tk.Text(editor_frame, undo=True, wrap="char", font=("Cascadia Mono", 11), relief="flat", borderwidth=0)
+        self.editor.grid(row=1, column=1, sticky="nsew", padx=(0, 0), pady=(0, 12))
+        self.line_numbers = _LineNumberGutter(editor_frame, self.editor, bg=self.editor.cget("background"))
+        self.line_numbers.grid(row=1, column=0, sticky="nsew", padx=(12, 0), pady=(0, 12))
         scroll = tk.Scrollbar(editor_frame, command=self.editor.yview)
-        scroll.grid(row=1, column=1, sticky="ns", padx=(0, 12), pady=(0, 12))
-        self.editor.configure(yscrollcommand=scroll.set)
+        scroll.grid(row=1, column=2, sticky="ns", padx=(0, 12), pady=(0, 12))
+        self.editor.configure(yscrollcommand=lambda first, last: self.line_numbers.set_scrollbar(first, last, scroll))
         self._configure_tags()
         self.editor.bind("<KeyRelease>", self._handle_editor_change)
         self.editor.bind("<ButtonRelease-1>", self._handle_editor_change)
@@ -192,6 +256,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._dirty = True
         self._update_status()
         self._highlight()
+        self.line_numbers.redraw()
         token = self._current_token()
         line = self.editor.get("insert linestart", "insert lineend")
         cursor = len(self.editor.get("insert linestart", "insert"))
