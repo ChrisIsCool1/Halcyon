@@ -91,6 +91,7 @@ class CardBrowserTab(ctk.CTkFrame):
         self.image_preview = ctk.CTkLabel(editor_frame, text="No image available")
         self.image_preview.grid(row=2, column=0, sticky="nsew", padx=12, pady=(6, 12))
         self._image_preview: ctk.CTkImage | None = None
+        self._image_preview_cache: dict[Path, tuple[int, ctk.CTkImage]] = {}
 
         self.refresh()
 
@@ -214,13 +215,20 @@ class CardBrowserTab(ctk.CTkFrame):
         if record.image_path is None or not record.image_path.exists():
             return
         try:
-            with Image.open(record.image_path) as source_image:
-                preview_image = ImageOps.contain(source_image.convert("RGB"), (260, 360), Image.Resampling.LANCZOS)
-            self._image_preview = ctk.CTkImage(
-                light_image=preview_image,
-                dark_image=preview_image,
-                size=preview_image.size,
-            )
+            image_mtime = record.image_path.stat().st_mtime_ns
+            cached_preview = self._image_preview_cache.get(record.image_path)
+            if cached_preview is None or cached_preview[0] != image_mtime:
+                with Image.open(record.image_path) as source_image:
+                    preview_image = ImageOps.contain(source_image.convert("RGB"), (260, 360), Image.Resampling.LANCZOS)
+                self._image_preview_cache[record.image_path] = (
+                    image_mtime,
+                    ctk.CTkImage(
+                        light_image=preview_image,
+                        dark_image=preview_image,
+                        size=preview_image.size,
+                    ),
+                )
+            self._image_preview = self._image_preview_cache[record.image_path][1]
         except (OSError, ValueError):
             self.image_preview.configure(text="Unable to load image")
             return
