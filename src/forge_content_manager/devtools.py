@@ -11,7 +11,7 @@ from pathlib import Path
 
 from forge_content_manager.services.documentation_pack import compile_pack, parse_legacy_guides, parse_markdown_catalog
 
-
+# These regex patterns are used to extract terms from Forge text scripts. Each pattern must contain one capture group for the discovered term.
 PRESETS = {
     "keyword": r"(?m)^K:\s*([^|\r\n]+)",
     "ability-mode": r"(?m)^(?:A|SVar:[^:]+):(?:DB|SP|AB)\$\s*([^|\r\n]+)",
@@ -20,6 +20,8 @@ PRESETS = {
     "replacement-mode": r"(?m)^R:Event\$\s*([^|\r\n]+)",
     "parameter": r"\|\s*([A-Za-z][\w]*\$)",
 }
+
+# This maps the preset names to the scope that will be used in the generated documentation.
 PRESET_SCOPES = {
     "keyword": "K",
     "ability-mode": "A",
@@ -29,8 +31,12 @@ PRESET_SCOPES = {
     "parameter": "*",
 }
 
+# These paramaters are expected to contain free-form text, so we don't attempt to enumerate their values.
 FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt"})
-MAX_COST_OBSERVED_VALUES = 10
+
+# These parameters can have many different values, but we only want to show a limited number of them in the documentation.
+LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "ValidTarget", "ValidTargets", "ValidZone", "ChangeValid"})
+LIMIT_FOR_LIMITED_PARAMETERS = 10
 
 
 def extract_terms(cards_dir: Path, pattern: str, progress: Callable[[int, int], None] | None = None) -> list[str]:
@@ -229,7 +235,7 @@ def write_ability_discoveries(destination: Path, families: list[AbilityFamily], 
             for label, values in sorted(family.parameters.items(), key=lambda item: item[0].casefold()):
                 lines.append(f"- `{label}$`: TODO: Describe this parameter.")
                 if label not in FREE_TEXT_PARAMETERS:
-                    observed_values = values[:MAX_COST_OBSERVED_VALUES] if label == "Cost" else sorted(values, key=str.casefold)
+                    observed_values = values[:LIMIT_FOR_LIMITED_PARAMETERS] if label in LIMITED_PARAMETERS else sorted(values, key=str.casefold)
                     observed = ", ".join(f"`{value}`" for value in observed_values) or "_No values observed_"
                     lines.append(f"  Observed values: {observed}")
         entries.append("\n".join(lines))
