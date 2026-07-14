@@ -7,8 +7,7 @@ __pycache__/
 .ruff_cache/
 .venv/
 build/
-scripting_docs/cards/*
-scripting_docs/catalog/*
+scripting_docs/*
 dist/
 doc_packs/*
 *.spec.bak
