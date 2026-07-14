@@ -8,6 +8,7 @@ from tkinter import filedialog
 from tkinter import ttk
 
 import customtkinter as ctk
+from PIL import Image, ImageOps
 
 from forge_content_manager.models import CardRecord
 from forge_content_manager.services.content_service import ForgeContentService
@@ -75,21 +76,27 @@ class CardBrowserTab(ctk.CTkFrame):
         editor_frame.grid(row=1, column=1, sticky="nsew", padx=(8, 16), pady=(0, 16))
         editor_frame.grid_columnconfigure(0, weight=1)
         editor_frame.grid_rowconfigure(1, weight=1)
+        editor_frame.grid_rowconfigure(2, weight=1)
 
         self.selection_label = ctk.CTkLabel(
             editor_frame,
-            text="Select a card to view or edit its Forge script.",
+            text="Select a card...",
             font=ctk.CTkFont(size=15, weight="bold"),
         )
         self.selection_label.grid(row=0, column=0, sticky="w", padx=12, pady=(12, 8))
 
-        self.script_editor = ctk.CTkTextbox(editor_frame)
-        self.script_editor.grid(row=1, column=0, sticky="nsew", padx=12, pady=(0, 12))
+        self.script_editor = ctk.CTkTextbox(editor_frame, wrap="none", activate_scrollbars=True)
+        self.script_editor.grid(row=1, column=0, sticky="nsew", padx=12, pady=(0, 6))
+
+        self.image_preview = ctk.CTkLabel(editor_frame, text="No image available")
+        self.image_preview.grid(row=2, column=0, sticky="nsew", padx=12, pady=(6, 12))
+        self._image_preview: ctk.CTkImage | None = None
 
         self.refresh()
 
     def refresh(self) -> None:
         """Reload the custom card scan results into the browser table."""
+        self._clear_image_preview()
         self._records.clear()
         for item in self.tree.get_children():
             self.tree.delete(item)
@@ -164,6 +171,7 @@ class CardBrowserTab(ctk.CTkFrame):
             return
         self.script_editor.delete("1.0", "end")
         self.selection_label.configure(text="Select a card to view or edit its Forge script.")
+        self._clear_image_preview()
         self._on_cards_changed()
         show_info("Card Deleted", f"Deleted '{record.name}'.")
 
@@ -183,3 +191,27 @@ class CardBrowserTab(ctk.CTkFrame):
         self.script_editor.delete("1.0", "end")
         self.script_editor.insert("1.0", self._content_service.load_script(record.script_path))
         self.selection_label.configure(text=f"Editing: {record.name}")
+        self._update_image_preview(record)
+
+    def _clear_image_preview(self) -> None:
+        """Remove the currently displayed card image."""
+        self._image_preview = None
+        self.image_preview.configure(image=None, text="No image available")
+
+    def _update_image_preview(self, record: CardRecord) -> None:
+        """Display a scaled preview when the selected card has an image."""
+        self._clear_image_preview()
+        if record.image_path is None or not record.image_path.exists():
+            return
+        try:
+            with Image.open(record.image_path) as source_image:
+                preview_image = ImageOps.contain(source_image.convert("RGB"), (260, 360), Image.Resampling.LANCZOS)
+            self._image_preview = ctk.CTkImage(
+                light_image=preview_image,
+                dark_image=preview_image,
+                size=preview_image.size,
+            )
+        except (OSError, ValueError):
+            self.image_preview.configure(text="Unable to load image")
+            return
+        self.image_preview.configure(image=self._image_preview, text="")
