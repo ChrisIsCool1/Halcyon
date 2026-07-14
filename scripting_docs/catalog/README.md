@@ -18,3 +18,7 @@ so distinct Forge spellings such as `TapOrUntapAll` and `TaporUntapAll` remain s
 `forge-content-manager docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md`
 
 `forge-content-manager docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1`
+
+To refresh both generated A/T catalogs and rebuild the pack at once:
+
+`forge-content-manager docs refresh --cards-dir scripting_docs/cards/cardsfolder`

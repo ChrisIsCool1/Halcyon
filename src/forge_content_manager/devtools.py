@@ -134,10 +134,51 @@ def extract_ability_families(cards_dir: Path, scope: str, progress: Callable[[in
     return sorted(families.values(), key=lambda item: item.title.casefold())
 
 
+def extract_ability_and_trigger_families(cards_dir: Path, progress: Callable[[int, int], None] | None = None) -> tuple[list[AbilityFamily], list[AbilityFamily]]:
+    """Collect ability and trigger families in one pass over a card-script tree."""
+    expressions = {
+        "A": re.compile(r"(?m)^(?:A|SVar:[^:\r\n]+):(?:DB|SP|AB)\$\s*([^|\r\n]+)(.*)$"),
+        "T": re.compile(r"(?m)^(?:T|SVar:[^:\r\n]+):Mode\$\s*([^|\r\n]+)(.*)$"),
+    }
+    parameter_expression = re.compile(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)")
+    paths = list(cards_dir.rglob("*.txt"))
+    families: dict[str, dict[str, AbilityFamily]] = {"A": {}, "T": {}}
+    if progress:
+        progress(0, len(paths))
+    for index, path in enumerate(paths, start=1):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError):
+            text = ""
+        for scope, expression in expressions.items():
+            for match in expression.finditer(text):
+                title = match.group(1).strip()
+                if not title:
+                    continue
+                family = families[scope].setdefault(title, AbilityFamily(title, {}))
+                for parameter in parameter_expression.finditer(match.group(2)):
+                    label, value = parameter.group(1), parameter.group(2).strip()
+                    observed = family.parameters.setdefault(label, [])
+                    if value and value not in observed:
+                        observed.append(value)
+        if progress:
+            progress(index, len(paths))
+    return (
+        sorted(families["A"].values(), key=lambda item: item.title.casefold()),
+        sorted(families["T"].values(), key=lambda item: item.title.casefold()),
+    )
+
+
 def terminal_progress(completed: int, total: int) -> None:
     """Render extraction progress without mixing status text into command output."""
+    if completed == 0:
+        terminal_progress._last_percent = -1
     width = 30
     ratio = completed / total if total else 1
+    percent = round(ratio * 100)
+    if completed not in {0, total} and percent == getattr(terminal_progress, "_last_percent", -1):
+        return
+    terminal_progress._last_percent = percent
     filled = round(width * ratio)
     print(f"\rScanning {completed:,}/{total:,} files [{'#' * filled}{'.' * (width - filled)}] {ratio:.0%}", end="", file=sys.stderr, flush=True)
     if completed == total:
@@ -196,11 +237,48 @@ def write_ability_discoveries(destination: Path, families: list[AbilityFamily], 
     destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
 
 
+def refresh_documentation(
+    cards_dir: Path,
+    catalog_dir: Path,
+    guides_dir: Path | None,
+    output: Path,
+    version: str = "2",
+    progress: Callable[[int, int], None] | None = None,
+) -> tuple[int, int]:
+    """Regenerate A/T family catalogs and compile the editor documentation pack.
+
+    Args:
+        cards_dir: Recursive Forge card-script source directory.
+        catalog_dir: Catalog directory whose ability and trigger files are replaced.
+        guides_dir: Optional bundled legacy guide directory used as fallback data.
+        output: SQLite documentation pack to create.
+        version: Content version stored in the output pack.
+        progress: Optional callback used while each source scan runs.
+
+    Returns:
+        The number of ability and trigger families written, in that order.
+
+    Raises:
+        OSError: If a source or output file cannot be read or written.
+        ValueError: If the compiled records are incomplete or duplicate.
+    """
+    abilities, triggers = extract_ability_and_trigger_families(cards_dir, progress)
+    write_ability_discoveries(catalog_dir / "ability-mode.md", abilities, "Ability Modes", "A")
+    write_ability_discoveries(catalog_dir / "trigger-mode.md", triggers, "Trigger Modes", "T")
+    
+    records = parse_legacy_guides(guides_dir) if guides_dir else []
+    authored = parse_markdown_catalog(catalog_dir)
+    authored_keys = {(record.scope, record.name) for record in authored}
+    compile_pack(output, [record for record in records if (record.scope, record.name) not in authored_keys] + authored, version)
+    return len(abilities), len(triggers)
+
+
 def sync_catalog(discoveries: Path, catalog: Path) -> int:
     """Append complete missing discovery entries without touching authored entries."""
     source = discoveries.read_text(encoding="utf-8")
     source_scope_match = re.search(r"(?mi)^<!--\s*forge-doc-scope:\s*([A-Za-z]+):?\s*-->\s*$", source)
     source_scope = source_scope_match.group(1) if source_scope_match else "*"
+    
     sections = re.split(r"(?m)^##\s+`?(.+?)`?\s*$", source)
     found = [(sections[index].strip(), sections[index + 1].strip()) for index in range(1, len(sections), 2)]
     current = catalog.read_text(encoding="utf-8") if catalog.exists() else f"# {catalog.stem.replace('-', ' ').title()}\n"
@@ -229,6 +307,7 @@ def main(argv: list[str] | None = None) -> None:
     """
     parser = argparse.ArgumentParser(prog="forge-content-manager docs")
     commands = parser.add_subparsers(dest="command", required=True)
+    
     extract = commands.add_parser("extract")
     extract.add_argument("--cards-dir", type=Path, required=True)
     extract.add_argument("--preset", choices=sorted(PRESETS))
@@ -236,14 +315,24 @@ def main(argv: list[str] | None = None) -> None:
     extract.add_argument("--output", type=Path, required=True)
     extract.add_argument("--title", default="Discovered Forge Terms")
     extract.add_argument("--scope", help="Documentation scope for a custom pattern, such as K or A.")
+    
     sync = commands.add_parser("sync")
     sync.add_argument("--discoveries", type=Path, required=True)
     sync.add_argument("--catalog", type=Path, required=True)
+    
     compile_command = commands.add_parser("compile")
     compile_command.add_argument("--catalog-dir", type=Path, required=True)
     compile_command.add_argument("--guides-dir", type=Path)
     compile_command.add_argument("--output", type=Path, required=True)
     compile_command.add_argument("--version", default="1")
+    
+    refresh = commands.add_parser("refresh", help="Regenerate A/T catalogs and compile the documentation pack.")
+    refresh.add_argument("--cards-dir", type=Path, required=True)
+    refresh.add_argument("--catalog-dir", type=Path, default=Path("scripting_docs/catalog"))
+    refresh.add_argument("--guides-dir", type=Path, default=Path("scripting_docs"))
+    refresh.add_argument("--output", type=Path, default=Path("scripting_docs/script_documentation.sqlite3"))
+    refresh.add_argument("--version", default="1")
+    
     args = parser.parse_args(argv)
     if args.command == "extract":
         if bool(args.preset) == bool(args.pattern):
@@ -264,6 +353,10 @@ def main(argv: list[str] | None = None) -> None:
             print(f"Wrote {len(terms):,} discovered terms to {args.output}", file=sys.stderr)
     elif args.command == "sync":
         print(f"Added {sync_catalog(args.discoveries, args.catalog)} documentation stubs.")
+    elif args.command == "refresh":
+        print(f"Refreshing documentation from {args.cards_dir}…", file=sys.stderr)
+        abilities, triggers = refresh_documentation(args.cards_dir, args.catalog_dir, args.guides_dir, args.output, args.version, terminal_progress)
+        print(f"Wrote {abilities:,} ability families, {triggers:,} trigger families, and {args.output}.", file=sys.stderr)
     else:
         records = parse_legacy_guides(args.guides_dir) if args.guides_dir else []
         authored = parse_markdown_catalog(args.catalog_dir)

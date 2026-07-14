@@ -111,7 +111,6 @@ TODO: Write documentation.
 - `Cost$`: TODO: Describe this parameter.
   Observed values: `0`, `PayLife<ConvertedManaCost>`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Max speed — You may pay {0} rather than pay the unearth cost of the first unearth ability you activate each turn.`, `Rather than pay the mana cost of the next spell you cast this turn, you may pay life equal to that spell's mana value.`
 - `EffectZone$`: TODO: Describe this parameter.
   Observed values: `Graveyard`
 - `Secondary$`: TODO: Describe this parameter.
@@ -190,7 +189,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `These creatures assign their combat damage this turn as though they weren't blocked.`, `You may have creatures you control assign their combat damage this turn as though they weren't blocked.`, `You may have EFFECTSOURCE assign its combat damage this turn as though it weren't blocked.`, `You may have this creature assign its combat damage as though it weren't blocked.`
 - `Optional$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -202,7 +200,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `EFFECTSOURCE assigns no combat damage this turn.`, `Remembered creature assigns no combat damage this turn.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.EffectSource`, `Card.IsRemembered`
 
@@ -467,7 +464,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Attacking doesn't cause creatures you control to tap this combat if EFFECTSOURCE is untapped.`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.EffectSource+untapped`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -626,7 +622,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Each opponent can't block with more than one creature this combat.`
 - `MaxBlockers$`: TODO: Describe this parameter.
   Observed values: `1`
 - `ValidDefender$`: TODO: Describe this parameter.
@@ -665,7 +660,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Remembered adapts as though it had no +1/+1 counters on it.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`
 
@@ -675,7 +669,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `CARDNAME can attack as though it didn't have defender.`, `Creatures you control with defender can attack this turn as though they didn't have defender.`, `EFFECTSOURCE can attack this turn as though it didn't have defender.`, `This creature can attack as though it didn't have defender.`, `This creature can attack this turn as though it didn't have defender.`, `This creature gains haste, can attack as though it didn't have defender, and assigns combat damage equal to its toughness rather than its power.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.EffectSource`, `Card.IsRemembered`, `Card.Self`, `Creature.IsRemembered`
 - `ValidCards$`: TODO: Describe this parameter.
@@ -691,7 +684,6 @@ TODO: Write documentation.
 - `DefenderNotNearestToYouInChosenDirection$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `CARDNAME can't attack unless defending player controls an Island.`, `CARDNAME can't attack.`, `Creatures can't attack this turn.`, `Creatures can't attack you until a player planeswalks.`, `Creatures can't attack you.`, `Creatures can't attack.`, `Creatures targeted player controls can't attack this turn.`, `Creatures that player controls can't attack you or planeswalkers you control until your next turn.`, `Creatures the chosen player controls can't attack you or planeswalkers you control.`, `Creatures without flying and/or islandwalk can't attack you.`, `During your next turn, creatures NOT chosen with EFFECTSOURCE can't attack.`, `Each of these creatures can't attack you or planeswalkers you control for as long as it has a vow counter on it.`, `Each of those creatures attacks that combat if able. They can't attack you or planeswalkers you control that combat.`, `Each opponent who does can't attack you or permanents you control during their next turn.`, `Each player may attack only the nearest opponent in the chosen direction and planeswalkers controller by that opponent.`, `EFFECTSOURCE can't attack those players or planeswalkers they control this combat.`, `For as long as that creature has a duty counter on it, it is goaded, can't attack you or a permanent you control, and can't block creatures you control.`, `Only creatures in the pile of their choice can attack this turn.`, `Other creatures can't attack this turn.`, `Remembered can't attack or block.`, `Target opponent can't attack with creatures until your next turn.`, `This creature can't attack its owner.`, `Until your next turn, only you and the chosen player can attack with creatures.`, `You can't attack that player or planeswalkers they control this turn.`, `You can't attack that player this turn.`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SVarCompare$`: TODO: Describe this parameter.
@@ -709,7 +701,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Remembered can't attack or block.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`
 
@@ -719,7 +710,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Remembered can't attack or block and activated abilities can't be activated.`, `Remembered can't attack or block and its activated abilities can't be activated.`, `Remembered can't attack or block, and its activated abilities can't be activated.`, `Remembered permanent can't attack or block, and its activated abilities can't be activated.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`
 
@@ -731,7 +721,6 @@ TODO: Write documentation.
 - `Cost$`: TODO: Describe this parameter.
   Observed values: `2`, `PayLife<2>`, `XChosen`, `WhipgrassClericNum`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `CARDNAME can't attack or block unless you pay 1 for each Cleric on the battlefield.`, `Creatures can't attack unless their controller pays {X} for each attacking creature they control.`, `Until your next turn, creatures can't attack you or a planeswalker you control unless their controller pays {2} for each of those creatures.`, `Until your next turn, creatures can't attack you unless their controller pays {2} for each of those creatures.`
 - `Target$`: TODO: Describe this parameter.
   Observed values: `You`, `You,Planeswalker.YouCtrl`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -746,7 +735,6 @@ TODO: Write documentation.
 - `Activator$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player.IsRemembered`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Its activated abilities can't be activated for as long as it remains tapped.`, `Its activated abilities can't be activated.`, `Remembered activated abilities can't be activated.`, `While doing so, the player can activate mana abilities only if they're from lands that player controls and only if mana they produce is spent to activate other mana abilities of lands the player controls and/or to play that card.`, `Your opponents can't activate planeswalkers' loyalty abilities.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card`, `Card.IsRemembered`, `Permanent.IsRemembered`, `Planeswalker`
 - `ValidSA$`: TODO: Describe this parameter.
@@ -762,7 +750,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `NumCount`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Defending player can't cast spells.`, `Its controller can't cast spells this turn.`, `Other players cast spells from their graveyards this turn.`, `Players can't cast creature or planeswalker spells.`, `Players can't cast noncreature spells this turn.`, `Players can't cast spells from their hand.`, `Players damaged by EFFECTSOURCE can't cast creature spells this turn.`, `Spells with the chosen name can't be cast and lands with the chosen name can't be played.`, `Target opponent can't cast creature spells until your next turn.`, `Target opponent can't cast noncreature spells until your next turn.`, `Target player can't cast creature spells this turn.`, `Target player can't cast instant or sorcery spells, and that player can't activate abilities that aren't mana abilities.`, `Target player can't cast spells this turn.`, `Target player can't cast spells until a player planeswalks.`, `Targeted player can't cast spells this turn.`, `That creature's owner can't cast spells with the same name as that creature until your next turn.`, `This turn, the targeted player can't cast spells or activate abilities and plays with their hand revealed.`, `Until end of turn, the targeted player can't cast spells.`, `Until your next turn, only you and the chosen player can cast spells.`, `Until your next turn, target player who was dealt combat damage by EFFECTSOURCE this turn can't cast noncreature spells.`, `You can cast only one more spell this turn.`, `You can't cast additional spells this turn.`, `You can't cast creature spells this turn.`, `You can't cast instant or sorcery spells.`, `You can't cast spells until your next turn.`, `You can't play remembered card.`, `Your opponents can't cast noncreature spells this turn.`, `Your opponents can't cast noncreature spells.`, `Your opponents can't cast spells from anywhere other than their hands.`, `Your opponents can't cast spells with the chosen name.`, `Your opponents can't cast spells with the same mana value as that spell until your next turn.`, `Your opponents can't cast spells.`
 - `Origin$`: TODO: Describe this parameter.
   Observed values: `Graveyard`, `Hand`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -774,7 +761,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `You can't become the monarch this turn.`
 - `ValidPlayer$`: TODO: Describe this parameter.
   Observed values: `You`
 
@@ -784,7 +770,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `CARDNAME can't block.`, `Creatures targeted player controls can't block this turn.`, `Creatures your opponents control can't block this turn.`, `Creatures your opponents control with power less than or equal to that number can't block this turn.`, `Each creature with toughness greater than its power can't block this turn.`, `This creature can't block this turn.`, `Those creatures can't block this turn.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Creature.IsRemembered`, `Creature.OppCtrl`, `Creature.OppCtrl+powerLEX`, `Creature.powerLTtoughness`, `Creature.RememberedPlayerCtrl`, `Creature.Self`
 
@@ -794,7 +779,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Black creatures you control can't be blocked this turn except by black creatures.`, `CARDNAME can't be blocked by creatures with greater power this combat.`, `CARDNAME can't be blocked by Walls this turn.`, `CARDNAME can't be blocked except by black creatures.`, `CARDNAME can't be blocked.`, `Creatures can't be blocked this turn.`, `Creatures in each sector can be blocked this turn only by creatures in the same sector.`, `Creatures named Leitmotif Composer can't be blocked this turn.`, `Creatures that player controls without flying can't block this turn.`, `Creatures without defender can't block EFFECTSOURCE this turn.`, `Creatures you control can't be blocked by creature tokens this turn.`, `Creatures you control can't be blocked this turn.`, `EFFECTSOURCE and target Frog you control can't be blocked this turn except by creatures with flying or reach.`, `EFFECTSOURCE can't be blocked by creatures of the chosen color this turn.`, `EFFECTSOURCE can't be blocked by creatures with power 2 or less this turn.`, `EFFECTSOURCE can't be blocked this combat.`, `EFFECTSOURCE can't be blocked this turn except by creatures with defender.`, `EFFECTSOURCE can't be blocked this turn except by creatures with haste.`, `EFFECTSOURCE can't be blocked this turn except by snow creatures.`, `EFFECTSOURCE can't be blocked this turn except by Walls.`, `EFFECTSOURCE can't be blocked this turn.`, `For as long as that creature has a duty counter on it, it is goaded, can't attack you or a permanent you control, and can't block creatures you control.`, `NICKNAME can't be blocked this turn.`, `Remembered can't attack or block.`, `Remembered creature can't be blocked by creatures with power 2 or less this turn.`, `Remembered creature can't be blocked this turn except by artifact creatures and/or red creatures.`, `Remembered creature can't be blocked this turn except by Walls.`, `That creature can't be blocked by creatures with power 2 or less this turn.`, `That creature can't be blocked by creatures your opponents control.`, `These creatures can't be blocked this turn except by creatures with haste.`, `These creatures can't be blocked this turn.`, `This creature can't be blocked by creatures of the chosen color this turn.`, `This creature can't be blocked by creatures with power 2 or less.`, `This creature can't be blocked by creatures with power 3 or greater this turn.`, `This creature can't be blocked by Walls this turn.`, `This creature can't be blocked except by Spirits.`, `This creature can't be blocked this turn except by creatures with haste.`, `This creature can't be blocked this turn.`, `This creature can't be blocked until your next turn.`, `This creature can't be blocked.`, `This creature can't block Giants or Warriors.`, `{c:Remembered} can't block EFFECTSOURCE this turn.`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidAttacker$`: TODO: Describe this parameter.
@@ -812,7 +796,6 @@ TODO: Write documentation.
 - `Cost$`: TODO: Describe this parameter.
   Observed values: `XChosen`, `WhipgrassClericNum`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `This turn, creatures can't block unless their controller pays {X} for each blocking creature they control.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.Self`
 
@@ -822,7 +805,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Your life total can't change.`
 - `ValidPlayer$`: TODO: Describe this parameter.
   Observed values: `You`
 
@@ -832,7 +814,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Players can't gain life this turn.`, `The damaged player can't gain life for the rest of the game.`, `You can't gain life for the rest of the game.`, `Your opponents can't gain life this turn.`
 - `ValidPlayer$`: TODO: Describe this parameter.
   Observed values: `Player`, `Player.IsRemembered`, `Player.Opponent`, `You`
 
@@ -842,7 +823,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Players can't lose life this turn.`, `You can't lose life this turn.`
 - `ValidPlayer$`: TODO: Describe this parameter.
   Observed values: `Player`, `You`
 
@@ -852,7 +832,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `It can't phase in for as long as you control EFFECTSOURCE.`, `That permanent can't phase in for as long as EFFECTSOURCE remains tapped. When EFFECTSOURCE becomes untapped or leaves the battlefield, that permanent phases in.`, `Those permanents can't phase in for as long as EFFECTSOURCE remains face up. When a player planeswalks, those permanents phase in.`, `Until the end of your next turn, they can't phase in. (Treat them and anything attached to them as though they don't exist.)`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.EffectSource+faceUp`, `Card.EffectSource+tapped`
 - `PresentZone$`: TODO: Describe this parameter.
@@ -866,7 +845,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Until your next upkeep, EFFECTSOURCE can't phase out.`, `Until your next upkeep, this permanent can't phase out.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`
 
@@ -876,7 +854,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Other players can't play lands from their graveyards this turn.`, `Players can't play lands from their hand.`, `Target player can't play lands this turn.`, `This player can't play land cards this turn.`, `You can't play lands this turn.`
 - `Origin$`: TODO: Describe this parameter.
   Observed values: `Graveyard`, `Hand`
 - `Player$`: TODO: Describe this parameter.
@@ -892,7 +869,6 @@ TODO: Write documentation.
 - `Affected$`: TODO: Describe this parameter.
   Observed values: `Creature.IsRemembered`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Damage can't be prevented this turn.`, `Damage can't be prevented.`, `Damage that would be dealt to that creature this turn can't be prevented.`
 
 ## `CantPutCounter`
 
@@ -902,7 +878,6 @@ TODO: Write documentation.
 - `CounterType$`: TODO: Describe this parameter.
   Observed values: `POISON`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `That creature can't have counters put on it for as long as EFFECTSOURCE remains on the battlefield.`, `That player can't get counters for as long as EFFECTSOURCE remains on the battlefield.`, `You can't get additional poison counters this turn.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`
 - `ValidPlayer$`: TODO: Describe this parameter.
@@ -914,7 +889,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Creature can't be regenerated this turn.`, `Creatures dealt damage by CARDNAME this turn can't be regenerated this turn.`, `If the creature deals damage to a creature this turn, the creature dealt damage can't be regenerated this turn.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`, `Creature.DamagedBy`, `Creature.DamagedBy Remembered`
 
@@ -926,7 +900,6 @@ TODO: Write documentation.
 - `ActiveZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `EFFECTSOURCE can't be sacrificed this turn.`, `This creature can't be sacrificed.`, `This token can't be sacrificed.`, `You can't sacrifice those creatures this turn.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.IsRemembered`, `Card.IsRemembered+YouCtrl`, `Card.Self`
 
@@ -938,7 +911,6 @@ TODO: Write documentation.
 - `Activator$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player.Opponent`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Creatures you control can't be the targets of blue or black spells this turn.`, `Creatures you control can't be the targets of spells or abilities your opponents control.`, `Permanents you control can't be the targets of blue or black spells your opponents control this turn.`, `Players and Permanents can't be the targets of spells or activated abilities.`, `Target creature can't be the target of spells or abilities your opponents control this turn.`
 - `ValidSA$`: TODO: Describe this parameter.
   Observed values: `Spell`, `Spell,Activated`
 - `ValidSource$`: TODO: Describe this parameter.
@@ -973,7 +945,6 @@ TODO: Write documentation.
 - `Caster$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `The next spell of the chosen type you cast this turn can be cast as though it had flash.`, `Until end of turn, you may cast creature spells as though they had flash.`, `Until your next turn, you may cast creature spells as though they had flash, and each creature you control enters with an additional +1/+1 counter on it.`, `Until your next turn, you may cast sorcery spells as though they had flash.`, `You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant.`, `You may cast Dinosaur spells this turn as though they had flash.`, `You may cast sorcery spells this turn as though they had flash.`, `You may cast spells this turn as though they had flash.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card`, `Card.ChosenType`, `Card.Creature`, `Creature`, `Dinosaur`, `Planeswalker.YouCtrl`, `Sorcery`
 - `ValidSA$`: TODO: Describe this parameter.
@@ -1240,7 +1211,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `This creature assigns combat damage equal to its toughness rather than its power.`, `This creature gains haste, can attack as though it didn't have defender, and assigns combat damage equal to its toughness rather than its power.`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -1326,7 +1296,6 @@ TODO: Write documentation.
 - `DeclaresBlockers$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Artifact creatures you control get +1/+1.`, `Artifacts and creatures target opponent controls don't untap during their next untap step.`, `Artifacts, creatures, enchantments, and lands you control are indestructible.`, `As long as EFFECTSOURCE remains on the battlefield, that creature is also goaded.`, `As long as you've cast a spell this turn, you may play cards from the top of your library.`, `As you cast spells from your hand this turn, they gain cascade.`, `CARDNAME gets +1/+1 as long as you control a Swamp.`, `CARDNAME is 3/1 and has flying for as long as it has a feather counter on it.`, `Cowards can't block this turn.`, `Creature cards in your graveyard have sneak {3}{B}.`, `Creature tokens you control get +2/+2.`, `Creatures can't block this turn.`, `Creatures target opponent controls don't untap during their next untap step.`, `Creatures target player controls don't untap during their next untap step.`, `Creatures that player controls don't untap during the player's next untap step.`, `Creatures with defender can't block this turn.`, `Creatures with even mana values can't block this turn.`, `Creatures with odd mana values can't block this turn.`, `Creatures with power 1 or less can't block this turn.`, `Creatures with power 2 or less can't block this turn.`, `Creatures with power 3 or less can't block this turn.`, `Creatures without flying can't block this turn.`, `Creatures without flying your opponents control can't block this turn.`, `Creatures you control get +1/+0 and have menace.`, `Creatures you control get +1/+0 and have trample and haste.`, `Creatures you control get +1/+0.`, `Creatures you control get +1/+1.`, `Creatures you control get +2/+0.`, `Creatures you control get +2/+2 and have flying.`, `Creatures you control get +3/+3 and have trample.`, `Creatures you control get -1/-0.`, `Creatures you control have "{T}: Add {U} or {R}. Spend this mana only to cast an instant or sorcery spell or to gain a Class level."`, `Creatures you control have '{T}: Add {R}, {G}, or {W}.`, `Creatures you control have base power and toughness 9/9.`, `Creatures you control have double strike, trample, hexproof and haste.`, `Creatures you control have double strike, trample, hexproof, and haste.`, `Creatures you control have flying.`, `Creatures you control have haste and "{T}: This creature deals damage equal to its power to any target."`, `Creatures you control have haste.`, `Creatures you control have menace.`, `Creatures you control have trample and haste and get +2/+2 for each differently named dungeon you've completed.`, `Creatures you control of the chosen type get +3/+3 and have vigilance and hexproof.`, `Davriel planeswalkers you control have "[+2]: Draw a card."`, `During any turn you attacked with a commander, you may play those cards.`, `During any turn you attacked with a Rogue, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.`, `During any turn you attacked with a token, you may play that card.`, `During any turn you attacked with a Wolf or Werewolf, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.`, `During any turn you attacked with EFFECTSOURCE, you may play that card.`, `During any turn you attacked with three or more creatures, you may play that card.`, `During any turn you put a lore counter on this Saga, you may play that card.`, `During your turn, CARDNAME has first strike.`, `During your turn, equipped creatures you control have double strike and haste.`, `Each creature with mana value X can't attack or block this turn.`, `Each land of the first chosen type becomes the second chosen type until end of turn.`, `Each noncreature artifact loses all abilities and is an artifact creature with power and toughness each equal to its mana value.`, `Each of those creatures attacks its owner each combat if able.`, `Each of those lands is an 8/8 green Elemental creature for as long as it has an awakening counter on it. They're still lands.`, `Each opponent may play the cards they exiled with EFFECTSOURCE for as long as those cards remain exiled. Each spell cast this way costs {1} more to cast. Each land played this way enters tapped.`, `EFFECTSOURCE gains all activated abilities of that card until end of turn.`, `EFFECTSOURCE perpetually gains "Creatures you control get +1/+0."`, `Enchanted creature gets -1/-1.`, `Enchanted creature loses flying.`, `Enchanted Forest has "{T}: Add three mana of any one color. You get two rad counters."`, `Enchanted Forest has "{T}: Add {G}{G}" and "{1}, {T}, Sacrifice this land: Create a tapped 4/4 green Troll Warrior creature token with trample."`, `Equipped creature gets +1/+0 and has haste.`, `Equipped creature gets +1/+0.`, `Equipped creature gets +1/+1 and has trample.`, `Equipped creature gets +1/+1.`, `Equipped creature gets +2/+0.`, `Equipped creature gets +3/+3.`, `Equipped creature gets +X/+0, where X is CARDNAME's mana value.`, `Equipped creature has deathtouch.`, `Equipped creature has flying.`, `Equipped creature has lifelink.`, `Exile the top card of your library. You may play that card this turn.`, `For as long as each of these remain exiled, its owner may play it.`, `For as long as that card remains exiled, its owner may cast it without paying its mana cost.`, `For as long as that card remains exiled, its owner may cast it.`, `For as long as that card remains exiled, its owner may play it.`, `For as long as that card remains exiled, you may cast it. That spell has undaunted. (It costs {1} less to cast for each opponent.)`, `For as long as that card remains exiled, you may play it if you control a Kavu.`, `For as long as that card remains exiled, you may play it, and mana of any type can be spent to cast that spell.`, `For as long as that card remains exiled, you may play it.`, `For as long as that creature has a bounty counter on it, it has "When this creature dies, each opponent draws a card and gains 2 life."`, `For as long as that creature has a duty counter on it, it is goaded, can't attack you or a permanent you control, and can't block creatures you control.`, `For as long as that creature has a mannequin counter on it, it has "When this creature becomes the target of a spell or ability, sacrifice it."`, `For as long as that land has a blaze counter on it, it has "At the beginning of your upkeep, this land deals 1 damage to you."`, `For as long as that land has a blight counter on it, it loses all land types and abilities and has "{T}: Add {C}."`, `For as long as they remain exiled, you may play one of those cards.`, `For as long as this creature has a shadow counter on it, it's a Wraith in addition to its other types.`, `For as long as those cards remain exiled, you may look at them, you may cast permanent spells from among them, and you may spend mana as though it were mana of any color to cast those spells.`, `For as long as you control EFFECTSOURCE, you may play one of the exiled cards, and you may spend mana as though it were mana of any color to cast it.`, `For each of those cards, its owner may play it until the end of their next turn.`, `Green creatures and white creatures can't block this turn.`, `If it's a Goblin creature card, you may cast that card until the end of your next turn.`, `Instant and sorcery spells you cast have storm.`, `Islands you control have "{T}: Draw a card".`, `It perpetually gains "This creature can't block."`, `It's an Island in addition to its other types for as long as it has a flood counter on it.`, `Knights you control get +1/+0 and have ward {1}.`, `Lands target player controls don't untap during their next untap step.`, `Lands you control gain all basic land types until end of turn.`, `Lands you control have indestructible.`, `Max speed — This creature gets +0/+1 and has vigilance.`, `Max speed — This creature gets +1/+0.`, `Max speed — This creature gets +1/+1 and has menace.`, `Max speed — This creature gets +1/+2.`, `Max speed — This creature has deathtouch and haste.`, `Max speed — This creature has double strike.`, `Max speed — This creature has lifelink.`, `Max speed — You may cast this card from your graveyard.`, `Monocolored creatures can't block this turn.`, `Mountains you control have "{T}: This land deals 1 damage to any target."`, `Ninjas you control get +1/+1.`, `Nonartifact creatures can't block this turn.`, `Once during each of your turns, you may cast a permanent spell from your graveyard by sacrificing a land in addition to paying its other costs.`, `Other artifacts you control have hexproof and indestructible.`, `Other commanders you control get +2/+2 and have lifelink.`, `Other creatures that player controls can't block this turn.`, `Other creatures with the same name as this creature are goaded.`, `Other creatures you control get +1/+1.`, `Other creatures you control get +2/+2.`, `Other creatures you control have indestructible.`, `Other tapped legendary creatures you control have indestructible.`, `Permanents you control with counters on them have ward {1}.`, `Play with remembered card revealed.`, `Players can't search libraries.`, `Prevent all combat damage that would be dealt by nongreen creatures this turn.`, `Prevent all combat damage this turn except that from red creatures.`, `Prevent all damage target instant or sorcery spell would deal this turn.`, `Prevent all damage target spell would deal this turn.`, `Swamps you control have "{T}: Add {B}{B}{B}{B}."`, `Target land becomes a Swamp until its controller's next untap step.`, `Target land gains "{T}: Add {B}, {R}, or {G}" until EFFECTSOURCE is cast from exile. You may cast EFFECTSOURCE for as long as it remains exiled.`, `Target land gains "{T}: Add {G}, {W}, or {U}" until EFFECTSOURCE is cast from exile. You may cast EFFECTSOURCE for as long as it remains exiled.`, `Target land gains "{T}: Add {R}, {G}, or {W}" until EFFECTSOURCE is cast from exile. You may cast EFFECTSOURCE for as long as it remains exiled.`, `Target land gains "{T}: Add {U}, {B}, or {R}" until EFFECTSOURCE is cast from exile. You may cast EFFECTSOURCE for as long as it remains exiled.`, `Target land gains "{T}: Add {W}, {U}, or {B}" until EFFECTSOURCE is cast from exile. You may cast EFFECTSOURCE for as long as it remains exiled.`, `That creature perpetually gets +1/+1.`, `That land is a Swamp for as long as it has a mire counter on it.`, `That land is an Island for as long as it has a flood counter on it.`, `That land is an island in addition to its other types for as long as it has a flood counter on it.`, `The chosen creature perpetually gets -1/-0.`, `The defending player plays with their hand revealed.`, `The duplicate perpetually gains "You may spend mana as though it were mana of any color to cast this spell" and "When this creature enters, each opponent loses 2 life and you gain 2 life."`, `The duplicate perpetually gains "You may spend mana as though it were mana of any color to cast this spell."`, `The duplicate perpetually gets +1/+0 and gains haste and "You may spend mana as though it were mana of any color to cast this spell."`, `The duplicate perpetually gets +2/+2 and gains "You may spend mana as though it were mana of any color to cast this spell."`, `The duplicates perpetually gain "You may spend mana as though it were mana of any color to cast this spell."`, `The next instant or sorcery spell you cast this turn has storm. (When you cast it, copy it for each spell cast before it this turn. You may choose new targets for the copies.)`, `The next instant or sorcery spell you cast this turn has storm. (When you cast that spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)`, `The next instant spell you cast this turn has cascade.`, `The next noncreature spell you cast this turn has cascade.`, `The next red or green creature spell you cast this turn can be cast without paying its mana cost.`, `The next sorcery spell you cast this turn has cascade.`, `The next spell you cast this turn has affinity for artifacts. (It costs {1} less to cast for each artifact you control as you cast it.)`, `The next spell you cast this turn has cascade and you may planeswalk.`, `The next spell you cast this turn has cascade.`, `The next spell you cast this turn has convoke.`, `The next spell you cast this turn has improvise. (Your artifacts can help cast this spell. Each artifact you tap after you're done activating mana abilities pays for {1}.)`, `The next spell you cast this turn of the chosen type can be cast without paying its mana cost.`, `The player may play that card this turn.`, `They may play those cards until the end of their next turn.`, `This creature gains flying until end of turn, or until any player rolls a 1.`, `This creature gets +1/+1 for each Construct you control.`, `This creature has first strike as long as it's attacking.`, `This creature has hexproof as long as it's untapped.`, `This creature perpetually gains "This creature can't be blocked."`, `This creature perpetually gains double strike.`, `This creature perpetually gains lifelink.`, `This creature perpetually gains menace.`, `This creature perpetually gets +1/+1 and gains reach, trample, and ward {2}.`, `This creature perpetually loses all abilities and has base power and toughness 1/1.`, `This creature's power and toughness are each equal to the number of charge counters on it.`, `This creature's power and toughness are each equal to the number of creature cards in your graveyard.`, `This creature's power and toughness are each equal to the number of lands you control.`, `This creature's power and toughness are each equal to the number of lore counters on it.`, `This permanent enters tapped.`, `This permanent loses all abilities for as long as EFFECTSOURCE remains on the battlefield.`, `This Spacecraft gets +1/+0 for each artifact you control.`, `Threshold — If there are seven or more cards in your graveyard, creatures can't block this turn.`, `Treasures you control have "{T}, Sacrifice this artifact: Add two mana of any one color."`, `Until end of combat on your next turn, you may play that card.`, `Until end of turn, for as long as the revealed card remains on top of your library, play with the top card of your library revealed and you may play that card without paying its mana cost. (If it has X in its mana cost, X is 0.)`, `Until end of turn, it gains hexproof, reach, and "Whenever this creature becomes tapped, it deals damage equal to its power to up to one target creature."`, `Until end of turn, permanents your opponents control gain "When this permanent deals damage to the player who cast EFFECTSOURCE, sacrifice this permanent. You lose 2 life."`, `Until end of turn, you may cast a creature card in a graveyard.`, `Until end of turn, you may cast a creature spell from among cards exiled with CARDNAME.`, `Until end of turn, you may cast a creature spell from among cards exiled with EFFECTSOURCE without paying its mana cost.`, `Until end of turn, you may cast a spell from among those cards.`, `Until end of turn, you may cast an artifact card in a graveyard.`, `Until end of turn, you may cast cards exiled this way without paying their mana costs.`, `Until end of turn, you may cast creature spells from your graveyard by foraging in addition to paying their other costs. If you cast a spell this way, that creature enters with a finality counter on it. (To forage, exile three cards from your graveyard or sacrifice a Food. If a creature with a finality counter on it would die, exile it instead.)`, `Until end of turn, you may cast instant and sorcery spells from the top of your graveyard. If a spell cast this way would be put into a graveyard this turn, exile it instead.`, `Until end of turn, you may cast nonland cards from among those exiled cards.`, `Until end of turn, you may cast spells from among cards exiled with EFFECTSOURCE, and you may spend mana as though it were mana of any color to cast those spells.`, `Until end of turn, you may cast spells from among those cards, and mana of any type can be spent to cast those spells.`, `Until end of turn, you may cast spells from among those exiled cards.`, `Until end of turn, you may cast that card and you may spend mana as though it were mana of any color to cast it.`, `Until end of turn, you may cast that card and you may spend mana as though it were mana of any color to cast that spell.`, `Until end of turn, you may cast that card without paying its mana cost.`, `Until end of turn, you may cast this card without paying its mana cost.`, `Until end of turn, you may cast those cards without paying their mana costs.`, `Until end of turn, you may cast Zombie spells from your graveyard.`, `Until end of turn, you may play cards exiled this way.`, `Until end of turn, you may play cards exiled with EFFECTSOURCE. Spells you cast this way cost {2} less to cast.`, `Until end of turn, you may play cards you own exiled with EFFECTSOURCE.`, `Until end of turn, you may play lands and cast spells from your graveyard.`, `Until end of turn, you may play one basic Plains card from outside the game.`, `Until end of turn, you may play one of those cards without paying its mana cost.`, `Until end of turn, you may play one of those cards. If you cast a spell this way, pay life equal to its mana value rather than paying its mana cost.`, `Until end of turn, you may play that card and you may spend mana as though it were mana of any color to cast it.`, `Until end of turn, you may play that card.`, `Until end of turn, you may play the card you own exiled this way and each other card exiled this way with lesser mana value than it without paying their mana costs.`, `Until end of turn, you may play the exiled card and may spend mana as though it were mana of any color to cast it.`, `Until end of turn, you may play this card without paying its mana cost.`, `Until end of turn, you may play those cards without paying their mana cost.`, `Until end of turn, you may tap lands you don't control for mana. Spend this mana only to cast spells.`, `Until that player's next end step, they may play that card without paying its mana cost.`, `Until the beginning of your next upkeep, you may play that card.`, `Until the end of turn, you may cast that card.`, `Until the end of turn, you may play that card.`, `Until the end of turn, you may play the exiled card.`, `Until the end of your next turn, you may cast an instant or sorcery spell from among the exiled cards.`, `Until the end of your next turn, you may cast that card.`, `Until the end of your next turn, you may play cards exiled this way.`, `Until the end of your next turn, you may play EFFECTSOURCE as an adventure.`, `Until the end of your next turn, you may play it.`, `Until the end of your next turn, you may play one of these cards. (If you cast EFFECTSOURCE this way, you can't play the other card, and vice versa.)`, `Until the end of your next turn, you may play remembered card.`, `Until the end of your next turn, you may play that card.`, `Until the end of your next turn, you may play the chosen card.`, `Until the end of your next turn, you may play the exiled card.`, `Until the end of your next turn, you may play the exiled cards.`, `Until the end of your next turn, you may play this card.`, `Until the end of your next turn, you may play those cards, and mana of any type can be spent to cast them.`, `Until the end of your next turn, you may play those cards.`, `Until your next end step, each player may play the card they exiled this way.`, `Until your next end step, you may play it.`, `Until your next end step, you may play one of those cards.`, `Until your next end step, you may play that card.`, `Until your next end step, you may play those cards and mana of any type can be spent to cast those spells.`, `Until your next end step, you may play those cards.`, `Until your next turn, those creatures can't block.`, `You choose how each player votes this turn.`, `You choose how those creatures block.`, `You choose which creatures attack this turn. You choose which creatures block this turn and how those creatures block.`, `You choose which creatures block this combat and how those creatures block.`, `You gain control of that creature for as long as it has a shield counter on it.`, `You gain control of that creature for as long as that player is the monarch.`, `You get 20% cooler.`, `You get an emblem with "Instant and sorcery cards in your graveyard have retrace." (You may cast instant and sorcery cards from your graveyard by discarding a land card in addition to paying their other costs.)`, `You have no maximum hand size for the rest of the game.`, `You have no maximum hand size.`, `You may cast a creature spell from that player's graveyard this turn, and you may spend mana as though it were mana of any color to cast that spell.`, `You may cast a creature spell from your graveyard this turn.`, `You may cast a foretold card you own from exile without paying its mana cost this turn.`, `You may cast a spell from among cards exiled with CARDNAME without paying its mana cost.`, `You may cast an artifact spell from among them this turn. If you do, it has affinity for artifacts.`, `You may cast cards without paying their mana cost as long as they remain exiled.`, `You may cast creature spells from the top of your library.`, `You may cast creature spells from your graveyard using their sneak abilities.`, `You may cast EFFECTSOURCE for as long as it remains exiled.`, `You may cast EFFECTSOURCE from your graveyard as an Adventure until the end of your next turn.`, `You may cast EFFECTSOURCE from your graveyard this turn.`, `You may cast Equipment spells this way without paying their mana costs.`, `You may cast instant and sorcery cards from among the exiled cards this turn without paying their mana costs.`, `You may cast instant and sorcery spells from your graveyard. If a spell cast this way would be put into your graveyard, exile it instead.`, `You may cast it this turn.`, `You may cast noncreature cards exiled with EFFECTSOURCE this turn without paying their mana costs.`, `You may cast nonland cards exiled this way.`, `You may cast nonland cards from among them as long as they remain exiled, and you may spend mana as though it were mana of any type to cast those spells.`, `You may cast red spells from among the exiled cards this turn.`, `You may cast spells from among those cards for as long as they remain exiled, and mana of any type can be spent to cast them.`, `You may cast spells from among those cards this turn. If you cast a spell this way, pay life equal to that spell's mana value rather than pay its mana cost.`, `You may cast spells from your graveyard this turn.`, `You may cast spells from your hand this turn without paying their mana costs.`, `You may cast spells from your hand without paying their mana costs.`, `You may cast spells with exactly three colors from among them this turn.`, `You may cast target instant or sorcery card from your graveyard this turn. (You still pay the spell's costs. Timing rules for the spell still apply.)`, `You may cast that card and you may spend mana as though it were mana of any color to cast it.`, `You may cast that card and you may spend mana as though it were mana of any type to cast it.`, `You may cast that card during your turn by waterbending {X} rather than paying its mana cost, where X is its mana value.`, `You may cast that card for as long as it remains exiled, and mana of any type can be spent to cast that spell.`, `You may cast that card for as long as it remains exiled, and you may spend mana as though it were mana of any color to cast it.`, `You may cast that card for as long as it remains exiled, and you may spend mana as though it were mana of any color to cast that spell.`, `You may cast that card for as long as it remains exiled.`, `You may cast that card for as long as it's in your graveyard.`, `You may cast that card for as long as you control EFFECTSOURCE, and mana of any type can be spent to cast that spell.`, `You may cast that card this turn, and you may spend mana as though it were mana of any type to cast that spell. If that card would be put into a graveyard this turn, exile it instead.`, `You may cast that card this turn.`, `You may cast that card until the end of your next turn.`, `You may cast that card without paying its mana cost for as long as it remains exiled.`, `You may cast that card.`, `You may cast the exiled card and you may spend mana as though it were mana of any color to cast that spell.`, `You may cast the exiled card this turn.`, `You may cast the exiled cards this turn.`, `You may cast the exiled instant or sorcery card without paying its mana cost for as long as it remains exiled.`, `You may cast the exiled red instant and/or sorcery spells this turn.`, `You may cast the remembered nonland card.`, `You may cast this card from exile as long as you control a Lukka planeswalker.`, `You may cast this card from exile as long as you've cast another spell this turn.`, `You may cast this card this turn. If a spell cast this way would be put into your graveyard, exile it instead.`, `You may cast this spell this turn.`, `You may cast those cards this turn, and you may spend mana as though it were mana of any type to cast those spells.`, `You may look at and play a card as long as it remains exiled.`, `You may look at and play that card for as long as it remains exiled, and you may spend mana as though it were mana of any color to cast that spell.`, `You may look at and play that card this turn.`, `You may look at and play the exiled card for as long as it remains exiled, and you may spend mana as though it were mana of any color to cast that spell.`, `You may look at and play those cards for as long as they remain exiled, and you may spend mana as though it were mana of any type to cast spells this way.`, `You may look at face-down creatures you don't control any time.`, `You may look at it for as long as it remains exiled.`, `You may look at it, and you may spend mana as though it were mana of any type to cast it.`, `You may look at that card for as long as it remains exiled.`, `You may look at the exiled face-down card again any time you wish. If another player gains control of the Spirit token, that player can't look at the exiled card.`, `You may look at the top card of that player's library any time.`, `You may look at the top card of your library any time and you may play cards from the top of your library. If you cast a spell this way, pay life equal to its mana value rather than pay its mana cost.`, `You may look at the top card of your library any time, and you may play lands and cast spells from the top of your library.`, `You may look at the top card of your library any time.`, `You may look at those cards for as long as they remain exiled. Until your next turn, you may play those cards.`, `You may pay {0} rather than pay this spell's mana cost.`, `You may pay {R} rather than pay this spell's mana cost.`, `You may pay {W/B} rather than pay this spell's mana cost.`, `You may pay {X} rather than pay this spell's mana cost, where X is its mana value.`, `You may play a card from exile with a discovery counter on it this turn.`, `You may play a card this turn.`, `You may play a card you own from outside the game this turn.`, `You may play an additional land on each of your turns.`, `You may play an additional land this turn.`, `You may play cards exiled this the end of your next turn.`, `You may play cards exiled with CARDNAME, and you may spend mana as though it were mana of any color to cast those spells.`, `You may play cards exiled with EFFECTSOURCE, and you may spend mana as though it were mana of any color to cast those spells.`, `You may play cards exiled with EFFECTSOURCE.`, `You may play cards from that player's hand this turn.`, `You may play cards from your graveyard.`, `You may play cards you own exiled this way until the end of your next turn.`, `You may play face-up cards you own from exile.`, `You may play instant and sorcery spells from any graveyard.`, `You may play it this turn.`, `You may play it until the end of your next turn.`, `You may play lands and cast permanent spells from your graveyard.`, `You may play lands and cast spells from among the exiled cards for as long as they remain exiled. If you cast a spell this way, you may spend mana as though it were mana of any color to cast it.`, `You may play lands and cast spells from other players' graveyards this turn as though those cards were in your graveyard.`, `You may play lands from among those cards for as long as they remain exiled.`, `You may play lands from your graveyard.`, `You may play one of those cards this turn.`, `You may play one of those cards until end of turn.`, `You may play remembered card without paying its mana cost.`, `You may play remembered card without paying their mana costs.`, `You may play remembered card.`, `You may play target snow permanent card from your graveyard this turn.`, `You may play that card for as long as CARDNAME remains on the battlefield.`, `You may play that card for as long as it remains exiled, and mana of any type can be spent to cast it.`, `You may play that card for as long as it remains exiled, and mana of any type can be spent to cast that spell.`, `You may play that card for as long as it remains exiled, and you may spend mana as though it were mana of any color to cast it.`, `You may play that card for as long as it remains exiled.`, `You may play that card from exile this turn.`, `You may play that card this turn without paying its mana cost.`, `You may play that card this turn.`, `You may play that card this turn. When you play a card this way, CARDNAME deals 2 damage to each player.`, `You may play that card until the end of your next turn.`, `You may play that card without paying its mana cost for as long as EFFECTSOURCE remains on the battlefield.`, `You may play the card(s) this turn.`, `You may play the cards exiled with EFFECTSOURCE for as long as they remain exiled, and mana of any type can be spent to cast those spells.`, `You may play the chosen card this turn.`, `You may play the exiled card this turn.`, `You may play the exiled card until end of turn.`, `You may play the exiled card until the end of your next turn.`, `You may play the exiled card until your next end step.`, `You may play the exiled card without paying its mana cost.`, `You may play the exiled card, and mana of any type can be spent to cast it.`, `You may play the exiled card, and you may spend mana as though it were mana of any color to cast it.`, `You may play the exiled card.`, `You may play the exiled cards for as long as they remain exiled. Mana of any type can be spent to cast spells this way.`, `You may play the exiled cards this turn.`, `You may play the exiled cards until the end of your next turn.`, `You may play the remembered card.`, `You may play the remembered cards.`, `You may play the top card of that player's library, and you may spend mana as though it were mana of any color to cast spells this way.`, `You may play them this turn without paying their mana costs.`, `You may play them this turn.`, `You may play them until the end of your next turn.`, `You may play this card for as long as it remains exiled, and mana of any type can be spent to cast it.`, `You may play this card for as long as it remains exiled.`, `You may play this card for as long as you control EFFECTSOURCE.`, `You may play this card from your graveyard this turn.`, `You may play this card from your graveyard.`, `You may play this card this turn.`, `You may play this card until you exile another card with CARDNAME.`, `You may play this card until you exile another card with EFFECTSOURCE.`, `You may play those cards for as long as they remain exiled, and you may spend mana as though it were mana of any color to cast them.`, `You may play those cards this turn, and mana of any type can be spent to cast them.`, `You may play those cards this turn, and you may spend mana as though it were mana of any color to cast those spells.`, `You may play those cards this turn.`, `You may play those cards until end of turn.`, `You may play those cards until the end of your next turn.`, `You may play those cards until your next end step.`, `You may play two additional lands this turn.`, `You may play up to three additional lands this turn.`, `You may play up to two of those cards until the end of your next turn.`, `You may play X additional lands this turn.`, `Your maximum hand size is reduced by three for the rest of the game.`, `Your opponents can't untap more than two permanents during their untap steps.`, `Your opponents play with their hands revealed.`
 - `Duration$`: TODO: Describe this parameter.
   Observed values: `Permanent`
 - `EffectZone$`: TODO: Describe this parameter.
@@ -2193,7 +2162,6 @@ TODO: Write documentation.
 - `Activator$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Your opponents and creatures your opponents control with hexproof can be the targets of spells and abilities you control as though they didn't have hexproof.`
 - `ValidEntity$`: TODO: Describe this parameter.
   Observed values: `Opponent,Creature.OppCtrl`
 
@@ -2203,7 +2171,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `The "legend rule" doesn't apply to permanents you control.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Permanent.YouCtrl`
 
@@ -2215,7 +2182,6 @@ TODO: Write documentation.
 - `Activator$`: TODO: Describe this parameter.
   Observed values: `Player.IsRemembered`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Until end of turn, EFFECTSOURCE can be the target of spells and abilities controlled by target player as though it didn't have shroud.`
 - `ValidEntity$`: TODO: Describe this parameter.
   Observed values: `Card.EffectSource`
 
@@ -2382,7 +2348,6 @@ TODO: Write documentation.
 - `AffectedZone$`: TODO: Describe this parameter.
   Observed values: `Exile`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `For one spell this turn, you may spend mana as though it were mana of any type to pay that spell's mana cost.`, `Mana of any type can be spent to cast this spell.`, `You may spend colorless mana as though it were mana of any color to cast that spell.`, `You may spend mana as though it were mana of any color to cast this spell.`, `You may spend white mana as though it were mana of any color.`
 - `EffectZone$`: TODO: Describe this parameter.
   Observed values: `Stack`
 - `ManaConversion$`: TODO: Describe this parameter.
@@ -2504,7 +2469,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `NICKNAME can't be blocked by more than one creature each combat this turn.`, `This creature can't be blocked by more than one creature.`
 - `Max$`: TODO: Describe this parameter.
   Observed values: `1`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -2518,7 +2482,6 @@ TODO: Write documentation.
 - `AffectedZone$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Creatures of the chosen creature type attack this turn if able.`, `Creatures target opponent controls attack this turn if able.`, `Creatures target player controls attack this turn if able.`, `Creatures targeted player controls attack this turn if able.`, `Creatures the active player controls attack this turn if able.`, `Creatures your opponents control attack each combat if able and attack a player other than you if able.`, `Creatures your opponents control attack this turn if able.`, `During target player's next turn, creatures that player controls attack EFFECTSOURCE if able.`, `During target player's next turn, creatures that player controls attack you if able.`, `During your next turn, creatures chosen with EFFECTSOURCE attack if able.`, `Each creature attacks this turn if able.`, `Each creature dealt damage this way attacks this turn if able.`, `EFFECTSOURCE attacks that player this combat if able.`, `Non-Wall creatures the active player controls attack this turn if able.`, `This creature attacks during its controller's next combat phase if able.`, `This creature attacks each combat if able.`, `This creature attacks EFFECTSOURCE during its controller's next turn if able.`, `This creature attacks its designated player each combat if able.`, `This creature attacks its designated player this turn if able.`, `This creature attacks or blocks this combat if able.`, `This creature attacks this combat if able.`, `This creature attacks this player this turn if able.`, `This creature attacks this turn if able.`, `This creature attacks you this turn if able.`, `This permanent attacks its owner each turn if able.`, `This permanent attacks its owner this turn if able.`, `Those creatures attack this turn if able.`, `Until your next turn, creatures your opponents control attack each combat if able.`, `Until your next turn, each creature attacks each combat if able and attacks a player other than you if able.`, `Until your next turn, each creature the chosen player control attacks the other chosen player each combat if able.`
 - `MustAttack$`: TODO: Describe this parameter.
   Observed values: `CardOwner`, `ChosenPlayer`, `EffectSource`, `Player`, `Player.IsRemembered`, `Player.Other`, `Remembered`, `Remembered.NonActive`, `RememberedPlayer`, `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2532,7 +2495,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Creatures your opponents control block this turn if able, and you choose how those creatures block.`, `Each creature blocks this turn if able.`, `Each creature your opponents control blocks this turn if able.`, `The chosen creatures block this turn if able.`, `This creature blocks this turn if able.`, `Those creatures block this turn if able.`
 - `ValidCreature$`: TODO: Describe this parameter.
   Observed values: `Card.ChosenCardStrict`, `Card.IsRemembered`, `Creature`, `Creature.OppCtrl`
 
@@ -2570,7 +2532,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `As long as this creature is on the battlefield, damage isn't removed from it during cleanup steps.`, `Damage isn't removed from creatures during cleanup steps.`, `Damage isn't removed from this creature during cleanup steps.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.Self`, `Card.Self+inZoneBattlefield`, `Creature`
 
@@ -2582,7 +2543,6 @@ TODO: Write documentation.
 - `Additional$`: TODO: Describe this parameter.
   Observed values: `1`, `2`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `For each planeswalker you control, you may activate one of its loyalty abilities once this turn as though none of its loyalty abilities had been activated this turn.`, `You may activate EFFECTSOURCE's loyalty ability two more times this turn.`, `You may activate the loyalty abilities of NICKNAME twice this turn rather than only once.`, `You may activate the loyalty abilities of planeswalkers you control twice this turn rather than only once.`
 - `OnlySourceAbs$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Twice$`: TODO: Describe this parameter.
@@ -2596,7 +2556,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `If a creature attacking causes a triggered ability of a permanent you control to trigger, that ability triggers an additional time.`, `If a creature dying causes a triggered ability of this creature or an emblem you own to trigger, that ability triggers an additional time.`, `Room abilities of dungeons you own trigger an additional time.`
 - `Destination$`: TODO: Describe this parameter.
   Observed values: `Graveyard`
 - `Origin$`: TODO: Describe this parameter.
@@ -2866,7 +2825,6 @@ TODO: Write documentation.
 - `Cost$`: TODO: Describe this parameter.
   Observed values: `B`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `If that spell doesn't target a creature you control, it costs {8} more to cast this way.`, `Noncreature spells your opponents cast cost {2} more to cast until your next turn.`, `Spells they cast this turn cost {2} more to cast.`, `Spells you cast cost {B} more to cast.`, `Spells your opponents cast cost {1} more to cast.`, `Spells your opponents cast that target CARDNAME cost {1} more to cast.`, `Spells your opponents cast that target CARDNAME cost {2} more to cast.`, `Spells your opponents cast that target you or a permanent you control cost {2} more to cast.`, `The next noncreature spell target opponent casts costs {2} more to cast.`, `This spell costs {1} more to cast.`, `This spell costs {2} more to cast.`
 - `EffectZone$`: TODO: Describe this parameter.
   Observed values: `All`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2904,7 +2862,6 @@ TODO: Write documentation.
 - `Color$`: TODO: Describe this parameter.
   Observed values: `B`, `R G`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Activated abilities of artifact tokens you control cost {2} less to activate this turn.`, `Artifact spells you cast cost {1} less to cast.`, `Artifact spells you cast this turn cost {2} less to cast.`, `Artifact, instant, and sorcery spells you cast this turn cost {2} less to cast.`, `Equip abilities you activate cost {2} less to activate.`, `Face-down spells you cast this turn cost {1} less to cast.`, `Historic spells you cast this turn cost {2} less to cast.`, `Instant and sorcery spells you cast this turn cost {1} less to cast.`, `Instant and sorcery spells you cast this turn cost {3} less to cast.`, `Legendary spells you cast cost {R}{G} less to cast. This effect reduces only the amount of colored mana you pay.`, `Max speed — Spells you cast cost {1} less to cast.`, `Noncreature spells you cast cost {1} less to cast.`, `Spells with the chosen name cost {1} less to cast this turn.`, `Spells you cast cost {B} less to cast.`, `Spells you cast from anywhere other than your hand cost {2} less to cast.`, `Spells you cast from exile this turn cost {X} less to cast, where X is the number of players you attacked.`, `Spells you cast from your graveyard this turn cost {2} less to cast.`, `Spells you cast named Karlov's Crossbow cost {1} less to cast.`, `Spells you cast this turn cost {1} less to cast for each Wizard you control.`, `Spells you cast this turn that are black and/or red cost {X} less to cast, where X is the amount of life you lost this turn.`, `Spells you cast this turn that are white and/or blue cost {X} less to cast, where X is the amount of life you gained this turn.`, `The first Dragon spell you cast each turn costs {2} less to cast.`, `The next Dragon creature spell you cast costs {X} less to cast.`, `The next Dragon spell you cast costs {2} less to cast.`, `The next face-down creature spell you cast this turn costs {3} less to cast.`, `The next Giant spell you cast this turn costs {2} less to cast.`, `The next instant or sorcery spell you cast this turn costs {X} less to cast, where X is CARDNAME's power at the time EFFECTSOURCE's ability resolved.`, `The next instant or sorcery spell you cast this turn costs {X} less to cast, where X is the number of cards looked at while scrying.`, `The next instant or sorcery spell you cast this turn costs {X} less to cast, where X is the number of Wizards you controlled at the time EFFECTSOURCE's ability resolved.`, `The next noncreature spell you cast costs {1} less to cast.`, `The next spell you cast this turn costs {1} less to cast for each counter removed this way.`, `the next spell you cast this turn costs {1} less to cast.`, `The next spell you cast this turn costs {1} less to cast.`, `This Equipment's equip abilities cost {2} less to activate.`, `This permanent costs {2} less to turn face up.`, `This spell costs {1} less to cast.`, `This spell costs {2} less to cast.`, `Until end of turn, you may play cards exiled with EFFECTSOURCE. Spells you cast this way cost {2} less to cast.`, `Until your next turn, instant and sorcery spells you cast cost {1} less to cast.`, `Until your next turn, instant, sorcery, and planeswalker spells that player casts cost {2} less to cast.`
 - `EffectZone$`: TODO: Describe this parameter.
   Observed values: `All`, `Battlefield`
 - `IgnoreGeneric$`: TODO: Describe this parameter.
@@ -3567,7 +3524,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `You don't lose unspent red mana as steps and phases end.`
 - `ManaType$`: TODO: Describe this parameter.
   Observed values: `Red`
 - `ValidPlayer$`: TODO: Describe this parameter.
@@ -3598,7 +3554,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Untap all permanents you control during each opponent's untap step.`, `Untap this land during each other player's untap step.`
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.Self`, `Permanent.YouCtrl`
 - `ValidPlayer$`: TODO: Describe this parameter.

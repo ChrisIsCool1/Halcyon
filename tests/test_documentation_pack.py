@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_keyword_families, extract_terms, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
+from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_keyword_families, extract_terms, refresh_documentation, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
 from forge_content_manager.services.documentation_pack import DocumentationRecord, compile_pack, load_pack, parse_markdown_catalog, validate_pack
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
 
@@ -98,6 +98,21 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertNotIn("Draw a card.", content)
             self.assertEqual(content.count("`0`"), 1)
             self.assertNotIn("`10`", content)
+
+    def test_refresh_regenerates_families_and_compiles_the_pack(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cards = root / "cards"
+            cards.mkdir()
+            (cards / "sample.txt").write_text(
+                "A:SP$ Draw | NumCards$ 1\nT:Mode$ Attacks | Execute$ TrigDraw\nSVar:TrigDraw:DB$ Draw\n",
+                encoding="utf-8",
+            )
+            catalog, pack = root / "catalog", root / "documentation.sqlite3"
+            self.assertEqual(refresh_documentation(cards, catalog, None, pack), (1, 1))
+            self.assertIn("## `Draw`", (catalog / "ability-mode.md").read_text(encoding="utf-8"))
+            self.assertIn("## `Attacks`", (catalog / "trigger-mode.md").read_text(encoding="utf-8"))
+            self.assertEqual(validate_pack(pack), "2")
 
     def test_sync_preserves_existing_authored_entry(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

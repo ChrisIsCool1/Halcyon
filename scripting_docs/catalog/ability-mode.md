@@ -2823,7 +2823,6 @@ TODO: Write documentation.
 - `Defined$`: TODO: Describe this parameter.
   Observed values: `AttackingPlayer`, `CardController`, `ChoosingPlayer`, `ChosenCard`, `ChosenCardController`, `ChosenPlayer`, `DelayTriggerRemembered`, `DelayTriggerRememberedLKI`, `Enchanted`, `EnchantedController`, `EnchantedOwner`, `EnchantedPlayer`, `ImprintedController`, `OppNonParentTarget`, `Opponent`, `Opponent.NotedForSilence`, `ParentTarget`, `ParentTargetedController`, `Player`, `Player.!MaxSpeed`, `Player.attackedBySourceThisCombat`, `Player.Chosen`, `Player.EnchantedBy`, `Player.IsRemembered`, `Player.Opponent`, `Player.Opponent+IsRemembered`, `Player.Other`, `Remembered`, `RememberedController`, `ReplacedCard`, `ReplacedSource`, `ReplacedSourceController`, `Self`, `ShieldEffectTarget`, `Targeted`, `TargetedController`, `TargetedPlayer`, `TriggeredActivator`, `TriggeredAttackedTarget`, `TriggeredAttackerController`, `TriggeredAttackerLKICopy`, `TriggeredAttackers`, `TriggeredAttackingPlayer`, `TriggeredBlockerController`, `TriggeredBlockerLKICopy`, `TriggeredBlockers`, `TriggeredCardController`, `TriggeredCardLKICopy`, `TriggeredCardOwner`, `TriggeredDefender`, `TriggeredDefender.Opponent & Valid Planeswalker.TriggeredDefender`, `TriggeredDefendingPlayer`, `TriggeredPlayer`, `TriggeredSourceController`, `TriggeredSourceLKICopy`, `TriggeredSourceSAController`, `TriggeredTarget`, `TriggeredTargetController`, `Valid Card.EnchantedBy`, `You`, `You.CardsInHandAtBeginningOfTurn`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `CARDNAME deals damage to target creature equal to the highest number you noted for cards named Garbage Fire.`
 - `DividedAsYouChoose$`: TODO: Describe this parameter.
   Observed values: `2`, `3`, `4`, `5`, `6`, `7`, `8`, `CoreStrength`, `Count$CardPower`, `DistroDmg`, `FirePower`, `MonstrosityX`, `NumCreatures`, `OrigMountains`, `OrigPower`, `TriggerObjectsAttackers$Amount`, `X`, `Y`, `Z`
 - `DivideEvenly$`: TODO: Describe this parameter.
@@ -4122,7 +4121,6 @@ TODO: Write documentation.
 - `Defined$`: TODO: Describe this parameter.
   Observed values: `Self`, `Targeted`, `You`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Prevent all combat damage that would be dealt this turn to Dogs you control.`, `Until end of turn, damage that would reduce your life total to less than 1 reduces it to 1 instead.`, `Until end of turn, you may cast spells from your hand without paying their mana costs.`, `Until end of turn, you may look at the top card of your library any time and you may play cards from the top of your library. If you cast a spell this way, pay life equal to its mana value rather than pay its mana cost.`, `When you cast your next creature spell of that type this turn, that creature enters with an additional +1/+1 counter on it.`
 - `Duration$`: TODO: Describe this parameter.
   Observed values: `AsLongAsControl`, `AsLongAsInPlay`, `End of Turn`, `EndOfTurn`, `Permanent`, `ThisTurnAndNextTurn`, `UntilEndOfCombat`, `UntilEndOfCombatYourNextTurn`, `UntilEndOfTurn`, `UntilHostLeavesPlay`, `UntilHostLeavesPlayOrEndOfCombat`, `UntilHostLeavesPlayOrEOT`, `UntilStateBasedActionChecked`, `UntilTargetedUntaps`, `UntilTheEndOfYourNextTurn`, `UntilTheEndOfYourNextUntap`, `UntilUntaps`, `UntilYourNextEndStep`, `UntilYourNextTurn`, `UntilYourNextUpkeep`
 - `EffectOwner$`: TODO: Describe this parameter.
@@ -6483,7 +6481,6 @@ TODO: Write documentation.
 - `DefinedLandwalk$`: TODO: Describe this parameter.
   Observed values: `Sacrificed`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `CARDNAME gains flying until end of turn. Activate only as a sorcery.`
 - `Duration$`: TODO: Describe this parameter.
   Observed values: `AsLongAsControl`, `Permanent`, `Perpetual`, `UntilEndOfCombat`, `UntilUntaps`, `UntilYourNextTurn`, `UntilYourNextUpkeep`
 - `Exhaust$`: TODO: Describe this parameter.
@@ -6833,7 +6830,6 @@ TODO: Write documentation.
 - `Defined$`: TODO: Describe this parameter.
   Observed values: `AttachedBy Returned`, `ChosenCard`, `ChosenPlayer`, `Convoked`, `DelayTriggerRemembered`, `DelayTriggerRememberedLKI`, `EffectSource`, `Enchanted`, `Equipped`, `ExiledCards`, `Imprinted`, `OriginalHost`, `ParentTarget`, `Remembered`, `Remembered.Saga`, `RememberedCard`, `RememberedLKI`, `ReplacedCard`, `ReplacedNewCard.Creature`, `ReplacedNewCard.Planeswalker`, `ReplacedTarget`, `Self`, `Self & Targeted`, `ShieldEffectTarget`, `Tapped`, `Targeted`, `Targeted.!ChosenCard`, `Targeted.Artifact+Creature`, `Targeted.ChosenType`, `Targeted.Spacecraft`, `Targeted.YouDontCtrl`, `TargetedCard`, `TriggeredAttackerLKICopy`, `TriggeredAttackers`, `TriggeredBlockerLKICopy`, `TriggeredCard`, `TriggeredCardLKICopy`, `TriggeredCardLKICopy & Self`, `TriggeredCardLKICopy.Spider`, `TriggeredObjectLKICopy`, `TriggeredSourceLKICopy`, `TriggeredSources`, `TriggeredTargetLKICopy`, `Valid Card.Self`, `Valid Creature.Other+YouCtrl`, `Valid Creature.YouCtrl+Other`, `Valid Creature.YouCtrl+powerGTbasePower`, `You`
 - `Description$`: TODO: Describe this parameter.
-  Observed values: `Boast — Put a +1/+1 counter on this creature. (Activate only if that creature attacked this turn and only once each turn.)`
 - `DividedAsYouChoose$`: TODO: Describe this parameter.
   Observed values: `2`, `3`, `4`, `5`, `7`, `8`, `OssuaryX`, `X`, `Y`
 - `DividedRandomly$`: TODO: Describe this parameter.
