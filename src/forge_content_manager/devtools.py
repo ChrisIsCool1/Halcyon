@@ -32,10 +32,10 @@ PRESET_SCOPES = {
 }
 
 # These paramaters are expected to contain free-form text, so we don't attempt to enumerate their values.
-FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt"})
+FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "ValidDescription", "Name", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt"})
 
 # These parameters can have many different values, but we only want to show a limited number of them in the documentation.
-LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "ValidTarget", "ValidTargets", "ValidZone", "ChangeValid"})
+LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "Affected", "ValidTarget", "Spellbook", "ValidTargets", "ValidZone", "ChangeValid", "IsPresent", "ValidSource"})
 LIMIT_FOR_LIMITED_PARAMETERS = 10
 
 
