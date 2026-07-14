@@ -15,7 +15,7 @@ from forge_content_manager.ui.widgets import LabeledValue
 
 
 class SettingsTab(ctk.CTkFrame):
-    """Display paths, theme controls, and application settings."""
+    """Display paths, theme controls, and application settings in a scrollable view."""
 
     def __init__(
         self,
@@ -38,8 +38,14 @@ class SettingsTab(ctk.CTkFrame):
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
-        appearance_frame = ctk.CTkFrame(self)
+        scrollable_frame = ctk.CTkScrollableFrame(self, label_text="Settings")
+        scrollable_frame.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=(16, 8), pady=16)
+        scrollable_frame.grid_columnconfigure(0, weight=1)
+        scrollable_frame.grid_columnconfigure(1, weight=1)
+        scrollable_frame.grid_rowconfigure(2, weight=1)
+        appearance_frame = ctk.CTkFrame(scrollable_frame)
         appearance_frame.grid(row=0, column=0, sticky="nsew", padx=(16, 8), pady=16)
         appearance_frame.grid_columnconfigure(0, weight=1)
 
@@ -63,7 +69,7 @@ class SettingsTab(ctk.CTkFrame):
         self.appearance_menu.set(self._settings.appearance_mode)
         self.appearance_menu.grid(row=2, column=0, sticky="w", padx=16, pady=(0, 16))
 
-        path_frame = ctk.CTkFrame(self)
+        path_frame = ctk.CTkFrame(scrollable_frame)
         path_frame.grid(row=0, column=1, sticky="nsew", padx=(8, 16), pady=16)
         path_frame.grid_columnconfigure(0, weight=1)
 
@@ -83,17 +89,19 @@ class SettingsTab(ctk.CTkFrame):
             widget = LabeledValue(path_frame, label=label, value=value)
             widget.grid(row=row, column=0, sticky="ew", padx=16, pady=8)
 
-        reference_frame = ctk.CTkFrame(self)
+        reference_frame = ctk.CTkFrame(scrollable_frame)
         reference_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
         reference_frame.grid_columnconfigure(0, weight=1)
+        reference_frame.grid_columnconfigure(1, weight=1)
         ctk.CTkLabel(reference_frame, text="Script Editor Reference Cards", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(16, 4))
         self._reference_label = ctk.CTkLabel(reference_frame, text=self._reference_text(), anchor="w", justify="left", wraplength=720)
         self._reference_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
         ctk.CTkButton(reference_frame, text="Choose cardsfolder", command=self._choose_reference_cards).grid(row=1, column=1, padx=16, pady=(0, 10))
 
-        documentation_frame = ctk.CTkFrame(self)
+        documentation_frame = ctk.CTkFrame(scrollable_frame)
         documentation_frame.grid(row=2, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
         documentation_frame.grid_columnconfigure(0, weight=1)
+        documentation_frame.grid_columnconfigure(1, weight=1)
         ctk.CTkLabel(documentation_frame, text="Script Documentation Pack", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(16, 4))
         self._documentation_label = ctk.CTkLabel(documentation_frame, text=self._documentation_text(), anchor="w", justify="left", wraplength=620)
         self._documentation_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
