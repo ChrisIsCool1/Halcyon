@@ -135,7 +135,27 @@ def parse_markdown_catalog(root: Path) -> list[DocumentationRecord]:
             signature = next((line.removeprefix("**Signature:**").strip().strip("`") for line in lines if line.startswith("**Signature:**")), "")
             example = next((line.removeprefix("**Example:**").strip().strip("`") for line in lines if line.startswith("**Example:**")), None)
             category = path.stem.replace("-", " ").title()
-            records.append(DocumentationRecord(name, category, description, tuple(filter(None, signature.split(" | "))), (), example, scope))
+            parameter_records = _catalog_parameter_records(body, name, category, scope)
+            parameters = tuple(filter(None, signature.split(" | "))) or tuple(record.name for record in parameter_records)
+            records.append(DocumentationRecord(name, category, description, parameters, (), example, scope))
+            records.extend(parameter_records)
+    return records
+
+
+def _catalog_parameter_records(body: str, family: str, category: str, scope: str) -> list[DocumentationRecord]:
+    """Read documented parameter bullets from one family section.
+
+    Parameter records have family-specific scopes (such as ``A:ChangeZone``),
+    so similarly named Forge parameters do not leak suggestions between modes.
+    """
+    records: list[DocumentationRecord] = []
+    bullet = re.compile(r"(?m)^\s*-\s*`?([A-Za-z][\w]*\$)`?\s*:\s*(.+?)\s*$")
+    for match in bullet.finditer(body):
+        name, description = match.group(1), match.group(2).strip()
+        following = body[match.end():].splitlines()
+        observed_line = next((line.strip() for line in following if line.strip().startswith("Observed values:")), "")
+        values = tuple(re.findall(r"`([^`]+)`", observed_line))
+        records.append(DocumentationRecord(name, f"{family} parameter", description, values, (), None, f"{scope}:{family}"))
     return records
 
 

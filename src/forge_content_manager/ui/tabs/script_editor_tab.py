@@ -174,6 +174,12 @@ class ScriptEditorTab(ctk.CTkFrame):
         if not text.strip():
             show_error("Missing Script", "Write a Forge script before importing.")
             return
+        unresolved = self._authoring_service.unresolved_svar_references(text)
+        if unresolved:
+            details = ", ".join(f"{item.label}$ {item.value} (line {item.line_number})" for item in unresolved[:5])
+            suffix = "" if len(unresolved) <= 5 else f", and {len(unresolved) - 5} more"
+            if not messagebox.askyesno("Unresolved SVar references", f"These Execute/SubAbility values do not name an SVar: {details}{suffix}.\n\nImport anyway?"):
+                return
         summary = self._content_service.import_cards(selected, [CardImportInput(text, None, "Common")])
         result = summary.results[0]
         if result.success:
@@ -204,14 +210,23 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.editor.tag_configure("mode", foreground="#4ec9b0")
         self.editor.tag_configure("parameter", foreground="#dcdcaa")
         self.editor.tag_configure("svar", foreground="#ce9178")
+        self.editor.tag_configure("svar-reference", foreground="#569cd6", underline=True)
+        self.editor.tag_configure("invalid-svar-reference", foreground="#f14c4c", underline=True)
 
     def _highlight(self) -> None:
-        for tag in ("field", "prefix", "mode", "parameter", "svar"):
+        for tag in ("field", "prefix", "mode", "parameter", "svar", "svar-reference", "invalid-svar-reference"):
             self.editor.tag_remove(tag, "1.0", "end")
-        for line_number, line in enumerate(self.editor.get("1.0", "end-1c").splitlines(), start=1):
+        text = self.editor.get("1.0", "end-1c")
+        unresolved = {(item.line_number, item.start, item.end) for item in self._authoring_service.unresolved_svar_references(text)}
+        for line_number, line in enumerate(text.splitlines(), start=1):
             for tag, pattern in (("field", r"^[A-Za-z][\w]*:"), ("prefix", r"\b(?:A|T|S|R|K|SVar):"), ("mode", r"\b(?:DB|SP|AB)\$\s*\w+"), ("parameter", r"\|\s*\w+\$"), ("svar", r"\bSVar:[\w-]+")):
                 for match in re.finditer(pattern, line):
                     self.editor.tag_add(tag, f"{line_number}.{match.start()}", f"{line_number}.{match.end()}")
+            for match in re.finditer(r"\|\s*(?:Execute|SubAbility)\$\s*([^|\r\n]+)", line):
+                value_start = match.start(1) + len(match.group(1)) - len(match.group(1).lstrip())
+                value_end = value_start + len(match.group(1).strip())
+                tag = "invalid-svar-reference" if (line_number, value_start, value_end) in unresolved else "svar-reference"
+                self.editor.tag_add(tag, f"{line_number}.{value_start}", f"{line_number}.{value_end}")
 
     def _current_token(self) -> str:
         before = self.editor.get("insert linestart", "insert")
@@ -220,7 +235,8 @@ class ScriptEditorTab(ctk.CTkFrame):
 
     def _show_completion(self, token: str) -> None:
         line = self.editor.get("insert linestart", "insert lineend")
-        self._completion_items = self._authoring_service.complete(token, scope=self._authoring_service.scope_for_line(line))
+        cursor = len(self.editor.get("insert linestart", "insert"))
+        self._completion_items = self._authoring_service.complete_context(line, cursor, token)
         if not self._completion_items:
             self._close_completion()
             return

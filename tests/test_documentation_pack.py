@@ -6,8 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from forge_content_manager.devtools import extract_keyword_families, extract_terms, sync_catalog, write_discoveries, write_keyword_discoveries
-from forge_content_manager.services.documentation_pack import DocumentationRecord, compile_pack, load_pack, validate_pack
+from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_keyword_families, extract_terms, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
+from forge_content_manager.services.documentation_pack import DocumentationRecord, compile_pack, load_pack, parse_markdown_catalog, validate_pack
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
 
 
@@ -53,6 +53,51 @@ class DocumentationPackTests(unittest.TestCase):
             root = Path(directory)
             (root / "keywords.txt").write_text("K:TapOrUntapAll\nK:TaporUntapAll\n", encoding="utf-8")
             self.assertEqual([family.title for family in extract_keyword_families(root)], ["TapOrUntapAll", "TaporUntapAll"])
+
+    def test_ability_extraction_groups_parameters_without_svar_labels(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "abilities.txt").write_text(
+                "A:SP$ ChangeZone | Origin$ Battlefield | Destination$ Hand\n"
+                "SVar:DBExile:DB$ ChangeZone | Origin$ Battlefield | Destination$ Exile\n"
+                "T:Mode$ Attacks | Execute$ TrigDraw\n"
+                "SVar:LaterTrigger:Mode$ Attacks | Execute$ TrigToken\n",
+                encoding="utf-8",
+            )
+            abilities = {family.title: family for family in extract_ability_families(root, "A")}
+            triggers = {family.title: family for family in extract_ability_families(root, "T")}
+            self.assertEqual(abilities["ChangeZone"].parameters["Destination"], ["Hand", "Exile"])
+            self.assertNotIn("DBExile", abilities)
+            self.assertEqual(triggers["Attacks"].parameters["Execute"], ["TrigDraw", "TrigToken"])
+            output = root / "abilities.md"
+            write_ability_discoveries(output, list(abilities.values()), "Abilities", "A")
+            self.assertIn("- `Destination$`: TODO: Describe this parameter.", output.read_text(encoding="utf-8"))
+
+    def test_catalog_parameter_records_are_scoped_to_their_family(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "abilities.md").write_text(
+                "# Abilities\n\n<!-- forge-doc-scope: A: -->\n\n## `ChangeZone`\n\nMoves a card.\n\n**Parameters:**\n- `Origin$`: Source zone.\n  Observed values: `Battlefield`, `Hand`\n",
+                encoding="utf-8",
+            )
+            records = parse_markdown_catalog(root)
+            parameter = next(record for record in records if record.name == "Origin$")
+            self.assertEqual(parameter.scope, "A:ChangeZone")
+            self.assertEqual(parameter.parameters, ("Battlefield", "Hand"))
+
+    def test_ability_discovery_omits_free_text_values_and_caps_cost_values(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "abilities.md"
+            write_ability_discoveries(output, [AbilityFamily("Draw", {
+                "SpellDescription": ["Draw a card."],
+                "TgtPrompt": ["Choose a player"],
+                "Cost": [str(value) for value in range(12)],
+            })], "Abilities", "A")
+            content = output.read_text(encoding="utf-8")
+            self.assertIn("- `SpellDescription$`: TODO: Describe this parameter.\n- `TgtPrompt$`", content)
+            self.assertNotIn("Draw a card.", content)
+            self.assertEqual(content.count("`0`"), 1)
+            self.assertNotIn("`10`", content)
 
     def test_sync_preserves_existing_authored_entry(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -101,6 +146,24 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertEqual(service.lookup_context("A:SP$ Pump | ValidTgts$ Creature", 23).description, "Defines legal targets.")
             self.assertEqual(service.lookup_context("A:SP$ AssembleContraption", 15).description, "Creates a Contraption.")
             self.assertEqual(service.lookup_context("R:Event$ AssembleContraption", 17).description, "Replaces a Contraption event.")
+
+    def test_context_completion_uses_family_parameters_and_svar_ability_scope(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            pack = Path(directory) / "documentation.sqlite3"
+            compile_pack(pack, [
+                DocumentationRecord("ChangeZone", "Abilities", "Moves a card.", ("Origin$",), scope="A"),
+                DocumentationRecord("Origin$", "ChangeZone parameter", "Source zone.", ("Battlefield", "Hand"), scope="A:ChangeZone"),
+                DocumentationRecord("Attacks", "Triggers", "Attacking trigger.", ("Execute$",), scope="T"),
+            ])
+            service = ScriptAuthoringService(Path("missing"), Path(directory) / "cards.sqlite3", pack)
+            self.assertEqual([item.name for item in service.complete_context("A:SP$ ChangeZone | Ori", 22, "Ori")], ["Origin$"])
+            self.assertEqual([item.name for item in service.complete_context("SVar:DoThing:DB$ ChangeZone | Origin$ B", 39, "B")], ["Battlefield"])
+            self.assertEqual(service.scope_for_line("SVar:Delay:DB$ DelayedTrigger | Mode$ Phase"), "A")
+
+    def test_unresolved_svar_references_are_reported_without_rejecting_the_script(self) -> None:
+        text = "T:Mode$ Attacks | Execute$ TrigDraw\nSVar:DBToken:DB$ Token | SubAbility$ Missing\nSVar:TrigDraw:DB$ Draw\n"
+        references = ScriptAuthoringService.unresolved_svar_references(text)
+        self.assertEqual([(item.label, item.value, item.line_number) for item in references], [("SubAbility", "Missing", 2)])
 
     def test_invalid_pack_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

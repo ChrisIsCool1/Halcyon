@@ -41,6 +41,17 @@ class ReferenceCard:
     source_path: str
 
 
+@dataclass(frozen=True, slots=True)
+class SVarReference:
+    """A local Execute or SubAbility reference and whether its target exists."""
+
+    label: str
+    value: str
+    line_number: int
+    start: int
+    end: int
+
+
 class ScriptAuthoringService:
     """Loads bundled Forge documentation and optional reference-card scripts."""
 
@@ -125,21 +136,43 @@ class ScriptAuthoringService:
         matches.sort(key=lambda item: (not item.name.casefold().startswith(needle), item.name.casefold()))
         return matches[:limit]
 
+    def complete_context(self, line: str, cursor: int, prefix: str, limit: int = 20) -> list[ScriptDocumentation]:
+        """Return completion choices appropriate to a mode, parameter, or value slot."""
+        scope = self.scope_for_line(line)
+        family = self.family_for_line(line)
+        parameter = self._parameter_at(line, cursor)
+        if family and parameter:
+            record = self.lookup(parameter, f"{scope}:{family}")
+            if record is not None:
+                return [
+                    ScriptDocumentation(value, f"Observed {parameter} value", record.description)
+                    for value in record.parameters
+                    if not prefix or value.casefold().startswith(prefix.strip().casefold())
+                ][:limit]
+        if family and self._typing_parameter_label(line, cursor):
+            return self.complete(prefix, limit, f"{scope}:{family}")
+        return self.complete(prefix, limit, scope)
+
     def lookup(self, token: str, scope: str | None = None) -> ScriptDocumentation | None:
         """Find documentation for an exact, case-sensitive term in the relevant scope."""
         name = token.strip()
         if scope is not None:
             return self._catalog.get((scope, name)) or (self._catalog.get(("*", name)) if scope != "*" else None)
         matches = [item for (item_scope, item_name), item in self._catalog.items() if item_name == name]
-        return matches[0] if len(matches) == 1 else None
+        if len(matches) == 1:
+            return matches[0]
+        return self._catalog.get(("*", name)) or self._catalog.get(("K", f"K:{name}"))
 
     def lookup_context(self, line: str, cursor: int) -> ScriptDocumentation | None:
         """Resolve the most specific Forge expression containing the caret."""
         scope = self.scope_for_line(line)
+        family = self.family_for_line(line)
         candidates: list[str] = []
         for match in re.finditer(r"\b([A-Za-z][\w]*)\$\s*([^|\r\n]+)", line):
             if match.start() <= cursor <= match.end():
                 key, value = match.group(1), match.group(2).strip()
+                if family and (item := self.lookup(f"{key}$", f"{scope}:{family}")) is not None:
+                    return item
                 candidates.extend((f"{key}$ {value}", value, f"{key}$"))
         for match in re.finditer(r"(?:^|\s)K:\s*([^|\r\n]+)", line):
             if match.start() <= cursor <= match.end():
@@ -158,8 +191,48 @@ class ScriptAuthoringService:
             return "*"
         prefix = match.group(1)
         if prefix == "SVar":
-            return "T" if re.search(r"\bMode\$", line) else "A" if re.search(r"\b(?:DB|SP|AB)\$", line) else "SVar"
+            first_field = re.match(r"\s*SVar:[^:]+:(DB|SP|AB|Mode)\$", line)
+            if first_field is not None:
+                return "T" if first_field.group(1) == "Mode" else "A"
+            return "SVar"
         return prefix
+
+    @staticmethod
+    def family_for_line(line: str) -> str | None:
+        """Return the mode family declared by an A, T, or ability-like SVar line."""
+        scope = ScriptAuthoringService.scope_for_line(line)
+        if scope == "A":
+            match = re.match(r"\s*(?:A|SVar:[^:]+):(?:DB|SP|AB)\$\s*([^|\r\n]+)", line)
+        elif scope == "T":
+            match = re.match(r"\s*(?:T|SVar:[^:]+):Mode\$\s*([^|\r\n]+)", line)
+        else:
+            return None
+        return match.group(1).strip() if match and match.group(1).strip() else None
+
+    @staticmethod
+    def unresolved_svar_references(text: str) -> list[SVarReference]:
+        """Find Execute and SubAbility values that are not declared by an SVar line."""
+        declared = {match.group(1) for match in re.finditer(r"(?m)^\s*SVar:([^:\r\n]+):", text)}
+        unresolved: list[SVarReference] = []
+        for line_number, line in enumerate(text.splitlines(), start=1):
+            for match in re.finditer(r"\|\s*(Execute|SubAbility)\$\s*([^|\r\n]+)", line):
+                value = match.group(2).strip()
+                if value and value not in declared:
+                    start = match.start(2) + len(match.group(2)) - len(match.group(2).lstrip())
+                    unresolved.append(SVarReference(match.group(1), value, line_number, start, start + len(value)))
+        return unresolved
+
+    @staticmethod
+    def _parameter_at(line: str, cursor: int) -> str | None:
+        for match in re.finditer(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)", line):
+            if match.start(2) <= cursor <= match.end(2):
+                return f"{match.group(1)}$"
+        return None
+
+    @staticmethod
+    def _typing_parameter_label(line: str, cursor: int) -> bool:
+        before = line[:cursor]
+        return bool(re.search(r"\|\s*[A-Za-z][\w]*$", before))
 
     def search_reference_cards(self, query: str, limit: int = 100) -> list[ReferenceCard]:
         """Search optional reference scripts by display name."""

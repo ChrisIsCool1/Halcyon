@@ -29,6 +29,9 @@ PRESET_SCOPES = {
     "parameter": "*",
 }
 
+FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "TriggerDescription", "StackDescription", "TgtPrompt"})
+MAX_COST_OBSERVED_VALUES = 10
+
 
 def extract_terms(cards_dir: Path, pattern: str, progress: Callable[[int, int], None] | None = None) -> list[str]:
     """Return sorted, distinct first-capture matches from Forge text scripts."""
@@ -60,6 +63,14 @@ class KeywordFamily:
     arguments: list[set[str]]
 
 
+@dataclass(slots=True)
+class AbilityFamily:
+    """One ability or trigger mode and the parameter values seen with it."""
+
+    title: str
+    parameters: dict[str, list[str]]
+
+
 def extract_keyword_families(cards_dir: Path, progress: Callable[[int, int], None] | None = None) -> list[KeywordFamily]:
     """Group K declarations by title while retaining every observed argument value."""
     paths = list(cards_dir.rglob("*.txt"))
@@ -82,6 +93,42 @@ def extract_keyword_families(cards_dir: Path, progress: Callable[[int, int], Non
             for argument_index, value in enumerate(values):
                 if value:
                     family.arguments[argument_index].add(value)
+        if progress:
+            progress(index, len(paths))
+    return sorted(families.values(), key=lambda item: item.title.casefold())
+
+
+def extract_ability_families(cards_dir: Path, scope: str, progress: Callable[[int, int], None] | None = None) -> list[AbilityFamily]:
+    """Group A or T declarations by mode and retain their pipe-delimited values.
+
+    ``SVar`` labels deliberately do not participate in the family key: an SVar is
+    a local name, while the mode after ``DB$``, ``SP$``, ``AB$``, or ``Mode$`` is
+    the reusable Forge construct being documented.
+    """
+    if scope not in {"A", "T"}:
+        raise ValueError("Ability families can only be extracted for A or T scopes.")
+    first_field = r"(?:DB|SP|AB)" if scope == "A" else "Mode"
+    expression = re.compile(rf"(?m)^(?:{scope}|SVar:[^:\r\n]+):{first_field}\$\s*([^|\r\n]+)(.*)$")
+    parameter_expression = re.compile(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)")
+    paths = list(cards_dir.rglob("*.txt"))
+    families: dict[str, AbilityFamily] = {}
+    if progress:
+        progress(0, len(paths))
+    for index, path in enumerate(paths, start=1):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError):
+            text = ""
+        for match in expression.finditer(text):
+            title = match.group(1).strip()
+            if not title:
+                continue
+            family = families.setdefault(title, AbilityFamily(title, {}))
+            for parameter in parameter_expression.finditer(match.group(2)):
+                label, value = parameter.group(1), parameter.group(2).strip()
+                observed = family.parameters.setdefault(label, [])
+                if value and value not in observed:
+                    observed.append(value)
         if progress:
             progress(index, len(paths))
     return sorted(families.values(), key=lambda item: item.title.casefold())
@@ -126,6 +173,24 @@ def write_keyword_discoveries(destination: Path, families: list[KeywordFamily], 
                 label = "Selector" if index == 1 else "Label (optional)" if index == 2 else f"Argument {index} (optional)"
                 observed = ", ".join(f"`{value}`" for value in sorted(values, key=str.casefold)) or "_No values observed_"
                 lines.extend((f"- **{label}:** TODO: Describe this argument.", f"  Observed values: {observed}"))
+        entries.append("\n".join(lines))
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
+
+
+def write_ability_discoveries(destination: Path, families: list[AbilityFamily], title: str, scope: str) -> None:
+    """Write editable documentation entries for ability/trigger mode families."""
+    entries: list[str] = []
+    for family in families:
+        lines = [f"## `{family.title}`", "", "TODO: Write documentation."]
+        if family.parameters:
+            lines.extend(("", "**Parameters:**"))
+            for label, values in sorted(family.parameters.items(), key=lambda item: item[0].casefold()):
+                lines.append(f"- `{label}$`: TODO: Describe this parameter.")
+                if label not in FREE_TEXT_PARAMETERS:
+                    observed_values = values[:MAX_COST_OBSERVED_VALUES] if label == "Cost" else sorted(values, key=str.casefold)
+                    observed = ", ".join(f"`{value}`" for value in observed_values) or "_No values observed_"
+                    lines.append(f"  Observed values: {observed}")
         entries.append("\n".join(lines))
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
@@ -189,6 +254,10 @@ def main(argv: list[str] | None = None) -> None:
             families = extract_keyword_families(args.cards_dir, terminal_progress)
             write_keyword_discoveries(args.output, families, args.title, scope)
             print(f"Wrote {len(families):,} keyword families to {args.output}", file=sys.stderr)
+        elif args.preset in {"ability-mode", "trigger-mode"}:
+            families = extract_ability_families(args.cards_dir, scope, terminal_progress)
+            write_ability_discoveries(args.output, families, args.title, scope)
+            print(f"Wrote {len(families):,} {scope} families to {args.output}", file=sys.stderr)
         else:
             terms = extract_terms(args.cards_dir, PRESETS.get(args.preset, args.pattern), terminal_progress)
             write_discoveries(args.output, terms, args.title, scope)

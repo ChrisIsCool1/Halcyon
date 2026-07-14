@@ -60,13 +60,21 @@ Arguments:
 | Preset | Finds |
 | --- | --- |
 | `keyword` | Values on `K:` lines. Unlike other presets, it groups related colon-delimited forms by keyword title. |
-| `ability-mode` | Ability modes from `A:` lines and `SVar` ability definitions using `DB$`, `SP$`, or `AB$`. |
-| `trigger-mode` | Trigger modes from `T:` lines and `SVar` definitions using `Mode$`. |
+| `ability-mode` | Ability families from `A:` lines and `SVar` ability definitions using `DB$`, `SP$`, or `AB$`, including observed pipe-delimited parameter values. |
+| `trigger-mode` | Trigger families from `T:` lines and `SVar` definitions using `Mode$`, including observed pipe-delimited parameter values. |
 | `static-mode` | Static modes from `S:Mode$` lines. |
 | `replacement-mode` | Replacement events from `R:Event$` lines. |
 | `parameter` | Pipe-delimited parameter names ending in `$`, such as `ValidTgts$`. |
 
-All non-keyword modes produce one `## \`term\`` section for each distinct exact
+The `ability-mode` and `trigger-mode` presets produce one section per mode family,
+with a `**Parameters:**` list containing editable documentation and observed values
+for each `Label$`. Their compiled parameter records stay scoped to that family, so
+autocomplete values are offered only in the matching ability or trigger.
+Free-text parameters (`SpellDescription$`, `TriggerDescription$`,
+`StackDescription$`, and `TgtPrompt$`) omit their observed text. `Cost$` retains
+only the first ten distinct values encountered.
+
+Other non-keyword modes produce one `## \`term\`` section for each distinct exact
 match, sorted case-insensitively. The body starts with `TODO: Write documentation.`
 
 The `keyword` preset produces one section per keyword title. It retains the values
