@@ -29,7 +29,7 @@ PRESET_SCOPES = {
     "parameter": "*",
 }
 
-FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "TriggerDescription", "StackDescription", "TgtPrompt"})
+FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt"})
 MAX_COST_OBSERVED_VALUES = 10
 
 

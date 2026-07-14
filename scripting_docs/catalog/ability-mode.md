@@ -21,7 +21,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCopy`, `DBSetInMotionAgain`
 - `UnlessCost$`: TODO: Describe this parameter.
   Observed values: `Discard<1/Card>`, `PayLife<3>`, `Sac<2/Creature>`
 - `UnlessPayer$`: TODO: Describe this parameter.
@@ -40,7 +39,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDrainMana`, `DBEmptyPool`
 - `Type$`: TODO: Describe this parameter.
   Observed values: `Land`
 - `ValidTgts$`: TODO: Describe this parameter.
@@ -82,7 +80,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBImmediateTrigger`, `DBSac`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `TgtZone$`: TODO: Describe this parameter.
   Observed values: `Battlefield,Exile`
@@ -128,7 +125,6 @@ TODO: Write documentation.
   Observed values: `2`, `TriggerCount$DamageAmount`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDelayedEffect`, `DBDelTrig`, `DBEffect`, `DBPumpAll`, `DBUntapAll`, `MakeVigilant`
 
 ## `AddTurn`
 
@@ -182,7 +178,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChange`, `DBCleanup`, `DBExile`, `DBIntensify`, `DBPump`, `DBReturn`, `DBShuffle`, `DBToken`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
@@ -209,7 +204,6 @@ TODO: Write documentation.
   Observed values: `TriggeredTarget`, `Valid Creature.NotDefinedTargeted`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `DBEffect`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `2`, `MaxTgts`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -258,7 +252,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAbsolve`, `DBAnimate`, `DBCleanup`, `DBDemote`, `DBEffect`, `DBGoad`, `DBToken`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -288,7 +281,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBImmediateTrig`, `DBMill`, `DBPump`, `DBPumpAll`, `IgnitionDamage`, `TrigMill`
 - `Type$`: TODO: Describe this parameter.
   Observed values: `Orc`, `Sliver`, `Zombie`
 
@@ -436,7 +428,6 @@ TODO: Write documentation.
 - `staticAbilities$`: TODO: Describe this parameter.
   Observed values: `AnyType`, `AttackOwner`, `BlockRestrict`, `BoneShamanStatic`, `CanAttack`, `CantAttackOwner`, `CantBlock`, `CantBlock,NoDamageRemoval`, `CarnageMustAttack`, `CDT`, `DamageNotRemoved`, `EquipPump`, `FreeCast`, `Hunger`, `IndestructibleAspect`, `LoseFlyingStatic`, `MustAttack`, `PerpAltCost`, `PerpetualEffect`, `PerpetualMustAttack`, `PerpetualRaiseCost`, `PerpetualReduce`, `Play`, `RaiseCost`, `ReduceCost`, `SCantSac`, `SpendAnyMana`, `Static`, `STFirstStrike`, `StLandPT`, `STMayPlay`, `StPlay`, `Unblockable`, `VeiledSerpentST`, `WhipgrassCantAttack,WhipgrassCantBlock`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AniBuzz`, `AniDoodle`, `DBAddSVar`, `DBAnimate`, `DBAttach`, `DBChangeZone`, `DBChangeZone2`, `DBChoose`, `DBCleanChosen`, `DBCleanup`, `DBCleanUp`, `DBCleanup1`, `DBConjure`, `DBCounter`, `DBDamage`, `DBDamageAll`, `DBDealDamage`, `DBDelayedTrigger`, `DBDelTrig`, `DBDraw`, `DBEffect`, `DBExile`, `DBFight`, `DBGainLife`, `DBGoad`, `DBGrow`, `DBLeftPump`, `DBMakeCard`, `DBMayPlayEffect`, `DBPrevent`, `DBProtection`, `DBPump`, `DBPumpCleric`, `DBPumpPhyrexian`, `DBPutCounter`, `DBPutFromHand`, `DBRemoveTimeCounterOtherCardsInExile`, `DBReturn`, `DBRightPump`, `DBShuffle`, `DBTimeTravel`, `DBUnblockable`, `DBUntap`, `DelayedExile`, `DelTrig`, `DelTrigSlowtrip`, `DestroyPacifist`, `EffDraw`, `EOTSac`, `ExileSelf`, `GideonPrevent`, `LightformAttach`, `NecromAttach`, `NonVehicle`, `NotifyWhack`, `PumpVehicle`, `PutCounter`, `RageformAttach`, `TrigTempt`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`, `GE8`, `GE9`
 - `sVars$`: TODO: Describe this parameter.
@@ -539,7 +530,6 @@ TODO: Write documentation.
 - `staticAbilities$`: TODO: Describe this parameter.
   Observed values: `Cowardly`, `DragonReduceCost`, `DragonReduceCost,DragonAltCost`, `MinMaxBlocked`, `PerpetualRaiseCost`, `ReduceCost`, `Static`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AnimateSwamp`, `ArmDwarf`, `BlindFuryEffect`, `DBAnimateB`, `DBAnimateG`, `DBAnimateR`, `DBAnimateU`, `DBCleanup`, `DBDamage`, `DBDealDamage`, `DBDestroyAll`, `DBExileSelf`, `DBPump`, `DBPumpAll`, `DBSearch`, `UPaid`
 - `Toughness$`: TODO: Describe this parameter.
   Observed values: `1`, `10`, `2`, `3`, `4`, `5`, `6`, `9`, `X`, `Y`
 - `Triggers$`: TODO: Describe this parameter.
@@ -644,7 +634,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CatchBreath`, `DBAmass`, `DBCleanup`, `DBDamage`, `DBDelay`, `DBDelayTrig`, `DBDestroy`, `DBDraw`, `DBEffect`, `DBImmediateTrigger`, `DBPump`, `DBPutCounter`, `DBTapAll`, `DBUntap`, `WretchedCleanup`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `MaxTargets`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -664,7 +653,6 @@ TODO: Write documentation.
   Observed values: `4 W T Sac<1/CARDNAME>`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `BalanceCreatures`, `BalanceHands`
 - `Valid$`: TODO: Describe this parameter.
   Observed values: `Creature`, `Land`, `Permanent`
 - `Zone$`: TODO: Describe this parameter.
@@ -685,7 +673,6 @@ TODO: Write documentation.
   Observed values: `TriggeredTarget`, `You`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDamage`, `DBNoMonarch`, `DBPower`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player`
 
@@ -706,7 +693,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDamage`, `DelTrigSlowtrip`, `Draw`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `MaxTgt`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -745,7 +731,6 @@ TODO: Write documentation.
 **Parameters:**
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBVote`
 
 ## `Blight`
 
@@ -782,7 +767,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`
 
 ## `Branch`
 
@@ -808,7 +792,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCleanupRemembered`, `DBExile`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -853,7 +836,6 @@ TODO: Write documentation.
 - `Optional$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ArmorClean`, `DBCleanup`, `DBDelayTrig`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `MaxTargets`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -920,7 +902,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCleanupImprinted`, `DBCopy`, `DBDraw`, `DBLoseLife`
 - `TargetRestriction$`: TODO: Describe this parameter.
   Observed values: `Creature`, `Creature.Other`, `Player`
 - `TargetType$`: TODO: Describe this parameter.
@@ -952,7 +933,6 @@ TODO: Write documentation.
   Observed values: `Wall`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCumUpkeep`, `DBDraw`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `TgtZone$`: TODO: Describe this parameter.
   Observed values: `Stack,Battlefield`
@@ -1259,7 +1239,6 @@ TODO: Write documentation.
 - `StaticEffectSVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE6`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AddCounter`, `AgyremCleanup`, `Animate`, `AttachAura`, `Aurify`, `BPaid`, `BronzeExchange`, `CantBlockEffect`, `CastFound`, `CastFromLibrary`, `CastOneExiled`, `CheckWin`, `ChooseP`, `ChooseRandom`, `ChooseZero`, `CleanupMemory`, `CloakEach`, `CloneArmy`, `ConjurerReturn`, `CopyYou`, `CostNotPaid`, `DBAdd`, `DBAddendum`, `DBAddMana`, `DBAddTrigger`, `DBAddTurn`, `DBAmass`, `DBAnimate`, `DBAnimate2`, `DBAnimatePerpetual`, `DBArtifact`, `DBAttach`, `DBBattlefield`, `DBBlight`, `DBBodySnatcherReturnCreature`, `DBBolster`, `DBBottom`, `DBBounce`, `DBBranch`, `DBCandlesDraw`, `DBCast`, `DBChange`, `DBChange2`, `DBChangeAll`, `DBChangeSorcery`, `DBChangeTwo`, `DBChangeZone`, `DBChangeZone1`, `DBChangeZone2`, `DBChangeZoneAll`, `DBChangeZoneDinosaur`, `DBChangeZoneHand`, `DBChangeZoneMerfolk`, `DBChangeZoneVampire`, `DBChoice`, `DBChoose`, `DBChooseCard`, `DBChooseCounter`, `DBChooseOpp`, `DBChoosePlayer`, `DBChooseSb`, `DBChooseSource`, `DBChooseTopLibrary`, `DBClash`, `DBCleanEff`, `DBCleanMinus`, `DBCleanup`, `DBCleanup2`, `DBCleanupAndBounce`, `DBCleanupOne`, `DBClearImprinted`, `DBClearRemembered`, `DBCloak`, `DBClone`, `DBCloneSK`, `DBConjure`, `DBConnive`, `DBCopy`, `DBCopy1`, `DBCopyCast`, `DBCopyPermanent`, `DBCounter`, `DBDamage`, `DBDealDamage`, `DBDealDamageAll`, `DBDealDmg`, `DBDelayedTrigger`, `DBDelayEffect`, `DBDelayTrig`, `DBDelayTrigger`, `DBDelTrig`, `DBDermoplasmBounce`, `DBDermoplasmCleanup`, `DBDestroy`, `DBDestroyAll`, `DBDig`, `DBDigUntil`, `DBDiscard`, `DBDiscard2`, `DBDiscover`, `DBDmg`, `DBDraft`, `DBDrain`, `DBDrainN`, `DBDraw`, `DBDrawYou`, `DBDread`, `DBEffect`, `DBEffect2`, `DBEmpty`, `DBEnchant`, `DBEnduringDraw`, `DBEnergy`, `DBEvokePlay`, `DBExile`, `DBExile2`, `DBExileAll`, `DBExileB`, `DBExileG`, `DBExileR`, `DBExileSelf`, `DBExileTopCard`, `DBExileU`, `DBExplore`, `DBExtraLoyaltyEffect`, `DBFlip`, `DBFog`, `DBFood`, `DBForEach`, `DBForest`, `DBGainControl`, `DBGainLife`, `DBGainLife19`, `DBGetLandsAll`, `DBGraveyard`, `DBHand`, `DBHaste`, `DBImmediateTrig`, `DBImmediateTrig1`, `DBImmediateTrig2`, `DBImmediateTrigger`, `DBIncubate`, `DBInitiative`, `DBIntensify`, `DBInvestigate`, `DBIsland`, `DBKeep`, `DBKnowledgePlaySpell`, `DBLand`, `DBLearn`, `DBLose`, `DBLoseEffect`, `DBLoseGame`, `DBLoseLife`, `DBLoseLifeYou`, `DBMakeCard`, `DBMana`, `DBManifest`, `DBMayCast`, `DBMayPlay`, `DBMesmericCleanup`, `DBMill`, `DBMonarch`, `DBMountain`, `DBMoveSb`, `DBMoveToBottom`, `DBName`, `DBNameCard`, `DBOmenPlay`, `DBOpenAttraction`, `DBOppSearch`, `DBOptionalSearch`, `DBPartyReturn`, `DBPass`, `DBPerpetual`, `DBPirateDraw`, `DBPlay`, `DBPlayerTarget`, `DBPlayExiled`, `DBPlayIt`, `DBPlaySpell`, `DBPlot`, `DBProliferate`, `DBProtection`, `DBPump`, `DBPut`, `DBPutCounter`, `DBPutCounterAll`, `DBPutCounters`, `DBPutLoyalty`, `DBRansom`, `DBRemember1`, `DBRemember2`, `DBRemember3`, `DBRemember4`, `DBRemove`, `DBReorder`, `DBRepeat`, `DBRepeatEach`, `DBRepeatPlayer`, `DBReset`, `DBResetCounter`, `DBRestOnBottom`, `DBRestRandomOrder`, `DBResurrection`, `DBReturn`, `DBReturn2`, `DBReturnAnyTwo`, `DBReturnCorrupted`, `DBReturnCreature`, `DBReturnOpp`, `DBReturnSelf`, `DBRevealUntilShare`, `DBRevive`, `DBReviveLife`, `DBRoll`, `DBRollDice`, `DBRonaLand`, `DBRonaPlay`, `DBSac`, `DBSacrifice`, `DBScry`, `DBSearch`, `DBSearch1`, `DBSearch2`, `DBSearchAgain`, `DBSearchBis`, `DBSeek`, `DBSetLife`, `DBShuffle`, `DBShuffleAll`, `DBShuffleChanged`, `DBShuffleGrave`, `DBSkipDraw`, `DBSpace`, `DBSurveil`, `DBSuspect`, `DBSwamp`, `DBSyphonLife`, `DBToGrave`, `DBToken`, `DBTransform`, `DBTreasure`, `DBTrigger`, `DBTurnFaceUp`, `DBTwoPiles`, `DBUnAnte`, `DBUnearthed`, `DBUntap`, `DBVengefulRebirthCleanup`, `DBVengefulRebirthDamage`, `DBVenture`, `DBWin`, `DBYouChoose`, `DDCopy`, `DeadeyeReturn`, `DeathrenderAttach`, `DecreaseSpeed`, `DelayedReturn`, `DelTrig`, `DelTrigEffect`, `DelTrigSlowtrip`, `Draw`, `DrawAbstainers`, `ElkinEffect`, `Enchantment`, `EqualTransmute`, `ETBExileCleanup`, `ETBExileSacrifice`, `ExchangeOwn2`, `ExileAll`, `ExileAllYard`, `ExileEffect`, `ExileGrave`, `ExileHand`, `ExileLib`, `ExileRest`, `ExileSelf`, `ExileTwo`, `ExileWithoutFly`, `ExileYard`, `FindCMC1`, `FindCMC2`, `GainControl`, `GetEnergy`, `GiveSuspend`, `HierophantChange`, `Instant`, `InvocationDBReturn`, `LibraryCheck`, `LoopTgts`, `LuckCounter`, `MoveSelf`, `MoveToBattlefield`, `MoveToYard`, `MyMagic`, `NemesisToken`, `NotPoisoned`, `ObzedatPump`, `OppDraw`, `PayForTransmute`, `Planeswalker`, `RandomHand`, `ReitoPump`, `RememberSpell`, `Replaneswalk`, `RestBottom`, `RestorationReturn`, `ReturnB`, `ReturnG`, `ReturnR`, `ReturnToHand`, `ReturnU`, `RPaid`, `SacLand`, `SacSelf`, `ScionCopy`, `ScytheAttach`, `ShuffleRest`, `SkipTurn`, `SmuggleIn`, `Sorcery`, `TabletToExile2`, `TabletToExile3`, `TabletToGraveyard`, `TakeOutTheTrash`, `TgtOpp`, `TheftEffect`, `TheyLose`, `TimeInGates`, `ToBattlefieldTapped`, `ToHand`, `Token`, `TokenPlus`, `TotemEffect`, `TrenchAnimate`, `TrigAuraReturn`, `TrigBranch`, `TrigDelay`, `TrigDraw`, `TrigExplore`, `TrigFlip`, `TrigImmediateTrig`, `TrigInvestigate`, `TrigLife`, `TrigReturn`, `TrigSearchPlay`, `TrigTempt`, `TrigToken`, `UnscytheDBToken`, `Wallflower`, `WonTwoDome`, `YouAreCommander`, `YouDraw`, `YouGetTheRest`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE111`, `GE2`, `GE3`, `GE5`, `GE6`, `GE7`, `GE8`, `GEY`, `GT0`, `GTY`, `LE1`
 - `Tapped$`: TODO: Describe this parameter.
@@ -1441,7 +1420,6 @@ TODO: Write documentation.
 - `StaticEffect$`: TODO: Describe this parameter.
   Observed values: `Animate`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChangeBack`, `ChangeEnchantment`, `ClearImprint`, `DBAnimate`, `DBAnimateAll`, `DBChange`, `DBChangeLands11M`, `DBChangeRest11M`, `DBChangeZone`, `DBChangeZone15U`, `DBChangeZone2`, `DBChangeZoneAll`, `DBChangeZoneAllBottomLibrary`, `DBChoose`, `DBChooseCard`, `DBCleanup`, `DBClearChosen`, `DBClearNoted`, `DBConjure`, `DBCounter`, `DBDamage`, `DBDamageAll`, `DBDelay`, `DBDelayTrig`, `DBDestiny`, `DBDestroy`, `DBDestroyEnchantments`, `DBDig`, `DBDigUntil`, `DBDiscard`, `DBDraw`, `DBDraw10U`, `DBDrawBis`, `DBEffect`, `DBEmblem`, `DBEndTurn`, `DBExile`, `DBExileAllGraveyard`, `DBExileGraveyard`, `DBExileHand`, `DBExileSelf`, `DBFog`, `DBGainLife`, `DBGenericChoice`, `DBGetLands`, `DBGoYard`, `DBGraveShuffle`, `DBHand`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBIncubate`, `DBInvestigate`, `DBLibrary`, `DBLoseLife`, `DBMana`, `DBManifest`, `DBMask`, `DBMassReveal`, `DBMayPlay`, `DBMill`, `DBNoCombatDamage`, `DBPlay`, `DBPlayThem`, `DBPoison`, `DBPossibilityCleanup`, `DBPump`, `DBPumpAll`, `DBPutBattlefield`, `DBPutLands`, `DBRemoveRope`, `DBRepeat`, `DBRepeatChoose`, `DBRepeatDraw`, `DBRepeatEach`, `DBReturn`, `DBReveal`, `DBRollDice`, `DBSac`, `DBSacrifice`, `DBSearchLibrary`, `DBShuffle`, `DBShuffleChanged`, `DBSkipTurn`, `DBToken`, `DelayedEffect`, `DelayedReturn`, `DelTrig`, `DelTrigSlowtrip`, `Draw`, `DrawEach`, `ExileAllGrave`, `ExileAllHand`, `ExileHand`, `ExileSelf`, `GotoBottom`, `GraveShift`, `Graveyard`, `HeadChange`, `MimeoChooseCopy`, `MyVision`, `OssuaryRepeat`, `PsychoDraw`, `RepeatBis`, `ReturnOfTheHumans`, `SacAll`, `Separate`, `SetAllLife`, `Shuffle2`, `Shuffle3`, `ShuffleRest`, `TrigDelay`, `TrigImmediateTrig`, `WindDraw`, `YouDraw`
 - `Tapped$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -1475,7 +1453,6 @@ TODO: Write documentation.
   Observed values: `Remembered`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`
 
 ## `Charm`
 
@@ -1526,7 +1503,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDraft`, `DBNoop`, `NoopDesc`
 - `XColor$`: TODO: Describe this parameter.
   Observed values: `White`
 
@@ -1644,7 +1620,6 @@ TODO: Write documentation.
 - `StartingWith$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `You`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Block`, `BounceArtifact`, `BounceCreature`, `BounceEnchant`, `BounceLand`, `CalimExile`, `ChooseYou`, `ChosenToHand`, `CopySpell`, `DBAdditionalCounter`, `DBAllOthers`, `DBAnimate`, `DBAnimate18`, `DBAnimateB`, `DBAnimateG`, `DBAnimateR`, `DBAnimateU`, `DBAnimateW`, `DBAttach`, `DBAttachEquip`, `DBBottom`, `DBBounce`, `DBBranch`, `DBChange`, `DBChangeOne`, `DBChangeZone`, `DBChangeZone1`, `DBChangeZone16`, `DBChangeZone19`, `DBChangeZone3`, `DBChangeZoneAll`, `DBChangeZoneBattlefield`, `DBChoose2`, `DBChoose3`, `DBChooseArtifactOpp`, `DBChooseB`, `DBChooseCard`, `DBChooseCardThree`, `DBChooseCardTwo`, `DBChooseCreatureYou`, `DBChooseEquip`, `DBChooseFromGraveyard`, `DBChooseG`, `DBChoosePlayer`, `DBChooseR`, `DBChooseU`, `DBChooseYou`, `DBCleanup`, `DBClone`, `DBConjure`, `DBControl`, `DBCopyPerm`, `DBCounter`, `DBDamage`, `DBDamageChosen`, `DBDamagePlayer`, `DBDealDamage`, `DBDelayedTrigger`, `DBDelayTrig`, `DBDestroy`, `DBDestroy12`, `DBDestroy8`, `DBDestroy9`, `DBDestroyAll`, `DBDestroyChosen`, `DBDig`, `DBDiscard`, `DBDmg`, `DBDraw`, `DBEffect`, `DBExchange`, `DBExchangeArtifact`, `DBExchangeCreature`, `DBExchangeText`, `DBExile`, `DBExileBoth`, `DBExileOpp`, `DBExileYou`, `DBFaceUp`, `DBGainControl`, `DBGenericChoice`, `DBGive`, `DBGuess`, `DBImprint`, `DBLook`, `DBManaLandOnlyEffect`, `DBMDamage`, `DBMoveHand`, `DBNoRegen`, `DBOneCounter`, `DBOppChooseCard`, `DBOpponentGainControl`, `DBOracleEffect`, `DBPayOrReturn`, `DBPhase`, `DBPlay`, `DBPlayEffect`, `DBPrevent`, `DBPump`, `DBPump1`, `DBPump10`, `DBPump14`, `DBPump15`, `DBPump3`, `DBPump8`, `DBPump9`, `DBPumpAll`, `DBPutArtifact`, `DBPutBattlefield`, `DBPutCounter`, `DBPutCounter20`, `DBPutX`, `DBRandom`, `DBRemoveCounter`, `DBRepeat`, `DBRepeatEach`, `DBRepeatEach17`, `DBReturn`, `DBReturnAll`, `DBSac`, `DBSac1`, `DBSacLand`, `DBSacrifice`, `DBSacrificeAll`, `DBSetVarBefore`, `DBShuffle`, `DBStoreSVar`, `DBTap`, `DBTap5`, `DBTapAll`, `DBTapOrUntap2`, `DBToken`, `DBUnattach`, `DBUntap`, `DBUntap4`, `DestroyAll`, `ExileChoice`, `ExileChosen`, `ExileCreatures`, `ExileYard`, `MakeItDance`, `MimeoAddCounters`, `MimeoExile`, `MoveChosen`, `MoveNotChosen`, `PhasesArtifact`, `PhasesCreature`, `PhasesLand`, `Pump4Tgt`, `ReturnCreature`, `SacAllOthers`, `SacRest`, `SacrificeSelf`, `StealChosen`, `SuspectOther`, `TapChosenCards`
 - `TargetControls$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -1709,7 +1684,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Animate`, `ChooseCT`, `ChooseOpp`, `ChooseP`, `DBAnimate`, `DBDmg`, `DBDmgEach`, `DBEffect`, `DBEffect2`, `DBExile`, `DBGainLife`, `DBMana`, `DBProtection`, `DBPump`, `DBPutCounter`, `DBRevealDiscard`, `DBRevealHand`, `DBScryingGlassRevealHand`, `DBSwayAnimate`, `DBToken`, `DBWash`, `DestroyAll`, `FilterForExile`, `SehtsProtection`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`
 - `TwoColors$`: TODO: Describe this parameter.
@@ -1730,7 +1704,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBControl`, `DBEffect`, `DBGainControl`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 
@@ -1748,7 +1721,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDestroyAll`, `DBExile`
 
 ## `ChooseNumber`
 
@@ -1808,7 +1780,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCheckPaid`, `DBChoice`, `DBChoose`, `DBChooseCard`, `DBDealDamage`, `DBDestroyAll`, `DBDig`, `DBDiscard`, `DBDmg`, `DBDraw`, `DBImmediateTrig`, `DBMill`, `DBPay`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBRepeat`, `DBReveal`, `DBSac`, `DBScryingGlassChooseColor`, `DBShuffle`, `DBStore`, `DBStun`, `DBToken`, `DBVoidDestroyAll`, `FlipCoin`, `Pay`, `RepeatFlip`
 - `UnmatchedAbility$`: TODO: Describe this parameter.
   Observed values: `DBFillSafe`
 - `ValidTgts$`: TODO: Describe this parameter.
@@ -1862,7 +1833,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CantAttackEffect`, `Card`, `ChoosePTwo`, `Counters`, `DBAttach`, `DBChangeZone`, `DBChangeZone1`, `DBChoice`, `DBChoose`, `DBChooseCard2`, `DBChooseCreature`, `DBChooseLand`, `DBChoosePlayer2`, `DBChooseSpell`, `DBChooseType`, `DBConjure`, `DBControlPlayer1`, `DBCounters`, `DBDamage`, `DBDealDamage`, `DBDelayTrig`, `DBDig`, `DBDiscard`, `DBDiscard18`, `DBDmg`, `DBDonate`, `DBDraw`, `DBDraw7`, `DBEffect`, `DBExile`, `DBFlip`, `DBGainControl`, `DBGainLife10`, `DBGainLifeYou`, `DBGiveControl`, `DBHorseDonate`, `DBImmediateTrig`, `DBLook`, `DBLoseLife`, `DBMana`, `DBMill13`, `DBOppChoose`, `DBPump`, `DBReturnYou`, `DBSac`, `DBToken`, `DBToken2`, `DBTwoPiles`, `DBUntap`, `DelTrigSlowtrip`, `DonateTheVale`, `LoseControl`, `MoveToPlay`, `NameOpp`, `OppPickOne`, `OppPickTwo`, `OppTreasure`, `PrepChamps`, `Tokens`, `TrigChoice`, `TrigSearchHand`, `YouChoice`
 - `TargetUnique$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidTgts$`: TODO: Describe this parameter.
@@ -1881,7 +1851,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDestroyAll`, `DBPutCounterAll`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 
@@ -1907,7 +1876,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CoinFlip`, `DBEffect`, `DBEffectSB`, `DBStoreSVar`
 - `UnlessCost$`: TODO: Describe this parameter.
   Observed values: `1`
 - `UnlessPayer$`: TODO: Describe this parameter.
@@ -1951,7 +1919,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ApplyPressure`, `ChooseType2`, `DBAnimate`, `DBAnimateAll`, `DBBranch`, `DBChangeZoneAll`, `DBChooseBis`, `DBCleanup`, `DBCleanupChosen`, `DBClone`, `DBCloneAll`, `DBCounters`, `DBDamage`, `DBDealDamage`, `DBDestroyAll`, `DBDestroyOther`, `DBDig`, `DBDigUntil`, `DBDraw`, `DBEffect`, `DBGainLife`, `DBPump`, `DBPumpAll`, `DBPumpOther`, `DBPutCounterAll`, `DBRemember`, `DBReturn`, `DBReturnAll`, `DBReveal`, `DBSeek`, `DBTap`, `DBTapOrUntapAll`, `DBUntapAll`, `EffChangeType`, `ShamanDig`, `ShuffleInto`, `TribalPump`, `TrigSac`, `TsabosDiscard`
 - `Type$`: TODO: Describe this parameter.
   Observed values: `Basic Land`, `Card`, `Creature`, `CreatureInTargetedDeck`, `Land`, `Nonbasic Land`, `Planeswalker`, `Shared`
 - `TypesFromDefined$`: TODO: Describe this parameter.
@@ -1986,7 +1953,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDeclined`, `DBExile`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Creature`, `Player`
 - `WinSubAbility$`: TODO: Describe this parameter.
@@ -2030,7 +1996,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChangePermanent`, `DBAddEOT`, `DBAnimate`, `DBBounceMe`, `DBChange`, `DBChangeZone`, `DBChoose`, `DBChooseA2C3`, `DBChooseA2L3`, `DBChooseA3`, `DBChooseArtifactYou`, `DBChooseC2A3`, `DBChooseC2L3`, `DBChooseC3`, `DBChooseL2A3`, `DBChooseL2C3`, `DBChooseL3`, `DBCleanup2`, `DBClearNotes`, `DBClearSVar`, `DBDigUntil`, `DBDraft`, `DBDraw`, `DBEffect`, `DBEmblem`, `DBExile`, `DBExile1`, `DBExileSelf`, `DBExileTop`, `DBFlip`, `DBGrind`, `DBImprint`, `DBInvestigate`, `DBLoseLife`, `DBMana`, `DBMassShuffle`, `DBMill`, `DBMonarchEffect`, `DBPerpetual`, `DBPlayEffect`, `DBRem`, `DBReset`, `DBReveal`, `DBSac`, `DBSacrificeE`, `DBSacrificeP`, `DBScry`, `DBSearch`, `DBSeek`, `DBShuffle`, `DBSpace`, `DBStore`, `DBToken`, `DeathrendersCall`, `FakeScry`, `FindHighestCMC`, `FlickerformAttach`, `GoToBottom`, `MaybeRepeat`, `PWAway`, `RememberTargets`, `SearchLibrary`, `TrigChoose`, `TrigRemember`, `TrigTempt`
 - `UnlessCost$`: TODO: Describe this parameter.
   Observed values: `2`
 - `UnlessPayer$`: TODO: Describe this parameter.
@@ -2057,7 +2022,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBAttach`, `DBCleanup`
 - `Tapped$`: TODO: Describe this parameter.
   Observed values: `True`
 
@@ -2167,7 +2131,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAddCounter`, `DBAnimate`, `DBCleanup`, `DBClearChosen`, `DBConditionEffect`, `DBCopy`, `DBImmediateTrig`, `DBImprint`, `DBPrevent`, `DBPump`, `DBPutCounter`, `DBTrigger`, `DelTrig`, `IrmaPutCounter`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -2195,7 +2158,6 @@ TODO: Write documentation.
   Observed values: `Convoked`, `Equipped`, `Targeted`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChooseCard`, `DBConvert`, `DBImmediateTrigger`, `DBPhase`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `X`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -2230,7 +2192,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ControlTurn`, `DBChange`, `DBControlPlayer2`, `DBDelTrig`, `DBExile`
 - `TargetUnique$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TgtPrompt$`: TODO: Describe this parameter.
@@ -2261,7 +2222,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChooseTargets`, `DBCopy`
 - `TargetType$`: TODO: Describe this parameter.
   Observed values: `Spell`, `Spell.numTargets EQ1`
 - `TargetValidTargeting$`: TODO: Describe this parameter.
@@ -2394,7 +2354,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ClearImprinted`, `CopyFight`, `DBAnimate`, `DBCastSp`, `DBChangeZoneAll`, `DBCleanup`, `DBClearNamed`, `DBCount`, `DBCounter`, `DBDraw`, `DBEnergy`, `DBGoad`, `DBMill`, `DBNotRepeat`, `DBPlaneswalk`, `DBProlif`, `DBPumpAll`, `DBPutCounter`, `DBPutCountersAll`, `DBRepeat`, `DBReset`, `DBSac`, `DBScry`, `DBToken`, `DBUntap`, `DBWin`, `DelTrig`, `ExileTokens`
 - `TargetingPlayer$`: TODO: Describe this parameter.
   Observed values: `Player.Opponent`
 - `TargetingPlayerControls$`: TODO: Describe this parameter.
@@ -2517,7 +2476,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBChangeTargets`, `DBCleanup`, `DBCopy`, `DBDraw`, `DBDrawAll`, `DBExile`, `DBPump`, `DBPutCounter`, `DBReturn`, `TrigCopyAbilities`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -2616,7 +2574,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAmass`, `DBAnimate`, `DBAssemble`, `DBBurn`, `DBCast`, `DBChange`, `DBChangeZone`, `DBClash`, `DBCleanup`, `DBCopy`, `DBCounter`, `DBCounterSamePermanent`, `DBDamage`, `DBDealDamage`, `DBDelTrig`, `DBDestroy`, `DBDig`, `DBDiscard`, `DBDisCard`, `DBDiscover`, `DBDraft`, `DBDrain`, `DBDraw`, `DBDread`, `DBEffect`, `DBEnergy`, `DBGainLife`, `DBIncubate`, `DBInvestigate`, `DBMill`, `DBPlay`, `DBProliferate`, `DBPutCounter`, `DBRandom`, `DBRearrange`, `DBReturn`, `DBReveal`, `DBSacrifice`, `DBScentOfBrineCleanup`, `DBScry`, `DBSeek`, `DBSurveil`, `DBSuspect`, `DBToken`, `DBTreasure`, `DBTreasureTokens`, `DBUntap`, `DBVenture`, `DelTrigSlowtrip`, `ExileYard`, `TapLands`, `TrigSurveil`, `TrigTempt`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `2`, `4`, `X`, `Y`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -2701,7 +2658,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAddMana`, `DBAnimate`, `DBChoose`, `DBCleanup`, `DBDamage`, `DBDamageAll`, `DBDamageCreature`, `DBDamageResolve`, `DBDamageResolve6U`, `DBDestroyAll`, `DBDiscard`, `DBDraw`, `DBEffect`, `DBExile`, `DBForget`, `DBGainLife`, `DBGainOneLife`, `DBNoRegen`, `DBPump`, `DBPumpAll`, `DBRadiation`, `DBRepeat`, `DBReturn`, `DBSacLand`, `DBScry`, `DBSearch`, `DBTapAllDamaged`, `DBToken`, `DBTreasure`, `GPaid`, `OppCantBlock`, `ResetFlips`, `SucksToBeAlpha`, `ThunderTap`
 - `TargetUnique$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TgtPrompt$`: TODO: Describe this parameter.
@@ -2730,7 +2686,6 @@ TODO: Write documentation.
 - `ReplaceDyingDefined$`: TODO: Describe this parameter.
   Observed values: `Remembered`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DB2`, `DBCleanup`, `DBDraw`, `DBMana`, `DBPump`
 
 ## `DayTime`
 
@@ -2743,7 +2698,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDiscard`, `DBPump`, `DBTransform`
 - `Value$`: TODO: Describe this parameter.
   Observed values: `Day`, `Night`, `Switch`
 
@@ -2906,7 +2860,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Animate`, `BombGainCtrl`, `BoomerangCatch`, `CantBlockEffect`, `ChandraDamage`, `ChompEquip`, `Clean`, `ControlFlip`, `CowedByAurelia`, `CreatureDmg`, `DamageEffectPlayer`, `DamageNonCreature`, `DamageOpponents`, `DamageSame`, `DamageThis`, `DB1`, `DBAmass`, `DBAnimate`, `DBAnimateAll`, `DBAttach`, `DBAuraDmg`, `DBBlood`, `DBBoon`, `DBBottom`, `DBBounce`, `DBBranch`, `DBCantBlock`, `DBChandraCleanup`, `DBChange`, `DBChangeZone`, `DBChoose`, `DBChooseCard`, `DBCinderCleanup`, `DBClash`, `DBCleanup`, `DBCleanup2`, `DBCleanupBis`, `DBClockworkCleanup`, `DBColor`, `DBColorlessMana`, `DBConvert`, `DBCopy1`, `DBCounter`, `DBCurseArtifactCleanup`, `DBDamage`, `DBDamage2`, `DBDamageAll`, `DBDamageAtk`, `DBDamageBlk`, `DBDamageChosen`, `DBDamageController`, `DBDamageCreature`, `DBDamagePlayer`, `DBDamageResolve`, `DBDamageSelf`, `DBDamageThree`, `DBDamageTwo`, `DBDamageYou`, `DBDealDamage`, `DBDealDamage2`, `DBDealDamageSelf`, `DBDebuff`, `DBDelayedTrigger`, `DBDelayTrig`, `DBDelayTrigger`, `DBDes`, `DBDestroy`, `DBDestroyAll`, `DBDig`, `DBDiscard`, `DBDiscard1U`, `DBDiscardDraw`, `DBDiscardOpp`, `DBDiscover`, `DBDmg`, `DBDmgAll`, `DBDoubleBelch`, `DBDrain`, `DBDraw`, `DBDrawSeven`, `DBEffect`, `DBElderSpawnCleanup`, `DBExile`, `DBFood`, `DBGain`, `DBGain1Life`, `DBGain3Life`, `DBGainFourLife`, `DBGainLife`, `DBGainLife2`, `DBGainLife3M`, `DBGainLifeC`, `DBGiantDamage`, `DBGoad`, `DBHereticCleanup`, `DBImmediateTrigger`, `DBIntensify`, `DBInvestigate`, `DBLearn`, `DBLoseFlying`, `DBMana`, `DBNoBlock`, `DBNoCombatDamage`, `DBNoRegen`, `DBPlay`, `DBPoison`, `DBProliferate`, `DBPump`, `DBPumpAll`, `DBPumpCurse`, `DBPutCounter`, `DBRemoveCounters`, `DBRepeat`, `DBReset`, `DBRoll`, `DBRollDice`, `DBSac`, `DBScentOfCinderCleanup`, `DBScry`, `DBSearch`, `DBShuffle`, `DBStayTapped`, `DBSurveil`, `DBTap`, `DBTapLand`, `DBToken`, `DBTokenForest`, `DBTransform`, `DBTreasure`, `DBUltimateEmblem`, `DBUntapAll`, `DBVengefulRebirthExile`, `DBWandDmg`, `DBYouGainLife`, `DelTrigSlowtrip`, `DmgAll`, `DmgAll6U`, `DmgController`, `DmgResolve`, `DmgYou`, `DrawNine`, `DrawYou`, `EffDraw`, `ExileEffect`, `ExileYard`, `GainLife`, `GigantotheriumFight`, `HammerCatch`, `Justice`, `Kicked`, `KickingLava`, `LavabellyGainLife`, `MoreDamage`, `PathwayTapAll`, `PreventHealing`, `QuicksilverDraw`, `ReheatTheForge`, `Retribution`, `ReturnDmg`, `SearingDamage`, `ShurikenGainCtrl`, `SquirrelToken`, `TapWolves`, `TrigDamage2`, `TrigDamage3`, `TrigDraw`, `TrigTempt`, `Unpoison`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `EQ1`
 - `TargetingPlayer$`: TODO: Describe this parameter.
@@ -2969,7 +2922,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBCleanup`, `DBDamage`, `DBDraw`, `DBFlight`, `DBGainFly`, `DBGainFs`, `DBGainShdw`, `DBGainTrpl`, `DBPump`, `Flight`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Creature`, `Creature.withFirst Strike`, `Creature.withFlying`, `Creature.withShadow`, `Creature.withTrample`
@@ -3006,7 +2958,6 @@ TODO: Write documentation.
 - `Destination$`: TODO: Describe this parameter.
   Observed values: `Any`, `Battlefield`, `Graveyard`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Abandon`, `AddMana`, `AddRebound`, `BounceCritter`, `ChooseB`, `ChooseOpp`, `DBAddTurn`, `DBChange`, `DBChangeZone`, `DBDig`, `DBDiscard`, `DBDraw`, `DBDread`, `DBEffect`, `DBLoseLife`, `DBMassReveal`, `DBPutCounter`, `DBPutCounters`, `DBReturn`, `DBSurveil`, `DBToken`, `DBUntapAll`, `DestroySource`, `Discard`, `DiscardEach`, `DrawSlowThree`, `DrawSlowtrip`, `DrawTwo`, `EffTrigCopy`, `EffTrigCopy1`, `EffTrigCopy2`, `EndlessReturn`, `GBReturn`, `GrantHaste`, `MischiefReturn`, `MoveBack`, `MoveToPlay`, `MoveToYard`, `ObzedatReturn`, `ReturnAll`, `RuneswordSac`, `TrigAddAPI`, `TrigAddCounter`, `TrigAddMana`, `TrigAnimate`, `TrigBack`, `TrigBounce`, `TrigBranch`, `TrigChange`, `TrigChangeAll`, `TrigChangeZone`, `TrigChoose`, `TrigChooseLand`, `TrigConditionEffect`, `TrigConjure`, `TrigConvert`, `TrigCopy`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDestroy1`, `TrigDestroyAll`, `TrigDestroyBlocked`, `TrigDestroyBlocker`, `TrigDestroySimic`, `TrigDiscard`, `TrigDiscardExiled`, `TrigDmg`, `TrigDraw`, `TrigEarthbend`, `TrigEffect`, `TrigExile`, `TrigExileAll`, `TrigFight`, `TrigFlip`, `TrigGainControl`, `TrigGainLife`, `TrigGhostReturn`, `TrigGrave`, `TrigGrowth`, `TrigLifelineReturn`, `TrigLoseGame`, `TrigPhase`, `TrigPoison`, `TrigPopulate`, `TrigPump`, `TrigPureReturn`, `TrigPutCounter`, `TrigRem`, `TrigRemember`, `TrigRemoveCounter`, `TrigReturn`, `TrigReturnSak`, `TrigSac`, `TrigSacBlocker`, `TrigSacrifice`, `TrigTap`, `TrigToken`, `TrigTokens`, `TrigTransform`, `TrigUnattach`, `TrigUntap`, `VenomousBreathTrigDestroy`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.IsTriggerRemembered`, `Card.IsTriggerRemembered+AttachedTo Creature.YouCtrl`, `Card.StrictlySelf`
 - `Mode$`: TODO: Describe this parameter.
@@ -3038,7 +2989,6 @@ TODO: Write documentation.
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCleanup1`, `DBCleanup2`, `DBClone`, `DBDamageAll`, `DBDraw`, `DBEffect`, `DBExile`, `DBFight`, `DelTrigDrawTwo`, `ExileSelf`, `RuneswordEffect`, `TrigDelay2`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -3168,7 +3118,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `BeserkParoxysm`, `CantBlockEffect`, `ChooserDraws`, `DBAddLoyalty`, `DBAssemble`, `DBAttach`, `DBBolster`, `DBBoon`, `DBChange`, `DBChangeZone`, `DBChangeZoneAll`, `DBChangeZoneAll11U`, `DBChoose`, `DBClash`, `DBCleanup`, `DBCleanUp`, `DBConjure`, `DBConnive`, `DBCopy`, `DBCounter`, `DBDamage`, `DBDamageAll`, `DBDamageController`, `DBDealDamage`, `DBDealDamageYou`, `DBDealTwoDamage`, `DBDebuff`, `DBDelTrig`, `DBDelTrigAttacker`, `DBDelTrigBlocker`, `DBDestroy`, `DBDestroy2`, `DBDestroy3`, `DBDig`, `DBDigUntil`, `DBDiscard`, `DBDmg`, `DBDrain`, `DBDraw`, `DBDread`, `DBEffect`, `DBExile`, `DBExileHand`, `DBFood`, `DBGainLife`, `DBGainLife4M`, `DBGainLife8`, `DBGainLifeBlocked`, `DBGainLifeBlocker`, `DBGiveFood`, `DBGoblin`, `DBIncubate`, `DBInvestigate`, `DBLifeGain`, `DBLoseLife`, `DBMana`, `DBMill`, `DBNoCombatDamage`, `DBPain`, `DBPoison`, `DBProliferate`, `DBPump`, `DBPutCounter`, `DBPutLoyalty`, `DBRancidDamage`, `DBRepeat`, `DBReturn`, `DBSacrifice`, `DBScry`, `DBSearch`, `DBSkipTurn`, `DBSpirit`, `DBSurveil`, `DBTapAttacker`, `DBTapBlocker`, `DBToken`, `DBTransform`, `DBTreasure`, `DBUntap`, `DBUntapSelf`, `DelTrigSlowtrip`, `DestroyArtifact`, `DestroyOtherAll`, `ExileEffect`, `GetForests`, `GhostToken`, `MakeToken`, `MakeTokens`, `NaturalLife`, `OxToken`, `PumpAll`, `ShadowRevealCards`, `StealEquip`, `TrigControl`, `TrigPutCounter`, `TrigTempt`, `TrigToken`, `TuktukDamage`, `Velocity`, `WeakenOther`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE4`
 - `TargetingPlayer$`: TODO: Describe this parameter.
@@ -3267,7 +3216,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAddMana`, `DBChoose`, `DBChooseCard`, `DBCleanImp`, `DBCleanup`, `DBCleanUp`, `DBClearUgin`, `DBDamageAll`, `DBDealDamage`, `DBDestroyAll`, `DBDestroyChaosOrb`, `DBDig`, `DBDraw`, `DBDrawCard`, `DBEffect`, `DBEndTurn`, `DBExile`, `DBFood`, `DBGainControl`, `DBGainLife`, `DBLoseLife`, `DBNoUntap`, `DBPay`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBRemove`, `DBRepeat`, `DBReturn`, `DBSacrifice`, `DBScry`, `DBSearch`, `DBTapAll`, `DBToken`, `DBTokenInfestation`, `DBTransform`, `DBTreasure`, `DBVoidRevealDiscard`, `PWAway`, `ThreshReturn`, `ThreshToken`, `TrigKicker`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
@@ -3297,7 +3245,6 @@ TODO: Write documentation.
   Observed values: `Valid Permanent.OppCtrl+nonLand+cmcLE4`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `2`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -3462,7 +3409,6 @@ TODO: Write documentation.
 - `StaticEffect$`: TODO: Describe this parameter.
   Observed values: `Enchantment`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `20Life`, `CastCard`, `ClearImprint`, `DamageOpponent`, `DBAnimate`, `DBAperture`, `DBBottom`, `DBBounce`, `DBBranch`, `DBCast`, `DBChange`, `DBChangeLibrary`, `DBChangeZone`, `DBChangeZone2`, `DBChangeZone3`, `DBChangeZoneAll`, `DBChoice`, `DBChoose`, `DBCleanup`, `DBCleanupChosen`, `DBCloak`, `DBConjure`, `DBConvert`, `DBCopy`, `DBCounter`, `DBDamage`, `DBDealDamage`, `DBDelay`, `DBDelayedTrigger`, `DBDig`, `DBDig1`, `DBDig2`, `DBDigBis`, `DBDigUntil`, `DBDraw`, `DBEffect`, `DBEffect1`, `DBEffect2`, `DBEffectYou`, `DBElf`, `DBEnergy`, `DBExile2`, `DBExile3`, `DBFlip`, `DBGain`, `DBGainLife`, `DBImmediateTrigger`, `DBImmediateTriggerCheck`, `DBLand`, `DBLifeGain`, `DBLookAgain`, `DBLose`, `DBLoseLife`, `DBManifest`, `DBMayPlay`, `DBMayPlayLand`, `DBMoveToBottom`, `DBOmenLand`, `DBOppDigOne`, `DBOppDigTwo`, `DBPain`, `DBPlaneswalk`, `DBPlay`, `DBPlayThem`, `DBPlot`, `DBProliferate`, `DBPump`, `DBPumpTrample`, `DBPutCounter`, `DBPutHand`, `DBPutLand`, `DBRemoveCombat`, `DBRepeat`, `DBReplace`, `DBReturn`, `DBReturnToHand`, `DBRollDice`, `DBSacrifice`, `DBShuffle`, `DBSower`, `DBStackDesc`, `DBToken`, `DBTreasure`, `DBTrig`, `DBTwoPiles`, `DBUntap`, `DBWin`, `DBYouDigTwo`, `Dig2`, `EachLose`, `ExchangeOwn1`, `ExileAll`, `FindHighestCMCFirst`, `GainLife`, `MillTargeted`, `OpponentChooses`, `PickOne`, `PicksFight`, `RandomGraveyard`, `SeersCost`, `TheyChoose`, `YouChoose`, `YouPick`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`
 - `Tapped$`: TODO: Describe this parameter.
@@ -3535,7 +3481,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChangeZone`, `DBGainLife`
 
 ## `DigUntil`
 
@@ -3633,7 +3578,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CascadeCast`, `Damage`, `DBAnimate`, `DBBelch`, `DBCast`, `DBChange`, `DBChaosEnsues`, `DBChoose`, `DBChoosePlayer`, `DBClean`, `DBCleanup`, `DBClone`, `DBDamage`, `DBDealDamage`, `DBDmg`, `DBEffect`, `DBExileW`, `DBForget`, `DBImmediateTrigger`, `DBLoseLife`, `DBMassCleanup`, `DBMassShuffle`, `DBPlaneswalk`, `DBPlay`, `DBPlay1`, `DBPlay2`, `DBPump`, `DBPutCounter`, `DBPutOnTop`, `DBPWTo`, `DBShuffle`, `DBToHand`, `DBToPlay`, `MakeItChoose`, `MutantPump`, `RecrossClash`, `SacThought`, `ShadowReattach`, `TrigPump`, `UndyingDamage`
 - `Tapped$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Valid$`: TODO: Describe this parameter.
@@ -3729,7 +3673,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ApathyUntap`, `BetThat`, `DBAirbend`, `DBAmass`, `DBAnte`, `DBCast`, `DBChandraDealDamage`, `DBChandraDraw`, `DBChangeZone`, `DBChangeZoneAll`, `DBChooseCard`, `DBCleanup`, `DBCopy`, `DBCoralSacrifice`, `DBCounter`, `DBCreature`, `DBDamage`, `DBDealDamage`, `DBDestroy`, `DBDig`, `DBDiscard`, `DBDiscard2`, `DBDiscardTarget`, `DBDmg`, `DBDmgAll`, `DBDraw`, `DBDraw2`, `DBDrawOne`, `DBDrawOpp`, `DBDrawSeven`, `DBDrawThree`, `DBEachDraw`, `DBExile`, `DBExileGraveyard`, `DBExileHand`, `DBExileSix`, `DBExperience`, `DBFlip`, `DBFluxDraw`, `DBGainLife`, `DBGainLife1`, `DBHeist`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBImmediateTriggerCheck`, `DBImprint`, `DBIncendiaryDraw`, `DBIncubate`, `DBInvestigate`, `DBLastRitesDiscard`, `DBLibrary`, `DBLose`, `DBLoseLife`, `DBLoseLifeOpp`, `DBLoseLifeThree`, `DBLosesGame`, `DBMana`, `DBMill`, `DBNantukoPutCounter`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBPutCounters`, `DBRaiseDead`, `DBRepeat`, `DBRepeatLoseLife`, `DBReturn`, `DBSac`, `DBSac1U`, `DBSacCreature`, `DBSacPermanent`, `DBSacrifice`, `DBScry`, `DBSearch`, `DBSeek`, `DBShuffle`, `DBSurveil`, `DBToken`, `DBTransform`, `DBTreasure`, `DBUnspeakable`, `DBUntap`, `DBUntapAll`, `DBWheelDraw`, `DelTrigSlowtrip`, `DemonBlight`, `DiscardRandom`, `ExileEffect`, `GainLife`, `MakeToken`, `MindMaggotsPutCounter`, `MorbidDiscard`, `MoveToGraveyard`, `ReturnAll`, `ReturnDross`, `TrigImmediateTrig`, `TrigMill`, `TrigReturn`, `TsabosDestroy`, `WindfallDraw`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `MaxTgt`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -3776,7 +3719,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBTreasure`
 
 ## `Draft`
 
@@ -3812,7 +3754,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBChangeZone`, `DBDiscard`, `DBExile`, `DBPlay`, `DBPut`, `DBReveal`, `TrigImmediateTrig`
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
 
@@ -3828,7 +3769,6 @@ TODO: Write documentation.
 - `RememberDrainedMana$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBNoCombatDamage`
 
 ## `Draw`
 
@@ -3954,7 +3894,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `BlessedLife`, `CalimChooseTwo`, `ChangeZoneDB`, `CheatBattlefield`, `CleanDrawn`, `CleanIncendiary`, `CleanTheFlux`, `CleanTheWind`, `DB1`, `DBAbandon`, `DBAddendum`, `DBAmass`, `DBAnimate`, `DBBlight`, `DBBottom`, `DBBounce`, `DBBranch`, `DBBreakthroughDiscard`, `DBCandlesCleanup`, `DBCast`, `DBChange`, `DBChangeZone`, `DBChangeZone2`, `DBChangeZone20U`, `DBChangeZone7M`, `DBChangeZoneAllOpponents`, `DBChangeZoneBis`, `DBChaos`, `DBChoose`, `DBChooseCardOne`, `DBChooseColor`, `DBChooseNumber`, `DBChoosePlayer`, `DBClash`, `DBCleanC`, `DBCleanE`, `DBCleanP`, `DBCleanup`, `DBClearNoted`, `DBClearRemembered`, `DBColor`, `DBConnive`, `DBConvert`, `DBCopy`, `DBCounter`, `DBDamage`, `DBDealDamage`, `DBDestroy`, `DBDiscard`, `DBDiscard20`, `DBDiscard20M`, `DBDiscard3`, `DBDiscardJustAsMany`, `DBDiscardOrFreeCast`, `DBDiscardYou`, `DBDmg`, `DBDoubleCounters`, `DBDraw`, `DBDraw2`, `DBDrawMore`, `DBDrawX`, `DBDrawYou`, `DBEffect`, `DBEmblem`, `DBEnd`, `DBEnduringCleanup`, `DBEnergy`, `DBExile`, `DBExileForEach`, `DBExtraTurn`, `DBFlip`, `DBFood`, `DBGain`, `DBGainControl`, `DBGainGontrol`, `DBGainLife`, `DBGainLifeYou`, `DBGetMana`, `DBGreen`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBIntensify`, `DBInvestigate`, `DBKhorne`, `DBLand`, `DBLearn`, `DBLife`, `DBLLoseLife`, `DBLook`, `DBLoseLife`, `DBLoseLife1`, `DBLoseLife2`, `DBLoseLifeSeven`, `DBLoseLifeYou`, `DBMana`, `DBMana14`, `DBMill`, `DBMLoseLife`, `DBNantukoCleanup`, `DBNoCombatDamage`, `DBPain`, `DBPass`, `DBPlaneswalk`, `DBPlay`, `DBProlif`, `DBProliferate`, `DBPump`, `DBPumpAll`, `DBPut`, `DBPutCounter`, `DBPutCounter1`, `DBPutCounterAll`, `DBRadiation`, `DBRegenerate`, `DBRemoveCounter`, `DBRemoveCounters`, `DBRepeat`, `DBRepeatCreature`, `DBReset`, `DBReveal`, `DBSac`, `DBSacrifice`, `DBScry`, `DBScryingGlassCleanup`, `DBSeek`, `DBSetLife`, `DBShuffle`, `DBSkip`, `DBSkipTurn`, `DBSLoseLife`, `DBSpace`, `DBSubDraw`, `DBTap`, `DBToken`, `DBToken1`, `DBToken2`, `DBToken3`, `DBTop`, `DBTransform`, `DBTreasure`, `DBTrigger`, `DBUnblockable`, `DBUntap`, `DBUntapAll`, `DBVillainousChoice`, `DBWar`, `DelayedDiscard`, `DelayedReturn`, `DelTrig`, `DelTrigSlowtrip`, `DelTrigUntap`, `Discard`, `Discard3`, `DiscardTwo`, `EachPlayLand`, `Effect`, `ExileEffect`, `HardCoverDiscard`, `MathasPayoffLife`, `MillOne`, `MindFlame`, `NoteNum`, `OppExile`, `OppTreasureScry`, `PitifulDraw`, `PumpAll`, `PWAway`, `ResetCoolness`, `SetAllLife`, `SetLife`, `Switch`, `TrigAddDraw`, `TrigChoosePlayer3`, `TrigDamageOpp`, `TrigDiscard`, `TrigDraft`, `TrigDrain`, `TrigReveal`, `TrigSteal`, `TrigTempt`, `TrigToken`, `Unfathomable`, `UntapLands`, `WindfallCleanup`, `WinGame`, `WitEmblem`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `EQ5`, `GE2`, `GE3`, `GE4`, `GE8`
 - `TapCreaturesForMana$`: TODO: Describe this parameter.
@@ -4013,7 +3952,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -4049,7 +3987,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBEarthbend`, `DBGainLife`, `DBImmediateTrig`, `DBPumpAll`, `DBPutCounter`, `DBSearch`, `DBUntap`
 
 ## `Effect`
 
@@ -4126,7 +4063,6 @@ TODO: Write documentation.
 - `EffectOwner$`: TODO: Describe this parameter.
   Observed values: `CardOwner`, `ImprintedOwner`, `Opponent`, `Player.IsRemembered`, `Player.Opponent`, `Remembered`, `RememberedController`, `RememberedOwner`, `RememberedOwner.Opponent`, `Targeted`, `TargetedController`, `TargetedOwner`, `TargetedPlayer`, `TriggeredActivator`, `TriggeredDefendingPlayer`, `TriggeredPlayer`, `TriggeredSourceController`, `TriggeredTarget`, `You`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigRemoveSelf`
 - `ExileOnLost$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ExileOnMoved$`: TODO: Describe this parameter.
@@ -4198,7 +4134,6 @@ TODO: Write documentation.
 - `StaticAbilities$`: TODO: Describe this parameter.
   Observed values: `AddAttackStatic`, `AddP2Ab`, `AllUnblockable`, `Animate`, `AttackChosen`, `AttackEach,AttackOther`, `AttackTax`, `AttackThisTurn`, `BlightStatic`, `BlockRestrict`, `BloomingLand`, `CadenceStaticAb`, `CanAttack`, `CanAttack,CombatDamageToughness`, `CantActivate`, `CantAttack`, `CantBeBlockedPow`, `CantBeCast`, `CantBeCast,CantAttack`, `CantBeCast,KWShow`, `CantBeCastCreats`, `CantBeCastNonCreats`, `CantBlock`, `CantBlockBy`, `CantBlockEven`, `CantBlockOdd`, `CantCast`, `CantGainLife`, `CantPhaseIn`, `CantPhaseOut`, `CantSac`, `CantSac,CantAttack`, `CantTarget`, `CascadeInstant`, `CascadeSorcery`, `CFReduceCost`, `ChangeLandType`, `CheapParts`, `CombatDamageToughness`, `Convert`, `CostBLess`, `CostBMore`, `CRPlay`, `DBCantAttack,DBCantBlockBy`, `DBCantAttackBlock`, `DBCantBeActivated`, `DBCantBlock`, `DBCantPutCounterCreature`, `DBCantPutCounterPlayer`, `DBCantStatic`, `DBLimitMana`, `DBPlay`, `DeclareCombatants`, `DontUntap`, `EffModeCantBlockBy`, `EffPlay`, `EffSModeContinuous`, `ElkinPlay`, `EmblemArtifactPump,ReduceCost`, `Enchant`, `Energybend`, `Exploration`, `FasterThanLime`, `FDManaConvertion`, `ForbidAttack`, `ForceAttack,ForbidAttack`, `FountainStatic`, `FreeCast`, `GainControl`, `GiveFlash`, `GrantAffinity`, `GrantCascade`, `GrantConvoke`, `GrantImprovise`, `GrantStorm`, `HBReduceCost`, `InstantPlaneswalkers`, `IsGoaded`, `IslandRetreat`, `JourneyOfDis`, `KWAnimateAll`, `KWPump`, `KWPump2`, `Land,MayPlay`, `LandPlay`, `LoyaltyAbs`, `MannequinStatic`, `MathasStatic`, `MayCast`, `MayCastForetell`, `MayCastGrave`, `MayLook`, `MayLookAndPlay`, `MayLookFaceDown`, `MayPlay`, `MayPlay,CostsMore`, `MayPlay,ManaConvert`, `MayPlay,RaiseCost`, `MimeomancerStatic`, `MinMaxBlocked`, `MischiefPlay`, `MustAttack`, `MustAttack,DBCantBeActivated`, `MustAttack,MustBlock`, `MustAttack1,MustAttack2`, `MustBlock`, `MustBlock,KWPump`, `NoCombat`, `NoMorePoison`, `NoRegen`, `NoRegen,NoPrevent`, `NoRegenST`, `ObsidianStatic`, `Omniscience`, `OppCantBlock`, `OppCantCast`, `OppPerms`, `OwnerMayPlay`, `PermanentRecycle`, `PerpetualAbility`, `PerpetualDebuff`, `PerpetualDoubleStrike`, `PerpetualLifelink`, `PerpetualLoss`, `PerpetualMenace`, `PerpetualP1P1`, `PerpetualPump`, `PerpetualStatic`, `PerpetualUnblockable`, `Play`, `Play1`, `Play2`, `PlayCr,PlayPl,PlayAr,PlayEn,PlayIn,PlaySo,PlayKi,PlayBa`, `PlayExile`, `PlayMoreLand`, `PlayOpp`, `PlaySideboard`, `PreventDmg`, `Pump`, `PumpStatic`, `PWTwice`, `QuickenStA`, `QuickSpell`, `RaiseCost`, `RalReduceCost`, `ReduceCost`, `ReduceCost,STPlay`, `ReduceHand`, `ReduceSPCost`, `RestrictAttackers,RestrictCasting`, `ScoutFlash`, `SectorBlock`, `ShadowStatic`, `SMayPlay,SReduceCost`, `SMayPlayLand`, `SNoCombatDamage`, `SReduceCost`, `ST7U`, `STArlinn`, `Static`, `Static,StaticTwo,StaticThree`, `StaticAllowAdapt`, `StaticBlock`, `StaticCantAttack`, `StaticMayLookAndPlay`, `StaticMayPlay`, `StaticPlay`, `StaticReduce`, `STaticReduce`, `STBlock`, `STBlock,DeclareCombatants`, `STBosiumStrip`, `STCanLookAtMayPlay`, `STCantAttack`, `STCantAttack,STCantTarget,STCantTargetPlayer`, `STCantAttack,STMustAttack`, `STCantBeActivated`, `STCantBeCast`, `STCantBeCast,STCanPeek,STCanPlay`, `STCantBeCast,STCantBeActivated`, `STCantBeCast,STCantBeActivated,STHandRevealed,STCanPlay`, `STCantBeTarget`, `STCantBlockBy,STCantBlockByFrog`, `STCantCast`, `STCantCast,STCantPlayLand`, `STCantChange`, `STCantGain`, `STCantGain,STCantPrevent`, `STCantMonarch`, `STCantPlayCreats`, `STCantPlayLand`, `STCantPlayLand,STCantCastSpell,STTrance`, `STCantPrevent`, `STCantSearch`, `STCantTarget`, `STCommuned`, `STCoolness`, `STCurse`, `STDamage`, `STDomri`, `STDovin`, `STDraw`, `STFlash`, `STFlying`, `STGrinning`, `STHandSize`, `STIndestructible`, `STIndestructible8U`, `STJaya`, `STKeepLife`, `STLimitBlock`, `STLook`, `STLook,STPlay`, `STLookPlay`, `STLoseAB`, `STMayLookAt`, `STMayPlay`, `STNarset`, `STNinjaBoost`, `STNoDmg`, `StolenGoodsPlay`, `STOverrun`, `STPiracy`, `STPlay`, `StPlay`, `STPlay,NoLand,NoCast`, `STPlay,STAffinity`, `STPlay,STPlay2`, `STPlay2`, `STPlayWithoutCost`, `STPump`, `STPump5M`, `STReveal`, `STRevealHand`, `STSetPT`, `STSteal`, `STThieving`, `STTrample`, `STUnblockable`, `STVigilance`, `STVivien`, `STVoter`, `STWit`, `STWrenn`, `STYardCast`, `SusPlay`, `SwampBoost`, `TangleStatic`, `TempoCantAttack`, `TombStatic`, `Unblockable`, `UnlimitedHand`, `Unspent`, `UntapOppStep`, `VowStatic`, `WillReduceCost`, `WithFlash`, `YojimboCantAttack`, `YoursM1Pow`, `YoursP2Pow`, `ZombieCast`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CantAttackWhenKicked`, `CleanupName`, `CloakofConfusionDiscard`, `DBAnimate`, `DBBargained`, `DBBranch`, `DBCantAttackBlock`, `DBChange`, `DBChangeZone`, `DBCleanup`, `DBCleanupSB`, `DBClearChosen`, `DBClearRemembered`, `DBConnive`, `DBConvert`, `DBCopy`, `DBDamage`, `DBDealDamage`, `DBDefLeftRight`, `DBDefRightEffect`, `DBDelayedTrigger`, `DBDelayTrig`, `DBDelTrig`, `DBDmg`, `DBDraft`, `DBDraw`, `DBEffect`, `DBEffect2`, `DBEffect3`, `DBEffectBis`, `DBEndCombatPhase`, `DBExile`, `DBExileSelf`, `DBForget`, `DBGainLife`, `DBGoad`, `DBImmediateTrigger`, `DBLearn`, `DBLose`, `DBLoseLife`, `DBMana`, `DBNoCombatDamage`, `DBPlaneswalk`, `DBPlay`, `DBProliferate`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBResetSVar`, `DBRestRandomOrder`, `DBReturn`, `DBScry`, `DBSorceryEffect`, `DBTap`, `DBToken`, `DBToken13U`, `DBTreasure`, `DBUntap`, `DBUnTapAll`, `DBVenture`, `DelTrig`, `DelTrigBoth`, `DelTrigFriend`, `DelTrigReturn`, `DelTrigSlowtrip`, `DestroyPacifist`, `ExileSelf`, `PutCounter`, `PWAway`, `TrigEffect2`, `TrigEffect3`, `WPaid`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`, `GE8`
 - `SVars$`: TODO: Describe this parameter.
@@ -4260,7 +4195,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DelayedLoss`
 
 ## `Endure`
 
@@ -4303,7 +4237,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanCreature`, `DBCleanup`, `DBDestroyAll`, `DBDraw`, `DBSacSelf`, `Energy`, `TrigImmediateTrig`
 - `TargetingPlayer$`: TODO: Describe this parameter.
   Observed values: `TriggeredCardController`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -4368,7 +4301,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `DBToken`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `2`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -4467,7 +4399,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBClone`, `DBDestroyAll`, `TrigEffect`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Creature.CrewedThisTurn`, `Creature.Merfolk+YouCtrl`, `Creature.YouCtrl`
@@ -4502,7 +4433,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCopy`, `DBDelayedTrigger`, `DBEffect`, `DBImmediateTrig`, `DBMana`, `DBPump`, `DBToken`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `2`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -4569,7 +4499,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Assassination`, `DBAdd0`, `DBCleanup`, `DBEffect`, `DoubleLifeStake`
 - `TailsSubAbility$`: TODO: Describe this parameter.
   Observed values: `ClashTails`, `DBDefender`, `DBRememberCreature`, `DBTailsPump`, `OddCopy`
 - `TargetType$`: TODO: Describe this parameter.
@@ -4598,7 +4527,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDamageTouched`, `DBDestroyTouched`
 
 ## `Fog`
 
@@ -4622,7 +4550,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `BatwingRepeat`, `DBClash`, `DBEffect`, `DBGainLife`, `DBPumpAll`, `DBRepeatLook`, `DBTapAll`
 
 ## `GainControl`
 
@@ -4686,7 +4613,6 @@ TODO: Write documentation.
 - `StaticCommandSVarCompare$`: TODO: Describe this parameter.
   Observed values: `EQ0`, `GTX`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AddMana`, `Animate`, `ChompEquip`, `DBAnimate`, `DBAttach`, `DBAttack`, `DBCast`, `DBChangeText`, `DBChangeZone`, `DBCleanup`, `DBClearChosen`, `DBControlSpell`, `DBCopy`, `DBDamage`, `DBDelay`, `DBDelayTrig`, `DBDestroyAll`, `DBDraw`, `DBEffect`, `DBGainCtrlOpp`, `DBGoad`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBNoCombatDamage`, `DBNoUntap`, `DBPlaneswalk`, `DBPump`, `DBPutCounter`, `DBPutCounters`, `DBRepeatEach`, `DBReset`, `DBRoll`, `DBScry`, `DBSuspect`, `DBTap`, `DBToken`, `DBUntap`, `DBUntapAll`, `DelTrig`, `PutCounter`, `ReEnchant`, `RemCombat`, `TrigCounter`, `TrigTempt`
 - `TargetingPlayer$`: TODO: Describe this parameter.
   Observed values: `Player.Opponent`
 - `TargetingPlayerControls$`: TODO: Describe this parameter.
@@ -4730,7 +4656,6 @@ TODO: Write documentation.
   Observed values: `T`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBUntap`
 
 ## `GainLife`
 
@@ -4800,7 +4725,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBBlood`, `DBBolster`, `DBChange`, `DBCleanup`, `DBCleanupN`, `DBCounter`, `DBDamage`, `DBDealDamage`, `DBDelayedTrigger`, `DBDestroy`, `DBDig`, `DBDiscard`, `DBDrain`, `DBDraw`, `DBDraw18U`, `DBDraw20U`, `DBDrawCardIsland`, `DBDrawCards`, `DBDrawThree`, `DBEffect`, `DBEnergy`, `DBExile`, `DBFight`, `DBFog`, `DBGainLife`, `DBGainLifeOpp`, `DBIncubate`, `DBIntensify`, `DBJaddiLifestriderCleanup`, `DBJasmineCleanup`, `DBLearn`, `DBLifeCurse`, `DBLose`, `DBLoseLife`, `DBMana`, `DBMill`, `DBNoCombatDamage`, `DBPump`, `DBPumpAll`, `DBPumpPlus`, `DBPutCounter`, `DBPutOnBottom`, `DBReturn`, `DBReturnKicked`, `DBScentOfJasmineCleanup`, `DBScry`, `DBSearch`, `DBSeek`, `DBShuffle`, `DBShuffleElixir`, `DBSurveil`, `DBSuspect`, `DBToken`, `DBTransform`, `DBTreasure`, `DBTrigDraw`, `DBUntap`, `DBUntapAll`, `DBWinGame`, `DelayReturn`, `DelTrigSlowtrip`, `Dmg`, `DoDraw`, `ExileEff`, `ExileEffect`, `GeniusCards`, `LoseLifeOpp`, `LoseLifeYou`, `Meld`, `Reapproach`, `Token`, `TrigDraw`, `TrigExile`, `TrigReturn`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -4837,7 +4761,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ExchangeAnte`, `TabletToExile1`, `TargetToExile1`, `ToGrave`, `ToGrave1`, `ToHand`
 - `TgtZone$`: TODO: Describe this parameter.
   Observed values: `Ante`
 - `ValidTgts$`: TODO: Describe this parameter.
@@ -4915,7 +4838,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Choice2`, `DBCleanup`, `DBCondition`, `DBDelayTrigger`, `DBDiscard`, `DBDraw`, `DBFame`, `DBGrandWheel`, `DBMoney`, `DBPutIntoHand`, `DBSilenceBranch`, `DBTimetwister`, `Exile`, `NotifyDoodle`, `NotifyPape`, `NotifyScis`, `OppChoice`, `ScoreWin`, `StoreYou`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -4954,7 +4876,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAddCombat`, `DBCleanup`, `DBDisableSacing`, `DBDraw`, `DBEffect`, `DBNoBlock`, `DBPump`, `DBPutCounter`, `DelTrig`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `MonstrosityX`, `OneEach`, `X`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -5012,7 +4933,6 @@ TODO: Write documentation.
 - `Defined$`: TODO: Describe this parameter.
   Observed values: `Remembered`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ChooseName`, `DBAddMana`, `DBChangeZone`, `DBDamage`, `DBDamageAll`, `DBDealDamage`, `DBDealDmg`, `DBDmg`, `DBDraw`, `DBFight`, `DBPlay`, `DBPump`, `DBReanimate`, `DBRepeatCopy`, `DBReturn`, `DBSac`, `DBTap`, `DBToken`, `GainLifeYou`, `NameCard`, `TrigABDealDamage`, `TrigAttach`, `TrigBounce`, `TrigBounceAll`, `TrigCast`, `TrigChange`, `TrigChangeZone`, `TrigCharm`, `TrigChoose`, `TrigClone`, `TrigConjure`, `TrigCopy`, `TrigCounter`, `TrigDamage`, `TrigDamageAll`, `TrigDamageBis`, `TrigDamageCreature`, `TrigDealDamage`, `TrigDealDmg`, `TrigDebuff`, `TrigDestroy`, `TrigDig`, `TrigDiscard`, `TrigDmg`, `TrigDoubleDamage`, `TrigDraw`, `TrigEachOpp`, `TrigEffect`, `TrigExile`, `TrigExileAll`, `TrigExtraTurn`, `TrigFight`, `TrigFirstStrike`, `TrigFlashback`, `TrigGainControl`, `TrigLoseGame`, `TrigMakeCard`, `TrigMill`, `TrigMoveCounter`, `TrigMultiplyCounter`, `TrigPlay`, `TrigPowerDamage`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigPutCounterP1P1`, `TrigPutCounters`, `TrigRemoveCounter`, `TrigReturn`, `TrigReveal`, `TrigSac`, `TrigSacrifice`, `TrigTap`, `TrigTapOrUntap`, `TrigToken`, `TrigUnblockable`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.Self+counters_GE4_QUEST`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -5036,7 +4956,6 @@ TODO: Write documentation.
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCleanup2`, `DBTriggerNonLand`, `ExileEffect`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `TrigDescReminderDefined$`: TODO: Describe this parameter.
   Observed values: `Player.IsRemembered`
@@ -5080,7 +4999,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDraw`, `DBTransform`
 - `Times$`: TODO: Describe this parameter.
   Observed values: `2`, `5`, `X`
 
@@ -5101,7 +5019,6 @@ TODO: Write documentation.
   Observed values: `all cards they own named Chittering Skullspeaker`, `all cards they own named Static Discharge`, `all Chorus cards you own`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDraw`
 
 ## `Investigate`
 
@@ -5129,7 +5046,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDebuff`, `DBDelTrig`, `DBDestroyAll`, `DBDraw`, `DBEffect`, `DBGainLife`, `DBLoseLife`, `DBNoGoad`, `DBPump`, `DBRegen`, `DBToken`
 
 ## `Learn`
 
@@ -5158,7 +5074,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBFaceDown`, `DBRearrange`, `DBTopLibrary`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Creature.faceDown`
@@ -5237,7 +5152,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DB1`, `DBAmass`, `DBAnimate`, `DBChange`, `DBChangeZone`, `DBClean`, `DBCleanup`, `DBControl`, `DBConvert`, `DBCounter`, `DBDamage`, `DBDamageMountain`, `DBDestroyAll`, `DBDig`, `DBDiscard`, `DBDraft`, `DBDraw`, `DBDrawC`, `DBDrawE`, `DBDrawP`, `DBEffect`, `DBEndure`, `DBEnergy`, `DBExile`, `DBExileTop`, `DBGain`, `DBGain2`, `DBGainLife`, `DBGainLife1`, `DBGainLife2`, `DBGainLifeEmblem`, `DBGainLifeN`, `DBGainOneLife`, `DBGainThree`, `DBGainTrea`, `DBInvestigate`, `DBLoseLifeOpp`, `DBLoseLifeOpponents`, `DBLoseLifeYou`, `DBMana`, `DBMill`, `DBPlay`, `DBPoison`, `DBPoisoned`, `DBProliferate`, `DBPutCounter`, `DBResurrectYou`, `DBReveal`, `DBSac`, `DBSacArtifact`, `DBSacrifice`, `DBSacrificeThree`, `DBSacSelf`, `DBScry`, `DBSearch`, `DBTap`, `DBToken`, `DBTreasure`, `DBTreasureTokens`, `DBTutor`, `DBUntap`, `DBVoidDraw`, `EbonyGain`, `Gain`, `GainLife`, `RememberOpp`, `RememberYou`, `TargetToExile2`, `TrigMill`, `TrigToken`, `YouLose`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `MaxTgts`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -5270,7 +5184,6 @@ TODO: Write documentation.
 - `ConditionPresent$`: TODO: Describe this parameter.
   Observed values: `Card`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`
 
 ## `LosesGame`
 
@@ -5295,7 +5208,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBExile`, `DBGainLife`, `DBLoseLife`, `DBSacrificePerm`, `DBShuffle`, `ForbiddenPractice`, `TargetToExile3`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 - `UnlessCost$`: TODO: Describe this parameter.
@@ -5385,7 +5297,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ArmorSetAtt`, `DBAnimate`, `DBAttach`, `DBCleanup`, `DBClearChosen`, `DBClearNamed`, `DBCloak`, `DBConjure`, `DBCopyPerm`, `DBDelayTrig`, `DBDiscard`, `DBDraw`, `DBEffect`, `DBImmediateTrigger`, `DBIntensify`, `DBManifest`, `DBPerpetual`, `DBPump`, `DBPumpTurn`, `DBPutBattlefield`, `DBPutCounter`, `DBRemember`, `DBReorder`, `DBRepeat`, `DBSetAttacking`, `DBToken`, `DBTransform`, `WeftwinderDraw`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE2`, `GE3`
 - `Tapped$`: TODO: Describe this parameter.
@@ -5510,7 +5421,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AddCounter`, `ChangeControl`, `CheckPlus`, `ChooseColor`, `DBAnimate`, `DBAnimateAll`, `DBChange`, `DBCleanup`, `DBConvert`, `DBCounter`, `DBDamageAll`, `DBDealDamage`, `DBDraft`, `DBDraw`, `DBEffect`, `DBEffectAddCounter`, `DBExile`, `DBExileSelf`, `DBGainLife`, `DBImmediateTrig`, `DBIntensify`, `DBLife`, `DBLoseLife`, `DBMana`, `DBMetalWorkerCleanup`, `DBPain`, `DBPlay`, `DBPump`, `DBPutCounter`, `DBRadiation`, `DBReturn`, `DBRollDice`, `DBSac`, `DBScry`, `DBStayTapped`, `DBSubCounter`, `DBTearUpAndRemove`, `DBTrigger`, `DelTrigSlowtrip`, `ManaB`, `RevealUntil`, `SubMana`, `TrigRemove`, `ValeTrig`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`, `GE6`, `GE8`
 - `TriggersWhenSpent$`: TODO: Describe this parameter.
@@ -5555,7 +5465,6 @@ TODO: Write documentation.
   Observed values: `Activated.Creature+inZoneBattlefield`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDealDamage`, `DBMove`, `DBPump`
 - `Valid$`: TODO: Describe this parameter.
   Observed values: `Basic.YouCtrl`, `Creature.Legendary+YouCtrl,Planeswalker.Legendary+YouCtrl`, `Defined.ExiledWith`, `Defined.Imprinted`, `Defined.Sacrificed`, `Defined.Self`, `Defined.Untapped`, `Defined.ValidGraveyard Card.YouOwn`, `Defined.ValidGraveyard Creature.Legendary+YouOwn`, `Gate.YouCtrl`, `Land.OppCtrl`, `Land.YouCtrl`, `Permanent.Legendary+YouCtrl`, `Permanent.YouCtrl`
 
@@ -5582,7 +5491,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Aurify`, `DBCleanup`, `DBClearBolas`, `DBDigRemaining`, `DBDraw`, `DBDrawSeven`, `TrigPutCounter`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `2`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -5608,7 +5516,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBAttach`, `DBChangeZone`, `DBCleanup`, `DBPutCounter`, `DBPutCounters`, `DBTurnFaceUp`
 
 ## `Meld`
 
@@ -5695,7 +5602,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DamageOpponent`, `DBAccumulateX`, `DBAmass`, `DBBranch`, `DBCast`, `DBChange`, `DBChangeZone`, `DBChangeZone1`, `DBChangeZone2`, `DBChangeZoneAll`, `DBChoose`, `DBCleanup`, `DBConjure`, `DBCounter`, `DBDamage`, `DBDestroy`, `DBDig`, `DBDiscard`, `DBDraw`, `DBEffect`, `DBEnergy`, `DBExile`, `DBExileGrave`, `DBExileSK`, `DBForEach`, `DBGainLife`, `DBHereticDamage`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBIncubate`, `DBInvestigate`, `DBLifeDrain`, `DBLifeGain`, `DBLoseLife`, `DBMillKicked`, `DBPlay`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBPutCounter1`, `DBRandom`, `DBRepeatEach`, `DBReset`, `DBReturn`, `DBReturnAura`, `DBSacrifice`, `DBScry`, `DBSelfSac`, `DBToken`, `DBTransform`, `DBUnblockable`, `DBUntap`, `DBYouGainLife`, `DelTrig`, `DelTrigSlowtrip`, `FishyCast`, `Treasure`, `TrigDraw`, `TrigImmediateTrig`, `TrigToken`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `MaxTgt`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -5742,7 +5648,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `DBGainLife`, `DBPump`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE2`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -5802,7 +5707,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCopyPermanents`, `DBDraw`, `DBEffect`, `DBToken`, `ScrollsOfLife`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `2`, `MaxTargets`, `MaxTgt`, `X`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -5890,7 +5794,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChooseCT`, `ChooseP`, `CreateAbility`, `DBCast`, `DBChangeZone`, `DBChooseNumber`, `DBCleanup`, `DBClear`, `DBConjure`, `DBCopy`, `DBDementiaReveal`, `DBDig`, `DBDigEach`, `DBDigUntil`, `DBDiscard`, `DBEffect`, `DBExile`, `DBGoad`, `DBGuess`, `DBMake`, `DBMill`, `DBRemove`, `DBReveal`, `DBRevealHand`, `DBSearch`, `DBTarget`, `ExileHand`, `ExileYard`, `FindThePrecious`, `RevealHand`
 - `ValidCards$`: TODO: Describe this parameter.
   Observed values: `Card.Artifact`, `Card.Creature`, `Card.Land+nonBasic`, `Card.ManaCost=Imprinted`, `Card.nonBasic`, `Card.nonLand`, `Card.nonLand+nonArtifact`, `Card.nonLand+nonCreature`, `Creature`, `Creature.cmcEQM`, `Creature.cmcEQX`, `Creature.ManaCost=Equipped`, `Land`
 - `ValidDescription$`: TODO: Describe this parameter.
@@ -5955,7 +5858,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CastCard`, `ChooseNonLand`, `CloneArmy`, `DBAnimate`, `DBBottom`, `DBCandlesChangeZone`, `DBChangeCreatures11M`, `DBChangeZone`, `DBChangeZone1`, `DBCheckLibrary`, `DBChoice`, `DBChoose`, `DBCleanImprint`, `DBClone`, `DBCopyCast`, `DBCounter`, `DBCreature`, `DBDamage`, `DBDamageAll`, `DBDiscard`, `DBDraw`, `DBEnduringGraveyard`, `DBExile`, `DBGainLife`, `DBInvestigate`, `DBLife`, `DBLoseLife`, `DBMana`, `DBMayCast`, `DBMill`, `DBPetalChoose`, `DBPlay`, `DBProd`, `DBPump`, `DBPutCounter`, `DBPutRevealed`, `DBRepeat`, `DBRepeatEach`, `DBRepeatTypes`, `DBReveal`, `DBRevealHand`, `DBRunChaos`, `DBSac`, `DBSacrifice`, `DBShuffle`, `DBToHand`, `DBToken`, `DBTransform`, `DBTwoPile`, `DBTwoPiles`, `DBTwoPiles9M`, `DBUntap`, `DelTrigSlowtrip`, `DestructiveParoxysm`, `ExileDown`, `GoToBattlefield`, `PickOne`, `Separate`, `TelepathCast`, `TrigPlay`, `TrigRepeatTypes`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `2`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -6035,7 +5937,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChooseArtifact`, `ChooseCreature`, `DBChange`, `DBCleanup`, `DBDamageAll`, `DBEffect`, `DBExile`, `DBExileSelf`, `DBPhaseOutAll`, `DBPhaseSelf`
 - `Tapped$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -6071,7 +5972,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ClearImprinted`, `DBCleanup`
 
 ## `Play`
 
@@ -6183,7 +6083,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CascadeMoveToLib`, `DBBottom`, `DBChange`, `DBChangeZone`, `DBChangeZone2`, `DBCleanup`, `DBCleanup1`, `DBCleanup2`, `DBConvert`, `DBCopy`, `DBDamage`, `DBDraw`, `DBEffect`, `DBExile`, `DBExileEffect`, `DBExileIfNotPlayed`, `DBExileSelf`, `DBGiveHaste`, `DBGrave`, `DBHand`, `DBHellCleanup`, `DBIncrease`, `DBInvestigate`, `DBKnowledgeCleanup`, `DBLibrary`, `DBLoseLife`, `DBLosePerpAbility`, `DBNoUntap`, `DBOmenCleanup`, `DBPump`, `DBPutHand`, `DBRepeatTwo`, `DBRestRandomOrder`, `DBReturn`, `DBReturnHand`, `DBRonaCleanup`, `DBScry`, `DBShuffle`, `DBToken`, `DBTokenIfNotPlayed`, `ExileMe`, `ExileSelf`, `MoveLand`, `PlayLandIfNotCast`, `PutRestBackBottomLibrary`, `Shuffle`, `TrigDT`, `TrigSpellweaverCopySame`, `YouShuffle`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `OneEach`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -6238,7 +6137,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `CobraEffect`, `DBDraw`, `DBMill`, `RepeatPlayers`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidTgts$`: TODO: Describe this parameter.
@@ -6290,7 +6188,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDraw`, `DBReturn`, `DBTap`, `DelTrigSlowtrip`, `GuardianEffect`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GTY`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -6329,7 +6226,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDraw`, `DBInvestigate`, `DBPhaseOut`, `DBPump`, `TrigProliferate2`
 
 ## `Protection`
 
@@ -6361,7 +6257,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBClash`, `DBCounter`, `DBDraw`, `DBGain`, `DBProtection`, `DBScry`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `X`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -6574,7 +6469,6 @@ TODO: Write documentation.
 - `staticAbilities$`: TODO: Describe this parameter.
   Observed values: `MustAttack`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ABChoice`, `AcolytesPrevention`, `AllNoBlock`, `AlphaAttack`, `ArchonPrevention`, `BloodDamage`, `Blue`, `BoonEffect`, `BrassSquireAttach`, `BruenorAttach`, `Burn`, `Burninate`, `ChangeColor`, `ChaoticStrikeDraw`, `Choice`, `Choice1`, `ChompEquip`, `Choose`, `ChooseArtifact`, `ChooseCreature`, `ChooseEnchant`, `ChooseLand`, `ChooseNumber`, `CrabExchange`, `Creature`, `CrimsonCascade`, `DBAddCombat`, `DBAddendum`, `DBAirbend`, `DBAmass`, `DBAnimate`, `DBAnte`, `DBAttach`, `DBBoon`, `DBBounce`, `DBBranch`, `DBChange`, `DBChangePower`, `DBChangeZone`, `DBChangeZoneAll`, `DBChangeZoneHand`, `DBChargeCounter`, `DBCheat`, `DBChoice`, `DBChoose`, `DBChooseAttackers`, `DBChooseCard`, `DBChooseCreature`, `DBChooseExiled`, `DBChooseLand`, `DBChoosePlayer`, `DBChooseRandom`, `DBChooseSac`, `DBChooseSource`, `DBClash`, `DBCleanup`, `DBCleanUp`, `DBCleanup2`, `DBClearChosen`, `DBClone`, `DBCombatDamageEffect`, `DBConjure`, `DBConnive`, `DBConvert`, `DBCopy`, `DBCounter`, `DBCreature`, `DBCurse`, `DBDamage`, `DBDealDamage`, `DBDeathtouch`, `DBDebuff`, `DBDefaultAction`, `DBDelay`, `DBDelayedTrigger`, `DBDelayedTrigger1`, `DBDelayTrig`, `DBDelTrig`, `DBDestroy`, `DBDestroyAll`, `DBDestroyBlue`, `DBDestroyLand`, `DBDestroyWhite`, `DBDig`, `DBDiscard`, `DBDiscover`, `DBDmg`, `DBDmgEach`, `DBDmgOpp`, `DBDonate`, `DBDouble`, `DBDoubleStrike`, `DBDraft`, `DBDraw`, `DBDraw1`, `DBEachDamage`, `DBEffect`, `DBEnchantment`, `DBEnergy`, `DBExchange`, `DBExchangeControl`, `DBExile`, `DBExileAll`, `DBExileTargets`, `DBExileTop`, `DBExileTopCard`, `DBExplore`, `DBFerocious`, `DBFight`, `DBFight2`, `DBFightBis`, `DBFirstStrike`, `DBFlip`, `DBFood`, `DBForget`, `DBGain`, `DBGainControl`, `DBGainLife`, `DBGainLife1`, `DBGiveControl`, `DBGoad`, `DBHand`, `DBHit`, `DBImmediateTrigger`, `DBIncubate`, `DBIndestructible`, `DBInvestigate`, `DBIvyCleanup`, `DBLand`, `DBLearn`, `DBLifelink`, `DBLoseLife`, `DBMana`, `DBMarkGraveyard`, `DBMenace`, `DBMill`, `DBMoonglove`, `DBMount`, `DBMove`, `DBMoveAura`, `DBMustBlock`, `DBNightshadeCleanup`, `DBNonLand`, `DBNoteBolas`, `DBNoteUgin`, `DBPeekAndReveal`, `DBPhases`, `DBPing`, `DBPitFight`, `DBPlay`, `DBProliferate`, `DBProtect`, `DBPump`, `DBPump1`, `DBPump2`, `DBPump3`, `DBPumpAll`, `DBPumpBis`, `DBPumpCombat`, `DBPumpHexproof`, `DBPumpMinus`, `DBPumpNeg`, `DBPumpOpp`, `DBPumpOther`, `DBPumpWalkers`, `DBPumpZ`, `DBPutCounter`, `DBPutCounterAll`, `DBRat`, `DBReanimate`, `DBRegen`, `DBRem`, `DBRemAura`, `DBRemember`, `DBRememberPlayer`, `DBRememberSorcery`, `DBRemoveCounter`, `DBRepeat`, `DBRepeatPlayer`, `DBReset`, `DBReturn`, `DBReturnToHand`, `DBReveal`, `DBRevealHand`, `DBRoll`, `DBRollDice`, `DBSac`, `DBSacMe`, `DBSacrificeAll`, `DBSaproling`, `DBScentOfIvyCleanup`, `DBScentOfNightshadeCleanup`, `DBScry`, `DBSearch`, `DBShuffle`, `DBSkipPhase`, `DBSkipTurn`, `DBStayTapped`, `DBSurveil`, `DBSwiftKick`, `DBTap`, `DBTargetYard`, `DBToken`, `DBTrample`, `DBTransform`, `DBTreasure`, `DBUnblockable`, `DBUnsuspect`, `DBUntap`, `DBUntapAll`, `DBVanilla`, `DBVehicle`, `DBWakeofDestructionDestroyThemAll`, `DeadKeepersDestroy`, `DealDamage`, `DelayedTrig`, `DelTrig`, `DelTrigSlowtrip`, `DestroyAll`, `DestroyCreature`, `DestroyEnch`, `DestroyLand`, `DestroyOpp`, `DestroyPacifist`, `DomriFight`, `Draw`, `EliteGuardEffect`, `Enchantment`, `ExileAll`, `ExileSelf`, `ExileYard`, `FeintPumpAll`, `FightForTheCliffs`, `FindOne`, `FinesseAttach`, `GoingDownInStyle`, `GPaid`, `GraveReap`, `GreenToRed`, `IgnitionDamage`, `JitterClean`, `KazuulAttach`, `Kicked`, `KickerPump`, `KjeldoranGuardEffect`, `KorOutfitting`, `Land`, `LifeTough`, `LightKeepersLife`, `MagneticTheft`, `MakeChoice`, `MirriPutCounter`, `MoveToPlay`, `MutinyDamage`, `NoDamage`, `OkoExchange`, `PhantasmalMountEffect`, `Planeswalker`, `Pump2`, `Pump3`, `PumpBargain`, `PumpEquipped`, `PumpKicked`, `PumpOthers`, `PutCounter`, `PutCounterSelf`, `RakdosBurn`, `ReanimateSelf`, `RebukeDamage`, `RedToGreen`, `RepeatFlip`, `ResetWin`, `ReturnTwo`, `RollD20`, `RuneDelay`, `SaheeliCopy`, `ShapesharerCopy`, `SkipTurn`, `Smolder`, `SnakeBite`, `SoulbrightMana`, `SoulsDamage`, `TailDamage`, `TrackerFight`, `TrigDamage`, `TrigDestroy`, `TrigEffect`, `TrigGenericChoice`, `TrigGorgonDestroy`, `TrigLose`, `TrigMill`, `TrigPlay`, `TrigRemoveCounter`, `TrigSac`, `TrigTap`, `TrigTempt`, `TypeChoice`, `VampiricUrge`, `VigorousPumping`, `WindwalkerAttach`, `WolfStrike`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`, `GE8`
 - `TargetingPlayer$`: TODO: Describe this parameter.
@@ -6713,7 +6607,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChooseColor`, `DBAddCombat`, `DBAddendum`, `DBAddTurn`, `DBAlterAttribute`, `DBAnimate`, `DBAnimateAll`, `DBBlack`, `DBBlue`, `DBBoon`, `DBChange`, `DBChangeZoneAll`, `DBChoose`, `DBCleanup`, `DBCleanUp`, `DBConvert`, `DBDeathtouch`, `DBDebuff`, `DBDelTrig`, `DBDestroy`, `DBDestroyAll`, `DBDoubleStrike`, `DBDraw`, `DBEffect`, `DBEffect2`, `DBExile`, `DBFirstStrike`, `DBGainLife`, `DBGainLife2`, `DBGreen`, `DBHaste`, `DBHexproof`, `DBIndestructible`, `DBInvestigate`, `DBLifelink`, `DBLoseLife`, `DBMenace`, `DBMonarch`, `DBPartner`, `DBPlay`, `DBPrevent`, `DBProtection`, `DBPump`, `DBPumpAll`, `DBPumpCitizens`, `DBPumpRed`, `DBPumpWhite`, `DBPumpYourZombies`, `DBPutCounter`, `DBPutCounterAll`, `DBPutCounters`, `DBRadiation`, `DBReach`, `DBRed`, `DBReturn`, `DBRollDice`, `DBScry`, `DBSeek`, `DBSurveil`, `DBTapAll`, `DBTimeTravel`, `DBTrample`, `DBTurnFaceUp`, `DBUntapAll`, `DBUnTapAll`, `DBVigilance`, `DelTrigSlowtrip`, `ExileSomeCreatures`, `FatefulHourPump`, `GSEffect`, `InnerHeatStrike`, `Kicked`, `LoseTwo`, `OppBlock`, `RPaid`, `TrigEffect`, `TrigTempt`, `TrigUntapAll`
 - `SubABility$`: TODO: Describe this parameter.
   Observed values: `DBChangeZone`
 - `SVarCompare$`: TODO: Describe this parameter.
@@ -6925,7 +6818,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AddFungalEffects`, `AddTrigger`, `ChooseColor`, `ChooseX`, `CostNotPaid`, `DBAddMana`, `DBAddTriggers`, `DBAlter`, `DBAnimate`, `DBAnimateAll`, `DBArtisanAnimate`, `DBAssemble`, `DBAttach`, `DBBranch`, `DBCast`, `DBChange`, `DBChangeTarget`, `DBChangeZone`, `DBChooseCard`, `DBChooseNumber`, `DBChoosePlayer`, `DBCleanImprinted`, `DBCleanup`, `DBClone`, `DBConjure`, `DBConvert`, `DBCopy`, `DBCounter`, `DBCounterBis`, `DBCounters`, `DBCurseCleanup`, `DBDamage`, `DBDealDamage`, `DBDelayedTrigger`, `DBDelayTrig`, `DBDelTrig`, `DBDestroy`, `DBDestroyHunger`, `DBDig`, `DBDigUntil`, `DBDmg`, `DBDouble`, `DBDraw`, `DBDraw1`, `DBDraw2`, `DBEachDamage`, `DBEarthbend`, `DBEffect`, `DBEnergy`, `DBExile`, `DBExileSelf`, `DBExileTop`, `DBFight`, `DBFood`, `DBGainControl`, `DBGainLife`, `DBGainLifeBis`, `DBGenericChoice`, `DBGetFood`, `DBGoad`, `DBHand`, `DBHaste`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBImprint`, `DBInvestigate`, `DBJunk`, `DBLearn`, `DBLose`, `DBLoseLife`, `DBMana`, `DBMaySac`, `DBMill`, `DBMonarch`, `DBMultiplyCounter`, `DBMustBlock`, `DBNantukoDraw`, `DBPhase`, `DBPhases`, `DBPlay`, `DBPrepare`, `DBProliferate`, `DBProtection`, `DBPump`, `DBPumpAll`, `DBPumpOne`, `DBPutCounter`, `DBPutCounter2`, `DBPutCounterAll`, `DBPutCounterCommander`, `DBPutLOYALTY`, `DBPutThree`, `DBPutTwo`, `DBRegenerate`, `DBRemoveCounter`, `DBRemoveCounters`, `DBRemoveSelf`, `DBRepeat`, `DBReselect`, `DBReturn`, `DBSac`, `DBSacrifice`, `DBScry`, `DBSearch`, `DBSeek`, `DBSkipTurn`, `DBSubCounter`, `DBSurveil`, `DBTap`, `DBTapOrUntap`, `DBToken`, `DBTokenFood`, `DBTrample`, `DBTransform`, `DBTreasure`, `DBTrigger`, `DBUnblockable`, `DBUntap`, `DBUntapAll`, `DBUpdate`, `DBWin`, `DealToCreature`, `DelayedTrigger`, `Delude`, `DevourCleanup`, `DivineCharacter`, `Dustwalk`, `ETBTapped`, `ExileFromHand`, `GiveSuspend`, `GorgeOnThoughts`, `LifelinkCounter`, `Mill`, `MimeoCopyChosen`, `MoveAllCounter`, `PayThePiper`, `PounceAmbush`, `PutCounters`, `PutOneMore`, `RemCounter`, `RemoveSelf`, `RonsoTap`, `SacAllOthers`, `Sacrifice`, `SacSelf`, `ScrollsOfKnowledge`, `ScrollsOfLife`, `SelectOpponent`, `SquadronLaunch`, `Survivor`, `TrigAnimate`, `TrigChoosePlayer2`, `TrigDoubleCounters`, `TrigDraw`, `TrigImmediate`, `TrigImmediateTrig`, `TrigLife`, `TrigPump`, `TrigRemoveSelf`, `TurnToStone`, `VolverLaunch`, `VolverLife`, `VolverResilience`, `VolverSpeed`, `VolverStomp`, `WinGame`
 - `Support$`: TODO: Describe this parameter.
   Observed values: `2`, `3`, `6`, `X`
 - `SVarCompare$`: TODO: Describe this parameter.
@@ -7032,7 +6924,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBCleanup`, `DBCopy`, `DBCount`, `DBDamage`, `DBDestroyAllRusted`, `DBDrain`, `DBDraw`, `DBEffect`, `DBGainLife`, `DBGoad`, `DBPlaneswalk`, `DBPump`, `DBPumpAll`, `DBPumpAll1`, `DBPumpAll2`, `DBRepeat`, `DBReset`, `DBSearch`, `DBSeek`, `DBShuffle`, `DBTap`, `DBUntap`, `DBUntapAll`, `SlowTime`
 - `TargetUnique$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TgtPrompt$`: TODO: Describe this parameter.
@@ -7060,7 +6951,6 @@ TODO: Write documentation.
   Observed values: `1`, `2`, `3`, `4`, `HalfXUp`, `TriggeredCard$CardPower`, `X`, `Z`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBP1P1`, `DBToken`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Player`
 
@@ -7083,7 +6973,6 @@ TODO: Write documentation.
   Observed values: `Targeted`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChoosePlayer`, `DBDraw`, `DBLoseLife`, `DBRearrange`, `DelTrigSlowtrip`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player`
 
@@ -7125,7 +7014,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDraw`, `DBGainLife`, `DBLoseLife`, `TrigGorgonEffect`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE8`
 - `TgtPrompt$`: TODO: Describe this parameter.
@@ -7206,7 +7094,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChangeZone`, `DBChangeZoneAll`, `DBChooseOpp`, `DBCleanup`, `DBClockworkDamage`, `DBConjure`, `DBCopy`, `DBDealDamage`, `DBDestroy`, `DBDig`, `DBDmg`, `DBDraw`, `DBEffect`, `DBExile`, `DBForget`, `DBGainLife`, `DBHeliodsPunishment`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBLosesGame`, `DBMoveToGraveyard`, `DBPump`, `DBPumpCreature`, `DBPumpOpponent`, `DBPutCounter`, `DBPutCounters`, `DBPutOntoStack`, `DBRadiation`, `DBReturn`, `DBSac`, `DBSacrifice`, `DBSacSelf`, `DBSeek`, `DBSekkiToken`, `DBTap`, `DBToken`, `DBTransform`, `DBUntap`, `ExileEffect`, `GameIsADraw`, `LoseGame`, `RepeatOnUpkeep`, `Sac`, `TrigGetMana`, `TrigPutCounter`, `Untap`, `WinnerDecided`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -7243,7 +7130,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanUp`, `DBRemove`, `QuickenTime`, `TrigCounters`
 - `ValidCards$`: TODO: Describe this parameter.
   Observed values: `Card.Self`, `Card.suspended`, `Card.suspended+YouOwn`, `Card.YouOwn+!IsRemembered`, `Creature`, `Creature.YouCtrl`, `Land`, `Permanent`, `Permanent.ActivePlayerCtrl`, `Planeswalker`
 - `ValidZone$`: TODO: Describe this parameter.
@@ -7275,7 +7161,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChooseAttacker`, `DBCantBlock`, `DBCleanup`, `DBDraw`, `DBTap`, `DBTreasureTree`, `DBUntap`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `UnblockCreaturesBlockedOnlyBy$`: TODO: Describe this parameter.
   Observed values: `Self`, `Targeted`, `TriggeredBlocker`
@@ -7319,7 +7204,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChoosePlayer`
 - `Zone$`: TODO: Describe this parameter.
   Observed values: `Graveyard`
 
@@ -7363,7 +7247,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DamageCreature`, `DamageTarget`, `DBAddTurn`, `DBCleanup`, `DBDealDamage`, `DBMoveChosen`, `DBRepeatToken`, `DBRestore`, `DBReturn`, `DBSacHelm`, `DBShuffle`, `DBToken`, `DrawIfWin`, `FinalReset`, `Play`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidTgts$`: TODO: Describe this parameter.
@@ -7449,7 +7332,6 @@ TODO: Write documentation.
 - `StartingWith$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `You`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AllChoose`, `Battlefield`, `ChangePermanent`, `ClashDamage`, `CopyAgain`, `DBAtkLeftRight`, `DBBidding`, `DBChangeTargets`, `DBChangeZone`, `DBChangeZoneAll`, `DBChoose`, `DBChooseRandom`, `DBCleanRemembered`, `DBCleanup`, `DBCleanupBis`, `DBClearNotes`, `DBCopy`, `DBCopySelf`, `DBDestroy`, `DBDestroyAll`, `DBDraw`, `DBDraw2`, `DBEffect`, `DBExile`, `DBFinalReset`, `DBFortune`, `DBFriends`, `DBGainLife`, `DBIncendiaryDraw`, `DBMill`, `DBOnlyBlock`, `DBPhaseOut`, `DBPlayAll`, `DBPoison`, `DBPump`, `DBPutCounter`, `DBPutOnBattlefield`, `DBRepeatCard`, `DBRepeatEach`, `DBRepeatLand`, `DBRepeatPay`, `DBRepeatPut`, `DBRepeatToken`, `DBRepeatYou`, `DBReturn`, `DBReveal`, `DBSac`, `DBSacAll`, `DBScry`, `DBSearch`, `DBSecrets`, `DBShuffle`, `DBToken`, `DBTreasure`, `DBYouDraw`, `DelTrig`, `DestroyAll`, `ExileAll`, `ExileAllOthers`, `ExileAurora`, `ExileChosen`, `FilterCreature`, `HuntedDamage`, `Nightmare`, `PutCounterAgain`, `PutIntoHand`, `PWAway`, `RepeatLands`, `SacA1C2L3`, `SacA1L2C3`, `SacA2C3`, `SacA2L3`, `SacA3`, `SacAllOthers`, `SacC1A2L3`, `SacC1L2A3`, `SacC2A3`, `SacC2L3`, `SacC3`, `SacL1A2C3`, `SacL1C2A3`, `SacL2A3`, `SacL2C3`, `SacL3`, `ShipToBottom`, `WalkAway`, `ZoneAuras`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE8`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -7480,7 +7362,6 @@ TODO: Write documentation.
 - `ChooseCounter$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBImmediateTrigger`
 - `ValidCounterType$`: TODO: Describe this parameter.
   Observed values: `ENERGY`, `M1M1`, `P1P1`, `POISON`
 - `ValidSource$`: TODO: Describe this parameter.
@@ -7496,7 +7377,6 @@ TODO: Write documentation.
 - `DivideShield$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDealDamage`, `ExileEffect`, `RemoveCtrsRepl`
 
 ## `ReplaceEffect`
 
@@ -7510,7 +7390,6 @@ TODO: Write documentation.
 - `ConditionPresent$`: TODO: Describe this parameter.
   Observed values: `Card`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBExileEffect`, `ExileEffect`, `EyeForEye`, `IgnoreLowest`, `IgnoreRoll`
 - `VarKey$`: TODO: Describe this parameter.
   Observed values: `You`
 - `VarName$`: TODO: Describe this parameter.
@@ -7582,7 +7461,6 @@ TODO: Write documentation.
   Observed values: `Exile`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ReturnFromExile`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 
@@ -7632,7 +7510,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBChangeZone`, `DBChoose`, `DBChooseCard`, `DBCinderDamage`, `DBCleanup`, `DBCounter`, `DBDamage`, `DBDementiaDiscard`, `DBDiscard`, `DBDiscard1`, `DBDmg`, `DBEffect`, `DBEvokeLand`, `DBExile`, `DBGain`, `DBGainLife`, `DBImmediateTrig`, `DBIvyPump`, `DBJasmineLife`, `DBLose`, `DBMana`, `DBMetalWorkerMana`, `DBNightshadePump`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBPutCounters`, `DBRepeat`, `DBScentOfBrineCounter`, `DBScentOfCinderDamage`, `DBScentOfIvyPump`, `DBScentOfJasmineLife`, `DBScentOfNightshadePump`, `DBSpeakerMana`, `DBTap`, `DBTrigger`, `DBTriggerLand`, `DelTrigSlowtrip`, `DrainOnUpkeep`, `ExchangeOwn1`, `ManaOnMain`, `PickOne`, `PlayChosen`, `ScryOnUpkeep`, `SetLifeOnUpkeep`, `TokenOnUpkeep`, `TrigEffect`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player`
 
@@ -7668,7 +7545,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `ChooseCard`, `Damage`, `DBChangeZone`, `DBChoose`, `DBChooseCard`, `DBChooseCardType`, `DBChooseW`, `DBCounter`, `DBDamage`, `DBDiscard`, `DBDraw`, `DBExile`, `DBGainLife`, `DBInHandDraw`, `DBLoseGame`, `DBNameCard`, `DBNotInHandDraw`, `DBPlay`, `DBRepeat`, `DBRepeatChoose`, `DBRepeatDiscard`, `DBRepeatEach`, `DBRevealTopLibrary`, `DBScryingGlassDraw`, `DBToken`, `DelTrigSlowtrip`, `ExileCard`, `MyPleasure`, `ShuffleCardToLib`, `TrigPlay`, `WinGame`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player`
@@ -7682,7 +7558,6 @@ TODO: Write documentation.
   Observed values: `T Exile<1/CARDNAME>`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBPlaneswalk`, `PWAway`
 
 ## `RingTemptsYou`
 
@@ -7705,7 +7580,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBDigUntil`, `DBDraw`, `DBMill`, `DBPutCounter`, `TrigSearch`
 
 ## `RollDice`
 
@@ -7763,7 +7637,6 @@ TODO: Write documentation.
 - `StoreResults$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Add0`, `Crash`, `DBAnimate`, `DBAssemble`, `DBChange`, `DBChangeZone`, `DBCheck`, `DBCounters`, `DBCountersEnd`, `DBCountersETB`, `DBCountersUpkeep`, `DBCreateTreasure`, `DBDamage`, `DBDamageAll`, `DBDecr`, `DBDestroy`, `DBDouble`, `DBDraw`, `DBEffect`, `DBGainLife`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBImmediateTrigPutCounter`, `DBLife`, `DBLoyalty`, `DBMill`, `DBPump`, `DBPutCounter`, `DBReturn`, `DBReveal`, `DBScry`, `DBToken`, `DBTreasure`, `DmgPlus`, `PumpDS`, `RollTough`, `Tokens`, `TrigDraw`, `Tuck`
 - `SubsForEach$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ToVisitYourAttractions$`: TODO: Describe this parameter.
@@ -7792,7 +7665,6 @@ TODO: Write documentation.
 - `Defined$`: TODO: Describe this parameter.
   Observed values: `Remembered`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChangeZone`
 
 ## `Sacrifice`
 
@@ -7866,7 +7738,6 @@ TODO: Write documentation.
 - `SuAbility$`: TODO: Describe this parameter.
   Observed values: `DBLoseLife`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AllFoundCelebration`, `CrashDamage`, `DBAddTurn`, `DBAnimate`, `DBBolster`, `DBBranch`, `DBChange`, `DBChangeZone`, `DBChangeZoneAll`, `DBCleanup`, `DBCleanup2`, `DBCleanupChosen`, `DBCoin`, `DBConjure`, `DBCopy`, `DBCoralCleanup`, `DBCurseArtifactDamage`, `DBCursePutCounter`, `DBDamage`, `DBDamageAll`, `DBDealDamage`, `DBDestroy`, `DBDestroyAll`, `DBDig`, `DBDigUntil`, `DBDiscard`, `DBDiscardOpp`, `DBDmg`, `DBDrain`, `DBDraw`, `DBEdict`, `DBEffect`, `DBElderSpawnDamage`, `DBElderSpawnSacrificeMe`, `DBExile`, `DBFood`, `DBGainLife`, `DBGenericChoice`, `DBGraveyard`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBIntensify`, `DBInvestigate`, `DBLand`, `DBLoseLife`, `DBLoseLife2`, `DBLoseLifeC`, `DBLoseLifeE`, `DBLoseLifeOpp`, `DBLoseLifeP`, `DBMana`, `DBNameCard`, `DBOpen`, `DBOpenSafe`, `DBPlaneswalk`, `DBPoison`, `DBPump`, `DBPutCounter`, `DBRageDamage`, `DBRepeat`, `DBRepeatEach`, `DBReturn`, `DBReturnChoose`, `DBReveal`, `DBSac`, `DBSac2`, `DBSacCreature`, `DBSacEnchantment`, `DBSacKindred`, `DBSacLand`, `DBSacPlaneswalker`, `DBSacrifice`, `DBSacrificeBoth`, `DBSacSelf`, `DBScry`, `DBSearch`, `DBShift`, `DBStealCreature`, `DBTap`, `DBToken`, `DBTransform`, `DBTreasure`, `DBTrigger`, `DevourCounters`, `Discard`, `DiscardIf`, `Dmg`, `EvidenceCollected`, `FetchLands`, `FluesDig`, `GainLife`, `GrabDmg`, `HalfHeartDBDamage`, `IdolWalk`, `LetEmHaveIt`, `MakeToken`, `MoveToGraveyard`, `NettlevineAttach`, `ResetFlips`, `ReturnGrave`, `Rise`, `RollD20`, `RuptureDmg`, `SacrificeCreatures`, `StoreCanSearch`, `TrigChoose`, `TrigConjure`, `TrigDamage`, `TrigImmediate`, `TrigImmediateTrig`, `TrigPayCost`, `TrigTempt`
 - `TargetUnique$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TgtPrompt$`: TODO: Describe this parameter.
@@ -7921,7 +7792,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBBounce`, `DBChange`, `DBCleanA1C2L3`, `DBCleanA1L2C3`, `DBCleanA3`, `DBCleanC1A2L3`, `DBCleanC1L2A3`, `DBCleanC3`, `DBCleanL1A2C3`, `DBCleanL1C2A3`, `DBCleanL3`, `DBCleanup`, `DBCleanup2`, `DBConjure`, `DBDamage`, `DBDamageAll`, `DBDig`, `DBDigUntil`, `DBDiscardHand`, `DBDmg`, `DBDrain`, `DBDraw`, `DBEffect`, `DBGainControl`, `DBGainLife`, `DBLifeGain`, `DBPutCounter`, `DBRepeat`, `DBRepeatEach`, `DBReturn`, `DBReturnAll`, `DBToken`, `MoveToBattlefield`, `ReturnAll`, `StillFurious`, `TrigImmediateTrig`
 - `TgtPrompt$`: TODO: Describe this parameter.
 - `UnlessCost$`: TODO: Describe this parameter.
   Observed values: `2`, `DefinedCost_Remembered_Minus2`, `PayEnergy<N>`, `PayEnergy<X>`, `W U B R G`, `X`
@@ -7988,7 +7858,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChoice`, `DBCleanup`, `DBCounter`, `DBDamageAll`, `DBDealDamage`, `DBDig`, `DBDraw`, `DBDraw2`, `DBDraw3`, `DBEffect`, `DBEnergy`, `DBExile`, `DBExplore`, `DBLandmark`, `DBLoseLife`, `DBPeekAndReveal`, `DBPutCounter`, `DBReveal`, `DBScry`, `DBScry2`, `DBScry3`, `DBToken`, `Draw`, `Draw2`, `OraclesInsightDraw`, `TrigGainLife`, `TrigPutCounter`, `TrigTempt`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GEY`
 - `UnlessCost$`: TODO: Describe this parameter.
@@ -8048,7 +7917,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBAnimateW`, `DBBattlefield`, `DBBottomCard`, `DBChangeZone`, `DBChangeZone1`, `DBChooseCard`, `DBCleanup`, `DBCloak`, `DBDelay`, `DBDelayTrig`, `DBDiscard`, `DBEffect`, `DBExile`, `DBManifest`, `DBPump`, `DBPump2`, `DBPut`, `DBRemoveCounter`, `DBShuffle`, `Shuffle`, `TrigImmediateTrig`
 - `Type$`: TODO: Describe this parameter.
   Observed values: `Artifact`, `Artifact.nonLand+cmcLEX`, `Card.!sharesCardTypeWith Remembered`, `Card.ChosenType`, `Card.cmcEQX`, `Card.cmcEQX+YouOwn`, `Card.cmcEQY`, `Card.cmcGTX`, `Card.cmcLTX`, `Card.Creature`, `Card.Creature+cmcLEX`, `Card.Creature+MostProminentCreatureTypeInLibrary`, `Card.Dragon`, `Card.Elf`, `Card.Historic`, `Card.Instant+cmcEQ3,Card.Sorcery+cmcEQ3`, `Card.Instant,Card.Sorcery`, `Card.Land`, `Card.Land+Basic`, `Card.Land+Urza's`, `Card.namedAudacious Knuckleblade`, `Card.nonCreature+nonLand`, `Card.nonLand`, `Card.nonLand+cmcEQX`, `Card.nonLand+cmcLE2`, `Card.nonShark`, `Card.Permanent+ChosenType`, `Card.Permanent+cmcEQX`, `Card.Permanent+nonLand`, `Card.Permanent+nonLand+cmcLE3`, `Card.sharesCardTypeWith Remembered`, `Card.sharesCardTypeWith TriggeredCards`, `Card.SharesColorWith Valid Permanent.YouCtrl`, `Card.Survivor+cmcLEX`, `Card.withStart your engines`, `Creature`, `Creature.cmcEQX`, `Creature.cmcLE2`, `Creature.cmcLE3+YouOwn`, `Creature.cmcLTX`, `Creature.nonElephant+cmcLE3`, `Creature.YouOwn+cmcLE3`, `Dragon`, `Forest`, `Instant,Sorcery`, `Instant.cmcLE3,Sorcery.cmcLE3`, `Kithkin`, `Land`, `Land.hasABasicLandType`, `Land.nonBasic`, `Merfolk`, `Permanent.nonLand+cmcLEX`, `Pirate`, `Rat`, `Spacecraft`, `Vampire`
 - `Types$`: TODO: Describe this parameter.
@@ -8068,7 +7936,6 @@ TODO: Write documentation.
 - `RepeatNum$`: TODO: Describe this parameter.
   Observed values: `3`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `ExilePlot`
 
 ## `SetLife`
 
@@ -8102,7 +7969,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBEffect`, `DBExile`, `DBLoseGame`, `DBLoseHalf`, `DBNoCombatDamage`, `DBNoUntap`, `DBShuffle`, `ExileEffect`, `ExileSelf`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -8182,7 +8048,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAdapt`, `DBAttach`, `DBChangeZone`, `DBCleanup`, `DBCounter`, `DBCurseNonWolves`, `DBDouble`, `DBGainLife`, `DBImmediateTrig`, `DBLoseLife`, `DBMana`, `DBPump`, `DBPumpAll`, `DBReturn`, `DBSetLife`, `DBToken`, `DBTokenLaserbeak`, `DBTokenRavage`, `DBTreasureTokens`, `DBUntap`, `ExileSelf`, `ExtraBeginningPhase`, `IgnitionDamage`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`, `GE4`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -8231,7 +8096,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChoose`, `DBCleanRemembered`, `DBCleanup`, `DBDigUntil`, `DBEffect`, `DBExile`, `DBMassCleanup`, `DBMill`, `DBReveal`, `DelTrigSlowtrip`, `RevealCard`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Player`
 
@@ -8256,7 +8120,6 @@ TODO: Write documentation.
 - `Step$`: TODO: Describe this parameter.
   Observed values: `Draw`, `Untap`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `TrigDelay`, `TrigTap`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Opponent`, `Player`
 
@@ -8296,7 +8159,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AniBuzz`, `DBChoose`, `DBCleanup`, `DBClear`, `DBDamage`, `DBDmg`, `DBEffect`, `DBEmptyLibrary`, `DBExile`, `DBGiveUp`, `DBLoseLife`, `DBMilledCreature`, `DBRepeat`, `DBRepeatChoice`, `DBResetEach`, `DBResetRem`, `DBSacrifice`, `DBStore`, `NotifyRock`, `OppChoice`, `RepeatClash`, `RepeatPlay`, `ResetLoss`, `ResetSVars2`, `ResetSVars3`, `ResetWins`, `ScoreLoss`, `SetFlipsDone`, `StoreCMC`, `StoreTgtP`, `StoreTgtPW`
 - `SVar$`: TODO: Describe this parameter.
   Observed values: `AccumulatedMilled`, `Aid`, `CarpetX`, `CheckNotPaid`, `CheckRepeat`, `CurrPower`, `Doodles`, `EachPlayer`, `ElkinSVar`, `ExiledCMC`, `FlipsDone`, `Hits`, `JoinForcesAmount`, `LandsPlayedFromExile`, `LandsPlayedFromNotHand`, `Left`, `LifePaid`, `LifePaidOnETB`, `LifePaidOnNewGame`, `Limit`, `Loss`, `Losses`, `M`, `ModsThisTurn`, `Noted`, `NotedLife`, `NotedPower`, `NumLife`, `NumPlayerGiveup`, `OppChose`, `PaidAmount`, `RepeatCheck`, `RhysticPaid`, `SackedCMC`, `Safe`, `SetTrap`, `ShieldAmount`, `TaintedCheck`, `TreasureNum`, `VarFSLif`, `VarFSVig`, `VarVigLif`, `Win`, `Wins`, `X`, `XDelirium`, `Y`, `YouChose`
 - `Type$`: TODO: Describe this parameter.
@@ -8330,7 +8192,6 @@ TODO: Write documentation.
 - `StartingLife$`: TODO: Describe this parameter.
   Observed values: `1`, `5`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBEffect`, `DBRepeatEachPlayer`
 
 ## `Surveil`
 
@@ -8376,7 +8237,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCastFromYard`, `DBChangeZone`, `DBChooseCard`, `DBCleanup`, `DBCopy`, `DBCounter`, `DBDiscard`, `DBDraw`, `DBExile`, `DBGainLife`, `DBInvestigate`, `DBPrepare`, `DBRemoveCounter`, `DBReturn`, `DBTransform`, `DBUntap`, `DBWin`, `TrigImmediate`
 
 ## `SwitchBlock`
 
@@ -8415,7 +8275,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBGainLife`, `DBTreasure`
 
 ## `Tap`
 
@@ -8501,7 +8360,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AbandonSelf`, `ChoosePlainsToSave`, `DBAddCounter`, `DBAnimate`, `DBBounce`, `DBChangeZone`, `DBChooseOpponent`, `DBCleanup`, `DBConstrict`, `DBControl`, `DBCounter`, `DBDamage`, `DBDealDamage`, `DBDestroyAll`, `DBDmg`, `DBDraw`, `DBEachDamage`, `DBEffect`, `DBElderSpawnDamage`, `DBExile`, `DBExileSelf`, `DBFight`, `DBGainLife`, `DBGoad`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBInvestigate`, `DBJaddiLifestriderGainLife`, `DBLearn`, `DBLoseLife`, `DBMana`, `DBMill`, `DBMonarch`, `DBNekoTe`, `DBNoUntap`, `DBProliferate`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBRadiation`, `DBRemoveAttacker`, `DBRemoveBlocker`, `DBRemoveCounter`, `DBScry`, `DBSeek`, `DBSetAttacking`, `DBStayTapped`, `DBStun`, `DBTap`, `DBToken`, `DBTransform`, `DBTransform1`, `DBTransform2`, `DBUnattach`, `DBUntap`, `DelTrigSlowtrip`, `DovinPump`, `Drain`, `GoblinHangover`, `RemCombat`, `RemoveSelf`, `RonsoClone`, `SpiritDmg`, `TamiyoPump`, `TrigDraw`, `TrigPump`, `TrigTapW2`, `VampiricFeed`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE3`
 - `Tapper$`: TODO: Describe this parameter.
@@ -8558,7 +8416,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBAddTurn`, `DBAnimate`, `DBChooseNumber`, `DBChooseP`, `DBCleanup`, `DBDamage`, `DBDmg`, `DBEffect`, `DBExileSelf`, `DBGoad`, `DBNoUntap`, `DBPump`, `DBPumpAll`, `DBStun`, `DBUnTap`, `DBUntapAll`, `DrainMana`, `FeintPump`, `ManaLose`, `NoUntap`, `PathwayCleanup`, `SpellLimitations`, `TrigPump2`, `WildHuntDamage`
 - `TapperController$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TgtPrompt$`: TODO: Describe this parameter.
@@ -8590,7 +8447,6 @@ TODO: Write documentation.
   Observed values: `GE4`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCopy`, `DBDraw`, `DBTapOrUntap`, `DelTrigSlowtrip`
 - `Tapper$`: TODO: Describe this parameter.
   Observed values: `TriggeredAttackingPlayer`
 - `TargetingPlayer$`: TODO: Describe this parameter.
@@ -8638,7 +8494,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBDraw`
 
 ## `Token`
 
@@ -8762,7 +8617,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `AdditionalPump`, `Blood`, `BlotDestroy`, `ChoseBlack`, `ChoseBlue`, `ChoseGreen`, `ChoseRed`, `CleanupFinal`, `Clear`, `CoupDestroy`, `CreateCopy`, `DBAbandon`, `DBAddTurn`, `DBAmass`, `DBAngels`, `DBAnimate`, `DBAnimateAll`, `DBAttach`, `DBAttachEach`, `DBBounce`, `DBCentaurToken`, `DBChange`, `DBChangeZone`, `DBChoose`, `DBChooseToken`, `DBChooseType`, `DBChooseX`, `DBClaim`, `DBClash`, `DBCleanup`, `DBClearRemember`, `DBCleric`, `DBClone`, `DBCopy`, `DBCount`, `DBCounter`, `DBCounters`, `DBCurseNonSpiders`, `DBDamage`, `DBDamageYou`, `DBDealDamage`, `DBDelayedTrigger`, `DBDelayTrig`, `DBDelTrig`, `DBDestroy`, `DBDig`, `DBDiscount`, `DBDrain`, `DBDraw`, `DBEarthbend`, `DBEff`, `DBEffect`, `DBEnergy`, `DBExile`, `DBFight`, `DBFirstStrike`, `DBFlip`, `DBGainLife`, `DBGainLifePlains`, `DBGoad`, `DBImmediateTrig`, `DBImmediateTrig1`, `DBImmediateTrigger`, `DBIntensify`, `DBInvestigate`, `DBLearn`, `DBLoot`, `DBLoseLife`, `DBLoseLife1`, `DBLoseLife14M`, `DBLoseLife3`, `DBLosePerpAbility`, `DBMakeCard`, `DBManifest`, `DBMassTokens`, `DBMill`, `DBMove`, `DBNoUntap`, `DBPass`, `DBPhases`, `DBPlay`, `DBPrepare`, `DBPrevent`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBPutCounterAll`, `DBPutCounters`, `DBReach`, `DBRepeat`, `DBReset`, `DBReturn`, `DBRhinoToken`, `DBRogue`, `DBRoll`, `DBSac`, `DBSac1`, `DBSack`, `DBSacrifice`, `DBScry`, `DBSetLife`, `DBShuffle`, `DBSpace`, `DBStoreSVar`, `DBStoreSVarT`, `DBSurveil`, `DBSuspect`, `DBTakeTurn`, `DBToken`, `DBToken2`, `DBTokenBis`, `DBTokenOpp`, `DBTokenTrice`, `DBTransform`, `DBTreasure`, `DBTrigger`, `DBUnimprint`, `DBUntap`, `DBVehicle`, `DBVenture`, `DBWinGame`, `DBWizard`, `DBWrath`, `DelTrig`, `ExileEffect`, `Insect`, `KickerPump`, `Life`, `MatureEvil`, `MoltenFlip`, `OppScry`, `RememberPlayer`, `RollDie`, `TrigDealDamage`, `TrigExile`, `TrigLoseLife`, `TrigPump`, `TrigTempt`, `UnscytheDBCleanup`, `UPaid`, `VillainousChoice`
 - `SVarCompare$`: TODO: Describe this parameter.
   Observed values: `GE2`, `GE8`, `GEY`
 - `TargetMax$`: TODO: Describe this parameter.
@@ -8859,7 +8713,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `DBCleanupChosen`, `DBClearImprinted`, `DBLoseLife`, `TheyChoose`, `TrigTempt`
 - `Ultimate$`: TODO: Describe this parameter.
   Observed values: `True`
 - `UnchosenPile$`: TODO: Describe this parameter.
@@ -8885,7 +8738,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBTap`, `ExileSelf`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Creature`
 
@@ -8985,7 +8837,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Animate`, `DBAddCombat`, `DBAddPhase`, `DBAnimate`, `DBChange`, `DBCleanup`, `DBClone`, `DBControl`, `DBDelTrig`, `DBDesc`, `DBDiscard`, `DBDraw`, `DBEffect`, `DBGainControl`, `DBGainLife`, `DBInvestigate`, `DBPhase`, `DBProtection`, `DBPump`, `DBPutCounter`, `DBRandom`, `DBRemoveCombat`, `DBScry`, `DBStunCounter`, `DBTap`, `DBTransform`, `DBUntap`, `DelTrigSlowtrip`, `GainShroud`, `Reconsider`, `RemCombat`, `TrigDraw`
 - `TargetMax$`: TODO: Describe this parameter.
   Observed values: `1`, `2`, `3`, `4`, `6`, `MaxTgts`, `OneEach`, `X`
 - `TargetMin$`: TODO: Describe this parameter.
@@ -9058,7 +8909,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `Battlecry`, `DBAddCombat`, `DBAddPhase`, `DBCleanup`, `DBDraw`, `DBEffect`, `DBGainControl`, `DBGainCtrl`, `DBGoad`, `DBPhase`, `DBPhaseOut`, `DBPump`, `DBPumpAll`, `DBPumpYourSamurai`, `DBTap`, `DBUntap`, `RepeatLoseLife`, `TheFuryContinues`
 - `UnlessCost$`: TODO: Describe this parameter.
   Observed values: `PayEnergy<8>`
 - `UnlessPayer$`: TODO: Describe this parameter.
@@ -9091,7 +8941,6 @@ TODO: Write documentation.
   Observed values: `True`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBGainLife`
 
 ## `VillainousChoice`
 
@@ -9105,7 +8954,6 @@ TODO: Write documentation.
 - `SpellDescription$`: TODO: Describe this parameter.
 - `StackDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`
 - `ValidTgts$`: TODO: Describe this parameter.
   Observed values: `Opponent`
 
@@ -9133,7 +8981,6 @@ TODO: Write documentation.
 - `StoreVoteNum$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBChange`, `DBExile`, `DBGainControl`, `DBRepeatDraw`, `DBRepeatOpp`, `DBRepeatStun`
 - `TargetType$`: TODO: Describe this parameter.
   Observed values: `Spell`
 - `TgtZone$`: TODO: Describe this parameter.
@@ -9176,4 +9023,3 @@ TODO: Write documentation.
   Observed values: `Player.lifeEQX`, `You`
 - `SpellDescription$`: TODO: Describe this parameter.
 - `SubAbility$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `GameIsADraw`

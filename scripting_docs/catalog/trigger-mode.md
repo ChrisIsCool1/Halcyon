@@ -8,7 +8,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBCleanup`, `EffectCleanup`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -24,7 +23,6 @@ TODO: Write documentation.
 - `Condition$`: TODO: Describe this parameter.
   Observed values: `LifePaid`, `Sacrificed`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChangeZone`, `TrigCopy`, `TrigCopyAbility`, `TrigCopySpell`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy1`, `TrigDig`, `TrigDmg`, `TrigDraw`, `TrigGain`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigStore`, `TrigToken`
 - `OneOff$`: TODO: Describe this parameter.
   Observed values: `True`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -57,7 +55,6 @@ TODO: Write documentation.
 - `AILogic$`: TODO: Describe this parameter.
   Observed values: `ActivateOnce`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDigUntil`, `TrigDrain`, `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -72,7 +69,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBProbingTelepathy`, `TrigBigToken`, `TrigCounter`, `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggeredOwnAbility$`: TODO: Describe this parameter.
   Observed values: `True`
@@ -93,7 +89,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ExileSelf`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `ValidCard$`: TODO: Describe this parameter.
@@ -136,7 +131,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `NumScrolls`, `OpponentSmallest`, `X`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ExileEffect`, `RolledWalk`, `Sacrifice`, `TrigChange`, `TrigDestroy`, `TrigDestroyAll`, `TrigExile`, `TrigFlip`, `TrigLoseGame`, `TrigLurkingJackalsAnimate`, `TrigOpalAvengerAnimate`, `TrigRemove`, `TrigRepeatEach`, `TrigSac`, `TrigSacrifice`, `TrigSacSelf`, `TrigToken`, `TrigTransform`, `TrigVCAnimate`, `TrigWin`, `TrigWinGame`
 - `HasColorCreatureInPlay$`: TODO: Describe this parameter.
   Observed values: `GWU`, `RGW`
 - `HasColorInGraveyard$`: TODO: Describe this parameter.
@@ -211,7 +205,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBClone`, `TrigChoose`, `TrigClone`, `TrigCopy`, `TrigGainControl`, `TrigTap`, `TrigToken`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TargetRelativeToSource$`: TODO: Describe this parameter.
@@ -230,7 +223,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ABBarrelingPump`, `AddSpores`, `DelayedTrig`, `DelTrig`, `HalfHeartTrigSacrifice`, `LaccolithDmg`, `MakeEffective`, `PumpSelf`, `StormsurgeKrakenDraw`, `TrigBlockedPump`, `TrigBounce`, `TrigCharm`, `TrigChooseBlockers`, `TrigClash`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDiscard`, `TrigDrain`, `TrigDraw`, `TrigExile`, `TrigFog`, `TrigGain`, `TrigMill`, `TrigNoDamage`, `TrigPeek`, `TrigPump`, `TrigPump2`, `TrigPutCounter`, `TrigRegen`, `TrigReturn`, `TrigSac`, `TrigTap`, `TrigTapAll`, `TrigToken`, `TrigTokenBlocking`, `TrigUntap`, `TrigUntapAll`, `TrigUntapRemove`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Creature.Wall+Other+sharesBlockingAssignmentWith`
 - `IsPresent2$`: TODO: Describe this parameter.
@@ -257,7 +249,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ABDestroy`, `DBLoseLife`, `DelayAttackTrig`, `DelTrig`, `DelTrigAttacker`, `DelTrigBlocked`, `DelTrigBlocker`, `DestroyAttacker`, `DestroyBlocker`, `PumpAttacker`, `PumpBlocker`, `RetaliationTrigPump`, `RogueDamage`, `TrigAnimateAttacker`, `TrigAnimateBlocker`, `TrigAnimateDefender`, `TrigBlocked`, `TrigBlockedPump`, `TrigBlocks`, `TrigChangeZone`, `TrigDamage`, `TrigDamageAttacker`, `TrigDamageBlocker`, `TrigDealDamage`, `TrigDealDamageAttack`, `TrigDealDamageBlock`, `TrigDestroy`, `TrigDestroyAttacker`, `TrigDestroyBlocked`, `TrigDestroyBlocker`, `TrigDraw`, `TrigEffect`, `TrigEndCombat`, `TrigExile`, `TrigLoseLife`, `TrigPhaseAttacker`, `TrigPhaseBlocker`, `TrigPump`, `TrigPumpAttacker`, `TrigPumpBlocker`, `TrigPumpShark`, `TrigPutCounter`
 - `PrecostDesc$`: TODO: Describe this parameter.
   Observed values: `Psionic Adept —`
 - `Secondary$`: TODO: Describe this parameter.
@@ -278,7 +269,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`, `TrigPump`, `TrigTreasure`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -305,7 +295,6 @@ TODO: Write documentation.
 - `Condition$`: TODO: Describe this parameter.
   Observed values: `AttackerHasUnattackedOpp`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDamage`, `DBDraw`, `DBGainLife`, `DBLoseLife`, `DBPump`, `DBPutCounter`, `DBRepeat`, `DBToken`, `DBTransform`, `DBUnTapAll`, `DelTrigEOC`, `TrigAnimate`, `TrigBolster`, `TrigChangeZone`, `TrigCharm`, `TrigChoose`, `TrigConjure`, `TrigConnive`, `TrigCopy`, `TrigCounter`, `TrigCounterAttacker`, `TrigCounters`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDig`, `TrigDiscard`, `TrigDiscover`, `TrigDmg`, `TrigDoubleCounters`, `TrigDraft`, `TrigDrain`, `TrigDraw`, `TrigEarthbend`, `TrigEffect`, `TrigEnergy`, `TrigExile`, `TrigExperience`, `TrigFight`, `TrigFood`, `TrigGainControl`, `TrigGainLife`, `TrigGenericChoice`, `TrigImmediateTrig`, `TrigIndestructible`, `TrigInvestigate`, `TrigLoot`, `TrigLoseLife`, `TrigMana`, `TrigMill`, `TrigPopulate`, `TrigPrepare`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigRepeat`, `TrigRepeatDefender`, `TrigRepeatEach`, `TrigReturn`, `TrigSac`, `TrigScry`, `TrigSearch`, `TrigState`, `TrigSuppression`, `TrigSurveil`, `TrigTapOrUntap`, `TrigTheyDraw`, `TrigToken`, `TrigTransform`, `TrigTreasure`, `TrigUnblockable`, `TrigUntap`, `TrigUntapAll`, `TrigWalkerPump`
 - `FirstCombat$`: TODO: Describe this parameter.
   Observed values: `True`
 - `GameActivationLimit$`: TODO: Describe this parameter.
@@ -346,7 +335,6 @@ TODO: Write documentation.
 - `AttackingPlayer$`: TODO: Describe this parameter.
   Observed values: `Player`, `Player.Opponent`, `You`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBTreasure`, `TrigAnimate`, `TrigCharm`, `TrigCopy`, `TrigDealDamage`, `TrigDraw`, `TrigDrawAndDamage`, `TrigExile`, `TrigFood`, `TrigGoad`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigRadiation`, `TrigReveal`, `TrigTap`, `TrigToken`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -363,7 +351,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Damage`, `DBChangeZone`, `DBNoCombatDamage`, `FarrelDmg`, `FrenzyPump`, `GainLife`, `TrigActivateManaAbility`, `TrigChange`, `TrigDamage`, `TrigDestroy`, `TrigDestroyCreature`, `TrigDig`, `TrigDiscard`, `TrigDiscards`, `TrigDraw`, `TrigExile`, `TrigGainControl`, `TrigGainLife`, `TrigLoseLife`, `TrigPlay`, `TrigPoison`, `TrigPump`, `TrigSacrifice`, `TrigToken`, `TrigTransform`, `TrigUntap`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `EnchantedController`, `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -380,7 +367,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw2`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -415,7 +401,6 @@ TODO: Write documentation.
 - `Desert$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Abandon`, `ABImpulse`, `AnimosityPump`, `AnthemPump`, `ArmorConjure`, `Aurify`, `BearUmbraUntap`, `CCCToken`, `CheckPower`, `CoinFlip`, `DBAnimate`, `DBAttach`, `DBBlight`, `DBChangeZone`, `DBClone`, `DBCounter`, `DBDealDamage`, `DBDig`, `DBDigUntil`, `DBDiscard`, `DBDmg`, `DBDraw`, `DBEffect`, `DBExile`, `DBFlip`, `DBLoop`, `DBMustBlock`, `DBNoCombatDamage`, `DBOpen`, `DBPump`, `DBRepeat`, `DBSacrifice`, `DBScry`, `DBTap`, `DBTreasure`, `DBTrigRollDice`, `DBUnblockable`, `DBUntap`, `DBVenture`, `Debuff`, `DebuffAttacker10`, `DelayedTransform`, `DelayedTrig`, `DelayTrig`, `DelBounce`, `DelTrig`, `DelTrigDestroy`, `Detain`, `DmgDistro`, `DragonWake`, `DrawACard`, `EachName`, `FlipCoin`, `GrothamaFight`, `HeraldsWarCry`, `HeroPump`, `JacePump`, `LaunchTokenAttacking`, `LiftMountain`, `MtendaLionPump`, `NorinExile`, `PatronLife`, `Pump`, `PumpTrample`, `RubblebeltWarCry`, `SaintTraftToken`, `StayTapped`, `TamiyoPump`, `TapOneEach`, `TgtNoBlock`, `ThorncasterDmg`, `TowerAboveTrigBlock`, `TrigAddCombat`, `TrigAmass`, `TrigAngelToken`, `TrigAnimate`, `TrigAnimateAll`, `TrigAttach`, `TrigAttackAttach`, `TrigBattalionDmg`, `TrigBattalionEffect`, `TrigBattalionPump`, `TrigBattleCry`, `TrigBolster`, `TrigBorrow`, `TrigBounce`, `TrigBranch`, `TrigCanNotBlock`, `TrigCantBlock`, `TrigCast`, `TrigChange`, `TrigChangeZone`, `TrigCharge`, `TrigCharm`, `TrigChoice`, `TrigChoose`, `TrigChooseNumber`, `TrigChoosePump`, `TrigClash`, `TrigClearRem`, `TrigClockworkRemoveCounter`, `TrigClone`, `TrigConjure`, `TrigConnive`, `TrigCopy`, `TrigCopyPermanent`, `TrigCounter`, `TrigCounters`, `TrigCurse`, `TrigDamage`, `TrigDamage1`, `TrigDamageAll`, `TrigDealDamage`, `TrigDebuff`, `TrigDelayedTrig`, `TrigDelayedTrigger`, `TrigDelTrig`, `TrigDestroy`, `TrigDestroy2`, `TrigDestroyAll`, `TrigDig`, `TrigDigMulti`, `TrigDigUntil`, `TrigDiscard`, `TrigDiscover`, `TrigDmg`, `TrigDouble`, `TrigDoubleCounters`, `TrigDoubleLife`, `TrigDoublePower`, `TrigDoubleToughness`, `TrigDraft`, `TrigDrain`, `TrigDraw`, `TrigDraw1`, `TrigDraw2`, `TrigDread`, `TrigEarthbend`, `TrigEff`, `TrigEffect`, `TrigEggCounter`, `TrigEndure`, `TrigEnergy`, `TrigExchangeDamage`, `TrigExile`, `TrigExileN`, `TrigExperience`, `TrigExplore`, `TrigFight`, `TrigFlashback`, `TrigFlicker`, `TrigFlipCoins`, `TrigFlying`, `TrigFood`, `TrigForceBlock`, `TrigFormidable`, `TrigGain`, `TrigGainControl`, `TrigGainLife`, `TrigGetCooler`, `TrigGoad`, `TrigGuess`, `TrigHeist`, `TrigImmediate`, `TrigImmediateTrig`, `TrigInfectionCounter`, `TrigInstantEffect`, `TrigInvestigate`, `TrigJoinForces`, `TrigLimitBlock`, `TrigLook`, `TrigLoot`, `TrigLose`, `TrigLoseLife`, `TrigLoseLifeAttack`, `TrigLure`, `TrigMana`, `TrigMassacre`, `TrigMill`, `TrigMustBlock`, `TrigNameCard`, `TrigOdricEffect`, `TrigPeek`, `TrigPlay`, `TrigPrepare`, `TrigProliferate`, `TrigProvoke`, `TrigPump`, `TrigPump1`, `TrigPump2`, `TrigPumpA`, `TrigPumpAll`, `TrigPumpAtt`, `TrigPumpAttack`, `TrigPut`, `TrigPutCounter`, `TrigPutCounter1`, `TrigPutCounterAll`, `TrigPutCounters`, `TrigRadiation`, `TrigRamp`, `TrigRandom`, `TrigReanimate`, `TrigRemoveCounter`, `TrigRepeat`, `TrigRepeatTypes`, `TrigReturn`, `TrigReveal`, `TrigRoll`, `TrigRollDice`, `TrigSac`, `TrigSacrifice`, `TrigSacUnless`, `TrigScry`, `TrigSearch`, `TrigSeek`, `TrigSelectTargetCreature`, `TrigShrink`, `TrigShuffle`, `TrigSoulcall`, `TrigStangg`, `TrigSteal`, `TrigStunCounter`, `TrigSurveil`, `TrigSuspect`, `TrigTap`, `TrigTapAll`, `TrigTapOrUntap`, `TrigTapUnTap`, `TrigTarget`, `TrigTempt`, `TrigToken`, `TrigTokenAttacking`, `TrigTransform`, `TrigTreasure`, `TrigTrigger`, `TrigUnblockable`, `TrigUntap`, `TrigUntapAll`, `TrigUntapAllSnow`, `TrigVenture`, `TrigVillainousChoice`, `TrigVote`, `TrigWinGame`, `TripPump`
 - `FirstAttack$`: TODO: Describe this parameter.
   Observed values: `True`
 - `FirstCombat$`: TODO: Describe this parameter.
@@ -477,7 +462,6 @@ TODO: Write documentation.
 - `BeginTurn$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigConvert`, `TrigDrain`, `TrigEffect`, `TrigReturn`, `TrigSac`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -492,7 +476,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ExileAll`, `TrigAnimate`, `TrigCopy`, `TrigDamageAll`, `TrigDestroy`, `TrigDestroyAll`, `TrigDmg`, `TrigExile`, `TrigGoad`, `TrigPump`, `TrigPutCounter`, `TrigSac`, `TrigTap`, `TrigToken`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -507,7 +490,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`, `TrigSearch`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -522,7 +504,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBPumpAll`, `TrigAnimate`, `TrigClone`
 - `FirstTimeCrewed$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -537,7 +518,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDealDamage`, `TrigPump`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Exile`
@@ -550,7 +530,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigMill`
 - `FirstTimeSaddled$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -567,7 +546,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`, `2`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Abandon`, `CrystallineNautilusSac`, `DBFight`, `DBForget`, `DBGainLife`, `DBToken`, `DismissSac`, `GlasskiteCounter`, `KiraGlassSpinnerCounter`, `LivewireDamage`, `MakeshiftSac`, `NaduDig`, `OpalineTrigDraw`, `PhantasmalImageSac`, `SlasherSac`, `TrigAirbend`, `TrigBlink`, `TrigBounce`, `TrigChange`, `TrigChangeZone`, `TrigChoose`, `TrigConnive`, `TrigCopy`, `TrigCounter`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDmg`, `TrigDrain`, `TrigDraw`, `TrigExile`, `TrigFight`, `TrigGainControl`, `TrigLoseLife`, `TrigLoseLife5`, `TrigMill`, `TrigPeekAndReveal`, `TrigPhaseOut`, `TrigPoison`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterTriggered`, `TrigReturn`, `TrigSac`, `TrigShuffle`, `TrigTap`, `TrigToken`, `TrigUntap`, `WildPump`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -594,7 +572,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDmg`, `TrigDraw`, `TrigReveal`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -611,7 +588,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `WarFlip`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -633,7 +609,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Animate`, `Aurify`, `ChangeControl`, `CoinFlip`, `DBNoCombatDamage`, `DelayedTrig`, `DelayTrig`, `DelTrig`, `DelTrigDestroy`, `EffDraw`, `FlipCoin`, `HeroPump`, `Pump`, `PumpSelf`, `TrigBlockedPump`, `TrigBounce`, `TrigCharm`, `TrigChooseAttackers`, `TrigClockworkRemoveCounter`, `TrigDamage`, `TrigDamage2`, `TrigDealDamage`, `TrigDebuff`, `TrigDestroy3`, `TrigDigUntil`, `TrigDrain`, `TrigDraw`, `TrigEnergy`, `TrigExchangePower`, `TrigGainLife`, `TrigJoinForces`, `TrigLoot`, `TrigLoseLife`, `TrigLoseLifeBlock`, `TrigMill`, `TrigPoison`, `TrigPrevent`, `TrigPump`, `TrigPump1`, `TrigPump2`, `TrigPumpAll`, `TrigPumpB`, `TrigPumpBlo`, `TrigPumpBlock`, `TrigPutCounter`, `TrigPutCounter2`, `TrigRem`, `TrigRemoveCounter`, `TrigReturn`, `TrigRoll`, `TrigSac`, `TrigScry`, `TrigToken`, `TrigUntap`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Creature.blockedBySource`, `Creature.nonHuman+Other+YouCtrl`, `Dinosaur.YouCtrl`, `Planeswalker.Vraska+YouCtrl`
 - `NoResolvingCheck$`: TODO: Describe this parameter.
@@ -924,7 +899,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDig`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -956,7 +930,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigTapAll`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -973,7 +946,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `X`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBChangeZoneAll`, `GoToYard`, `TrigChoose`, `TrigDraw`, `TrigExile`, `TrigToken`, `TrigUnattach`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerController$`: TODO: Describe this parameter.
@@ -1020,7 +992,6 @@ TODO: Write documentation.
 - `ExcludedOrigins$`: TODO: Describe this parameter.
   Observed values: `Graveyard,Exile`, `Hand`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Abandon`, `ABDraw`, `ABMana`, `AbnormalEnduranceTrigChangeZone`, `AirFight`, `AndJusticeForAll`, `AngelicSalvation`, `AssassinsFlip`, `AtRaVZombie`, `AuthorityExile`, `BailOutChangeZone`, `BarricadePumped`, `BehemothPump`, `BereavementDiscard`, `BlazeDmg`, `BringBackThoughts`, `CastEach`, `Catalogue`, `CatharsCounters`, `CemeteryPucaCopy`, `ChooseCreatures`, `ChooseOpp`, `ChooseP`, `CleanTheBlade`, `ConstrictingExile`, `CoRNonDmg`, `CoRSpiritDmg`, `DamageAndMoreDamage`, `DBAddTurn`, `DBAmass`, `DBAnimate`, `DBAskOpponentDrawOrPlay`, `DBAttach`, `DBBoon`, `DBCardChoice`, `DBChangeZone`, `DBChangeZoneAll`, `DBChoice`, `DBChoosePlayer`, `DBChooseSb`, `DBCleanImprinted`, `DBCleanup`, `DBCleanup2`, `DBCopy`, `DBCounter`, `DBDamage`, `DBDealDamage`, `DBDestroy`, `DBDestroyAll`, `DBDig`, `DBDigUntil`, `DBDiscard`, `DBDmg`, `DBDraw`, `DBEffect`, `DBExchangeText`, `DBExile`, `DBExileMe`, `DBFetch`, `DBFight`, `DBFight13U`, `DBForEach`, `DBForget`, `DBGainLife`, `DBLose`, `DBLoseLife`, `DBMana`, `DBMill`, `DBOpen`, `DBPhaseIn`, `DBPump`, `DBPumpAll`, `DBPutCounter`, `DBPutCounterAll`, `DBRemember`, `DBRepeat`, `DBReturn`, `DBSac`, `DBSacrifice`, `DBSacSelf`, `DBScry`, `DBSearch`, `DBSeek`, `DBTap`, `DBToken`, `DBTokens`, `DBTreasure`, `DBTreasureTokens`, `DBTrigger`, `DBVenture`, `DeathGift`, `DelayedReturn`, `DelayedTrig`, `DelTrig`, `DelTrigLeaves`, `DelTrigReturn`, `DelTrigSlowtrip`, `DestroyOneEach`, `DestroyRemembered`, `Detain`, `DevilTakeYou`, `Disinter`, `Dmg1`, `DmgDistro`, `DrawACard`, `DropMountain`, `EachOpponent`, `EatMyThoughts`, `EatSomeDays`, `EffDealDamage`, `EffMassToken`, `EliteDefence`, `EquipmentSelection`, `ETBExileAbility`, `ETBExileReturn`, `EternalCounters`, `EverFlameCopy`, `ExileAll`, `ExileAndToken`, `ExileDraw`, `ExileEffect`, `ExileOneEach`, `ExileSelf`, `ExileTop`, `ExileTwin`, `FeatherDuster`, `ForgetCard`, `FreeCard`, `GalufPutCounter`, `GetUp`, `GoodWood`, `GoToYard`, `GraveAuras`, `GrinningDiscard`, `GuestList`, `HarmonicDestroy`, `HatchlingFight`, `HavenLife`, `HeroAttach`, `HistoricExile`, `HofriTrigReturn`, `HonorGained`, `HuatliDraw`, `InfernalDraw`, `KickedGiant`, `LavabellyTrigDmg`, `LazavCopy`, `Life`, `LiftMountain`, `LoseTrack`, `LukkaDmg`, `MathasPayoffDraw`, `MesmericFateseal`, `MindFishing`, `NurturingPump`, `OnHostLost`, `OppRevealX`, `OrbToken`, `OssuaryCounters`, `PaymentCheck`, `PerigeeBeckonerTrigChangeZone`, `PhantomSearch`, `PounceAdvantage`, `PumpRandom`, `PutKeywordCounter`, `RaiseDead`, `RDCopy`, `ReanimateDmg`, `RememberController`, `RememberInitialAttach`, `RemoveCounters`, `RepeatEachOpp`, `RepeatPayment`, `ResetSVars`, `RestorationExile`, `ReturnOneEach`, `RevenantSkipCombat`, `RollD20`, `SacMount`, `SacTarget`, `SacTwin`, `SarkanCopy`, `ScoutSearch`, `ScytheReturn`, `SetupSearch`, `ShowstopperTrigDamage`, `ShuffleCard`, `SmallBurnination`, `SquadronEnlist`, `SupernaturalStaminaTrigChangeZone`, `SVar2`, `SwarmSpread`, `TailSpikes`, `TakenumaDraw`, `TakeOneEach`, `TamiyoReturn`, `TempAttackTax`, `ThicketKicker`, `ThornbiteTrigUntap`, `ThunderDamage`, `Token`, `TokenAndLife`, `TrigAbandon`, `TrigABChangeZone`, `TrigAbsolve`, `TrigAdd`, `TrigAddCounter`, `TrigAddMana`, `TrigAddOrRemoveCounter`, `TrigAddPhase`, `TrigAirbend`, `TrigAmass`, `TrigAnimate`, `TrigAnimateAll`, `TrigAnimateTomb`, `TrigAssemble`, `TrigAttach`, `TrigAttachAll`, `TrigAuraAttach`, `TrigAurify`, `TrigBattleCry`, `TrigBird`, `TrigBite`, `TrigBlight`, `TrigBlink`, `TrigBlood`, `TrigBodySnatcherExileMe`, `TrigBolster`, `TrigBoon`, `TrigBottom`, `TrigBounce`, `TrigBounceAll`, `TrigBounceMe`, `TrigBranch`, `TrigCanNotBlock`, `TrigCantBlock`, `TrigCataclysm`, `TrigChange`, `TrigChange2`, `TrigChangeAll`, `TrigChangeAttacker`, `TrigChangeHand`, `TrigChangeInstant`, `TrigChangeZone`, `TrigChangeZone1`, `TrigChangeZone2`, `TrigChangeZoneAll`, `TrigChangeZoneBis`, `TrigChangeZoneBlue`, `TrigChangeZoneRed`, `TrigCharge`, `TrigCharm`, `TrigChoice`, `TrigChoose`, `TrigChooseBis`, `TrigChooseColor`, `TrigChooseCT`, `TrigChooseDirection`, `TrigChooseExile`, `TrigChooseNumber`, `TrigChooseOpp`, `TrigChoosePlayer`, `TrigChooseThree`, `TrigChooseType`, `TrigClash`, `TrigCloak`, `TrigClone`, `TrigClue`, `TrigConjure`, `TrigConjure1`, `TrigConnive`, `TrigControl`, `TrigCopy`, `TrigCopyEquip`, `TrigCopyPermanent`, `TrigCounter`, `TrigCounterAbility`, `TrigCounterDist`, `TrigCounters`, `TrigCurse`, `TrigDamage`, `TrigDamage2`, `TrigDamageAll`, `TrigDamageAllFlyers`, `TrigDamageAllFlyersAndPlayers`, `TrigDamageAllNonFlyers`, `TrigDamageCreature`, `TrigDamageDies`, `TrigDamageEach`, `TrigDay`, `TrigDealDamage`, `TrigDealDamage1`, `TrigDealDamage2pts`, `TrigDealDamage4pts`, `TrigDeath`, `TrigDebuff`, `TrigDelay`, `TrigDelay2`, `TrigDelayedTrig`, `TrigDelayedTrigger`, `TrigDelayTransform`, `TrigDelayTrigger`, `TrigDestroy`, `TrigDestroyA`, `TrigDestroyAll`, `TrigDestroyE`, `TrigDestroyYourLand`, `TrigDiceRoll`, `TrigDiesToken`, `TrigDig`, `TrigDigMulti`, `TrigDigShrine`, `TrigDigUntil`, `TrigDiscard`, `TrigDiscardThree`, `TrigDiscover`, `TrigDmg`, `TrigDmg1`, `TrigDmgOpp`, `TrigDouble`, `TrigDoubleCounters`, `TrigDoublePower`, `TrigDraft`, `TrigDrain`, `TrigDraw`, `TrigDraw1`, `TrigDraw2`, `TrigDrawDiscard`, `TrigDread`, `TrigDualCopy`, `TrigDualExile`, `TrigDualExileAll`, `TrigEach`, `TrigEachAttacker`, `TrigEachOpp`, `TrigEarthbend`, `TrigEffect`, `TrigEndure`, `TrigEnduringBounce`, `TrigEnergy`, `TrigEvidence`, `TrigExchange`, `TrigExchangeControl`, `TrigExchangeLife`, `TrigExcruciator`, `TrigExile`, `TrigExile1`, `TrigExile2`, `TrigExileAll`, `TrigExileAllSerfs`, `TrigExileAndBounce`, `TrigExileCreature`, `TrigExileGrave`, `TrigExileHand`, `TrigExileMe`, `TrigExileN`, `TrigExileSelf`, `TrigExileUnless`, `TrigExileYourLibrary`, `TrigExperience`, `TrigExploration`, `TrigExplore`, `TrigFaceUp`, `TrigFetch`, `TrigFight`, `TrigFightBis`, `TrigFlashback`, `TrigFlip`, `TrigFlipCoin`, `TrigFlipDamage`, `TrigFlying`, `TrigFood`, `TrigForget`, `TrigGain`, `TrigGainControl`, `TrigGainCounter`, `TrigGainLife`, `TrigGainLife1`, `TrigGainLife2`, `TrigGenericChoice`, `TriggeredBounce`, `TrigGoad`, `TrigGrave`, `TrigGraveyard`, `TrigHeist`, `TrigHexproof`, `TrigHit`, `TrigHumanToken`, `TrigImmediate`, `TrigImmediateTrig`, `TrigImmediateTrigger`, `TrigImprint`, `TrigIncrementCounters`, `TrigIncubate`, `TrigInitiative`, `TrigIntensify`, `TrigInvestigate`, `TrigJaddiLifestriderTap`, `TrigKeeperCascade`, `TrigKicker`, `TrigKicker2`, `TrigKnowledgeExile`, `TrigLands`, `TrigLearn`, `TrigLibrary`, `TrigLife`, `TrigLifelineDelay`, `TrigLook`, `TrigLoot`, `TrigLose`, `TrigLoseLife`, `TrigLoseLife1`, `TrigLoseLife2`, `TrigLoseLifeEmblem`, `TrigMakeCard`, `TrigMakeToken`, `TrigMana`, `TrigManifest`, `TrigManifestDread`, `TrigMarkBattlefield`, `TrigMartyrsSacrifice`, `TrigMassacre`, `TrigMesmericBounce`, `TrigMesmericExile`, `TrigMill`, `TrigMill1`, `TrigMinsc`, `TrigMonarch`, `TrigMoreMassacre`, `TrigMove`, `TrigMoveCounter`, `TrigMoveCounters`, `TrigNameCard`, `TrigNantukoDiscardLand`, `TrigNausea`, `TrigNoLose`, `TrigNote`, `TrigNoteNum`, `TrigOpenAttraction`, `TrigOppToken`, `TrigPay`, `TrigPayCost`, `TrigPeek`, `TrigPeekAndReveal`, `TrigPhaseOut`, `TrigPhases`, `TrigPickCard`, `TrigPlay`, `TrigPoison`, `TrigPopulate`, `TrigPrepare`, `TrigPrevent`, `TrigPrivateResearchDraw`, `TrigProcess`, `TrigProliferate`, `TrigProt`, `TrigProteanCopy`, `TrigProtect`, `TrigProvoke`, `TrigPump`, `TrigPump1`, `TrigPumpAll`, `TrigPumpCurse`, `TrigPumpEOT`, `TrigPumpETB`, `TrigPut`, `TrigPutCounter`, `TrigPutCounter1`, `TrigPutCounter2`, `TrigPutCounterAll`, `TrigPutCounterAll1`, `TrigPutCounterAll2`, `TrigPutCounterOpp`, `TrigPutCounterQuest`, `TrigPutCounters`, `TrigPutCountersAll`, `TrigRadiate`, `TrigRadiation`, `TrigRamp`, `TrigRandom`, `TrigReanimate`, `TrigRearrange`, `TrigRecall`, `TrigRemove`, `TrigRemoveCounter`, `TrigRemoveCounters`, `TrigRemoveFromCombat`, `TrigRepeat`, `TrigRepeatEach`, `TrigReset`, `TrigReturn`, `TrigReturn1`, `TrigReturn2`, `TrigReturnArti`, `TrigReturnCreatures`, `TrigReturnFromGraveyard`, `TrigReturnOther`, `TrigReturnOwner`, `TrigReveal`, `TrigRevealUntil`, `TrigRevive`, `TrigRoll`, `TrigRollDice`, `TrigRollETB`, `TrigSac`, `TrigSacAll`, `TrigSacPerm`, `TrigSacrifice`, `TrigSacrificeAll`, `TrigSacrificeBlack`, `TrigSacrificeBlue`, `TrigSacUnless`, `TrigSacZom`, `TrigSaddle`, `TrigScry`, `TrigSearch`, `TrigSearchHand`, `TrigSeek`, `TrigSeekLand`, `TrigSeekNonLand`, `TrigSeekTwo`, `TrigSetLife`, `TrigShuffle`, `TrigShuffleBack`, `TrigSkip`, `TrigSkipCombat`, `TrigSkipDraw`, `TrigSkipPhase`, `TrigSmallToken`, `TrigSpellweaverExile`, `TrigSrcy`, `TrigStangg`, `TrigSurveil`, `TrigSuspect`, `TrigTap`, `TrigTapAll`, `TrigTapOrUntap`, `TrigTaporUntapAll`, `TrigTarget`, `TrigTempt`, `TrigTgtOpp`, `TrigToken`, `TrigToken1`, `TrigToken2`, `TrigTokenChoice`, `TrigTokenSenior`, `TrigTokenTiny`, `TrigTransform`, `TrigTransform1`, `TrigTransform2`, `TrigTrap`, `TrigTreasure`, `TrigTremor`, `TrigTuck`, `TrigTurnFaceDown`, `TrigTutor`, `TrigTutorEquip`, `TrigUnattach`, `TrigUnblockable`, `TrigUnspecialize`, `TrigUntap`, `TrigUntapAll`, `TrigUrzaConstruct`, `TrigVenture`, `TrigVesuvaCopy`, `TrigVote`, `TrigWipeCounters`, `TrigYouLose`, `TripleGoat`, `TriReturn`, `TroubleMaking`, `TuktukDestroy`, `UnscytheTrigExile`, `USCopy`, `VampiricCounters`, `VampiricEmbraceCounters`, `VensersBounce`, `VerdantRebirthTrigChangeZone`, `VizierSearch`, `WeftwinderConjure`, `WhirlYou`, `WortETB`, `ZealotGained`
 - `ForgetOnCast$`: TODO: Describe this parameter.
   Observed values: `Card.nonCreature+YouCtrl`
 - `Hellbent$`: TODO: Describe this parameter.
@@ -1101,7 +1072,6 @@ TODO: Write documentation.
 - `Destination$`: TODO: Describe this parameter.
   Observed values: `Ante,Command,Exile,Hand,Library`, `Any`, `Battlefield`, `Exile`, `Graveyard`, `Library`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `DBMakeCard`, `ExileSelf`, `LoseGain`, `TrigChangeZone`, `TrigChangeZoneAll`, `TrigCharm`, `TrigChoose`, `TrigConjure`, `TrigConvert`, `TrigCopy`, `TrigCounter`, `TrigDamage`, `TrigDealDamage`, `TrigDrain`, `TrigDraw`, `TrigEffect`, `TrigExile`, `TrigExperience`, `TrigExplore`, `TrigGainLife`, `TrigInvestigate`, `TrigLoseLife`, `TrigMill`, `TrigPrepare`, `TrigPump`, `TrigPutCounter`, `TrigPutCounters`, `TrigRemoveCounter`, `TrigScry`, `TrigSearch`, `TrigSeek`, `TrigSurveil`, `TrigToken`, `TrigTreasure`, `TrigUntapAll`, `TrigVenture`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `InvertValidCause$`: TODO: Describe this parameter.
@@ -1136,7 +1106,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBFetch`, `DBPutCounter`, `PanopticonDraw`, `RolledChaos`, `TrigAnimateAll`, `TrigChooseColor`, `TrigDamage`, `TrigDamageAll`, `TrigDetain`, `TrigDigUntil`, `TrigDiscard`, `TrigEffect`, `TrigEndTurn`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigReanimate`, `TrigRedistribute`, `TrigRepeat`, `TrigReturn`, `TrigReturnOneEach`, `TrigReverseOrder`, `TrigSetState`, `TrigSteal`, `TrigSwitch`, `TrigTimeTravel`, `TrigToken`, `TrigTreasure`, `TrigVote`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1149,7 +1118,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDestroy`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1162,7 +1130,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`, `TrigTapL`, `TrigTapW`, `TrigTokenL`, `TrigTokenW`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -1183,7 +1150,6 @@ TODO: Write documentation.
 - `ClassLevel$`: TODO: Describe this parameter.
   Observed values: `2`, `3`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigAnimateLand`, `TrigBounce`, `TrigChangeZone`, `TrigCopy`, `TrigDig`, `TrigDigUntil`, `TrigDraw`, `TrigReanimate`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1198,7 +1164,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigInvestigate`, `TrigToken`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1224,7 +1189,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChange`, `TrigDig`, `TrigExile`, `TrigLoot`, `TrigLoseLife`, `TrigMill`, `TrigProliferate`, `TrigPump`, `TrigPutCounter`, `TrigReturn`, `TrigSurveil`, `TrigToken`, `TrigUntap`
 - `PlayerTurn$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1239,7 +1203,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPump`, `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`, `Battlefield,Graveyard`
@@ -1377,7 +1340,6 @@ TODO: Write documentation.
 - `CounterType$`: TODO: Describe this parameter.
   Observed values: `HOUR`, `LORE`, `M1M1`, `P1P1`, `PLAN`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `FathomDraw`, `TrigChangeAll`, `TrigDraw`, `TrigPutCounter`, `TrigSac`, `TrigSeek`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1398,7 +1360,6 @@ TODO: Write documentation.
 - `CounterType$`: TODO: Describe this parameter.
   Observed values: `LOYALTY`, `P1P1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`, `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1417,7 +1378,6 @@ TODO: Write documentation.
 - `CounterType$`: TODO: Describe this parameter.
   Observed values: `ENERGY`, `LOYALTY`, `M1M1`, `P1P1`, `TIME`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `RemoveCounter`, `TrigChange`, `TrigChangeZone`, `TrigCharge`, `TrigConvert`, `TrigCreate`, `TrigDamage`, `TrigDealDamage`, `TrigDelayedTrigger`, `TrigDrain`, `TrigDraw`, `TrigGainLife`, `TrigInvestigate`, `TrigLoseLife`, `TrigMana`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigSearch`, `TrigSquirrel`, `TrigTap`, `TrigToken`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `IsPresent$`: TODO: Describe this parameter.
@@ -1454,7 +1414,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `TrackValidCounters`, `TrigLoot`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Static$`: TODO: Describe this parameter.
@@ -1475,7 +1434,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `TrigCounter`, `TrigDamage`, `TrigEffect`, `TrigPutCountersOther`, `TrigTap`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1494,7 +1452,6 @@ TODO: Write documentation.
 - `CounterType$`: TODO: Describe this parameter.
   Observed values: `HONE`, `ORE`, `P1P1`, `TIME`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBCast`, `DBCastWithoutPayingManaCost`, `DBDamage`, `ProteanPutCounter`, `TrigDestroy`, `TrigDraw`, `TrigEffect`, `TrigLoseLife`, `TrigPut`, `TrigSurveil`, `TrigToken`
 - `NewCounterAmount$`: TODO: Describe this parameter.
   Observed values: `0`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -1517,7 +1474,6 @@ TODO: Write documentation.
 - `CounterType$`: TODO: Describe this parameter.
   Observed values: `LOYALTY`, `TIME`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDmg`, `TrigSac`, `TrigScry`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `SVarCompare$`: TODO: Describe this parameter.
@@ -1534,7 +1490,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigAnimate`, `TrigDraw`, `TrigPutCounter`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1549,7 +1504,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigCrank`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.Self`
@@ -1560,7 +1514,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigEffect`, `TrigPump`, `TrigSpeedway`
 - `Phase$`: TODO: Describe this parameter.
   Observed values: `Main1,Main2`
 - `PlayerTurn$`: TODO: Describe this parameter.
@@ -1581,7 +1534,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `X`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBEffect`, `DBGainLifeBis`, `TrigAnimate`, `TrigBounce`, `TrigCanNotBlock`, `TrigChangeZone`, `TrigClone`, `TrigCounter`, `TrigDamage`, `TrigDamageAll`, `TrigDealDamage2`, `TrigDestroy`, `TrigDestroyAll`, `TrigDiscard`, `TrigExile`, `TrigGainLife`, `TrigImmediateTrig`, `TrigLoseLife`, `TrigMill`, `TrigPrevent`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigReturn`, `TrigTap`, `TrigTapOrUntap`, `TrigToken`, `TrigToken2`, `TrigTreasure`, `TrigUntap`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -1606,7 +1558,6 @@ TODO: Write documentation.
 - `CombatDamage$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigBranch`, `TrigDraw`, `TrigExileTop`, `TrigMonarch`, `TrigProliferate`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1629,7 +1580,6 @@ TODO: Write documentation.
 - `Delirium$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Eff`, `GainLife`, `GenjuTrigGain`, `KiyomaroGainLife`, `RollCounters`, `TrigBlood`, `TrigBounce`, `TrigCast`, `TrigChange`, `TrigChangeZone`, `TrigCharm`, `TrigDamage`, `TrigDestroy`, `TrigDrawCard`, `TrigExile`, `TrigGain`, `TrigGainLife`, `TrigInvestigate`, `TrigLoseLife`, `TrigManifest`, `TrigMill`, `TrigPutCounter`, `TrigRollDice`, `TrigSac`, `TrigSacLore`, `TrigToken`, `TrigTransform`, `TrigUntap`, `VigorousLife`, `VolverTrigGain`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `PlayerTurn$`: TODO: Describe this parameter.
@@ -1662,7 +1612,6 @@ TODO: Write documentation.
 - `Delirium$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `BalshanDig`, `CharismaticControl`, `CuriousObsessionDraw`, `Damage`, `DBChoosePermanent`, `DBCopy`, `DBCounter`, `DBDamage`, `DBDig`, `DBDraw`, `DBLose`, `DBLoseLife`, `DBScry`, `DBToken`, `DBTransform`, `DBVenture`, `DeathGift`, `DelTrig`, `DelTrigSimic`, `Eff`, `Eff1`, `Eff2`, `EmblemTrigChangeZone`, `ExileTwo`, `GamaDamage`, `HelmTrigDiscard`, `HelmTrigDraw`, `HunterProwessX`, `LoseGame`, `MangarasRetribution`, `MephidrossCounters`, `MoreDamage`, `NafsEffect`, `NoteDamaged`, `OpenIntoWonderDraw`, `PhageAvatarDestroy`, `PhageAvatarDestroy2`, `PoisonTarget`, `RemoveCounter`, `SakuraManaSingle`, `SixthSenseDraw`, `SnakeUmbraDraw`, `TalonPutCounter`, `TandemLookoutTrigDraw`, `TapTarget`, `TemperedCounters`, `ToHand`, `Traitor`, `TrigAddPhase`, `TrigAddTurn`, `TrigAmass`, `TrigAnimate`, `TrigAssemble`, `TrigBlink`, `TrigBoon`, `TrigBounce`, `TrigBranch`, `TrigCascade`, `TrigCast`, `TrigCastFromYard`, `TrigChange`, `TrigChangeZone`, `TrigCharm`, `TrigChoice`, `TrigChoose`, `TrigChooseCard`, `TrigChooseColor`, `TrigClearRem`, `TrigCloak`, `TrigConjure`, `TrigConnive`, `TrigControl`, `TrigConvert`, `TrigCopy`, `TrigCounter`, `TrigCounters`, `TrigDamage`, `TrigDamageAll`, `TrigDealDamage`, `TrigDealDamage1`, `TrigDealDamage2`, `TrigDelayedTrigger`, `TrigDelayTrig`, `TrigDelTrig`, `TrigDestroy`, `TrigDestroy19`, `TrigDestroyAll`, `TrigDestroyPlaneswalker`, `TrigDig`, `TrigDigUntil`, `TrigDiscard`, `TrigDiscardDraw`, `TrigDiscardOpp`, `TrigDiscover`, `TrigDmg`, `TrigDmgBlockers`, `TrigDouble`, `TrigDrain`, `TrigDraw`, `TrigDrawD`, `TrigDrawDiscard`, `TrigDrawN`, `TrigEffect`, `TrigEmblem`, `TrigEnergy`, `TrigExchange`, `TrigExchangeControl`, `TrigExile`, `TrigExplore`, `TrigFleshReaverDamage`, `TrigFlip`, `TrigFood`, `TrigGain`, `TrigGainControl`, `TrigGainLife`, `TrigGoad`, `TrigGuess`, `TrigHeist`, `TrigImmediateTrig`, `TrigImmediateTrigger`, `TrigImmTrigger`, `TrigIncrementCounters`, `TrigInvestigate`, `TrigLoop`, `TrigLoot`, `TrigLose`, `TrigLoseLife`, `TrigLoseLifeOpp`, `TrigLoyalty`, `TrigMill`, `TrigMonarch`, `TrigNameCard`, `TrigNekoTeLoseLife`, `TrigNekoTeTap`, `TrigNote`, `TrigOpenAttraction`, `TrigOppDiscard`, `TrigPayCost`, `TrigPeek`, `TrigPlay`, `TrigPoison`, `TrigPrepare`, `TrigProliferate`, `TrigPump`, `TrigPut`, `TrigPutCounter`, `TrigPutCounters`, `TrigRadiation`, `TrigRamp`, `TrigRandom`, `TrigReassemble`, `TrigRemember`, `TrigRememberPlayer`, `TrigRemove`, `TrigRemoveCounter`, `TrigReturn`, `TrigReveal`, `TrigRoll`, `TrigSac`, `TrigSac2`, `TrigSacOpp`, `TrigSacrifice`, `TrigScry`, `TrigSearch`, `TrigSeek`, `TrigSetLife`, `TrigSkipCombat`, `TrigSkipPhase`, `TrigSlug`, `TrigSpell`, `TrigSurveil`, `TrigSuspect`, `TrigTap`, `TrigTapOrUntap`, `TrigTempt`, `TrigTheyLose`, `TrigTimeTravel`, `TrigToken`, `TrigTokenFoodClue`, `TrigTransform`, `TrigTreasure`, `TrigTrig`, `TrigUnlock`, `TrigUntap`, `TrigUntapAll`, `TrigVenture`, `TrigVote`, `TrigZombie`, `VraskaGaze`, `WarriorLessonDraw`
 - `Hellbent$`: TODO: Describe this parameter.
   Observed values: `True`
 - `IsPresent$`: TODO: Describe this parameter.
@@ -1718,7 +1667,6 @@ TODO: Write documentation.
 - `DamageSource$`: TODO: Describe this parameter.
   Observed values: `Any`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `DBInvestigate`, `DBReveal`, `DBTapAll`, `DBToken`, `DealDamage`, `DmgOther`, `FungusCounters`, `LoseLife`, `PutCounterAll`, `SpitefulDmg`, `SVar1`, `TrigCast`, `TrigChange`, `TrigChangeZone`, `TrigCharm`, `TrigChoose`, `TrigConjure`, `TrigConjure2`, `TrigConvert`, `TrigCopy`, `TrigCopyPermanent`, `TrigDamage`, `TrigDamageAll`, `TrigDealDamage`, `TrigDestroy`, `TrigDestroy2`, `TrigDig`, `TrigDigUntil`, `TrigDraw`, `TrigEnergy`, `TrigExile`, `TrigExplore`, `TrigFight2`, `TrigFlipSac`, `TrigGain`, `TrigGainGontrol`, `TrigGainLife`, `TrigGoad`, `TrigInvestigate`, `TrigLoseLife`, `TrigLoseLifeChosen`, `TrigLoseLifeRemembered`, `TrigLoseOrSac`, `TrigLoyalty`, `TrigMana`, `TrigMill`, `TrigMonarch`, `TrigPeek`, `TrigPlay`, `TrigPoison`, `TrigPrepare`, `TrigProliferate`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigRemCounter`, `TrigSac`, `TrigSearchLand`, `TrigSeek`, `TrigToken`, `TrigTreasure`, `TrigUntap`, `TrigUntapAll`, `TrigVenture`, `TrigYouDiscard`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.StrictlySelf`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -1747,7 +1695,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPut`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1760,7 +1707,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDig`, `DBDraw`, `DBGainLife`, `TrigDamage`, `TrigDig`, `TrigDiscard`, `TrigPutCounter`, `TrigReturn`, `TrigTapOrUntap`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`, `Graveyard`
@@ -1771,7 +1717,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrackValidDestroy`, `TrigDamage`, `TrigDestroy`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -1792,7 +1737,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigToken`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Command`
@@ -1805,7 +1749,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DelTrig`, `TrigAmass`, `TrigChange`, `TrigCharm`, `TrigChoosePlayer`, `TrigConjure`, `TrigCopy`, `TrigCounter`, `TrigDamage`, `TrigDealDamage`, `TrigDelay`, `TrigDiscardedToken`, `TrigDouble`, `TrigDoubleDmg`, `TrigDrain`, `TrigDraw`, `TrigExile`, `TrigFight`, `TrigGainLife`, `TrigImmediateTrig`, `TrigLoseLife`, `TrigMana`, `TrigMill`, `TrigPlay`, `TrigPump`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigReturn`, `TrigScry`, `TrigTapOrUntap`, `TrigToken`, `TrigTokenCopy`, `TrigTreasure`, `TrigUntap`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Plains.YouCtrl`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -1834,7 +1777,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDealDamage1`, `TrigDig`, `TrigDraw`, `TrigEffect`, `TrigExile`, `TrigInvestigate`, `TrigLoseLife`, `TrigMana`, `TrigPowerstone`, `TrigPump`, `TrigPureChange`, `TrigPutCounter`, `TrigSeek`, `TrigToken`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1855,7 +1797,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDiscover`, `TrigDmg`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1874,7 +1815,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `Z`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDamage`, `DBDestroySelf`, `DBLoseLife`, `DBPump`, `DBReveal`, `DivinerTrigPump`, `EffSpellCast`, `LoseGain`, `TrapTriggered`, `TrigAmass`, `TrigAnimate`, `TrigAttach`, `TrigChange`, `TrigChangeZone`, `TrigConjure`, `TrigCopy`, `TrigDamage`, `TrigDealDamage`, `TrigDebuff`, `TrigDig`, `TrigDmg`, `TrigDrain`, `TrigDraw`, `TrigDropLand`, `TrigExile`, `TrigGain`, `TrigGainLife`, `TrigImmediateTrig`, `TrigLose`, `TrigLoseLife`, `TrigMill`, `TrigPrepare`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigReturn`, `TrigSac`, `TrigToken`, `TrigTransform`, `TrigUnblockable`, `TrigUntap`
 - `FirstCardInDrawStep$`: TODO: Describe this parameter.
   Observed values: `False`, `True`
 - `ForReveal$`: TODO: Describe this parameter.
@@ -1911,7 +1851,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBReturn`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1926,7 +1865,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1939,7 +1877,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigBoon`, `TrigConjure`, `TrigScry`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -1956,7 +1893,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigCopy`, `TrigPutCounterAll`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1971,7 +1907,6 @@ TODO: Write documentation.
 - `CombatDamage$`: TODO: Describe this parameter.
   Observed values: `False`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigAmass`, `TrigDamage`, `TrigDraw`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1986,7 +1921,6 @@ TODO: Write documentation.
 - `CombatDamage$`: TODO: Describe this parameter.
   Observed values: `False`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigTreasure`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -1999,7 +1933,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDamageAll`, `TrigDig`, `TrigDiscard`, `TrigPumpAll`, `TrigTap`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2012,7 +1945,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigGainLife`, `TrigPutCounter`
 - `Origin$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2029,7 +1961,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChange`, `TrigChangeZone`, `TrigChangeZoneAll`, `TrigCounter`, `TrigDestroy`, `TrigDig`, `TrigDrain`, `TrigDraw`, `TrigExile`, `TrigMassacre`, `TrigPump`, `TrigPutCounterAll`, `TrigSac`, `TrigScry`, `TrigSearch`, `TrigSubmerge`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2046,7 +1977,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBPutCounter`, `TrigChangeZone`, `TrigDebuff`, `TrigPump`, `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2061,7 +1991,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DelTrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2074,7 +2003,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2087,7 +2015,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`, `TrigOppDmg`, `TrigPump`, `TrigPutCounter`, `TrigToken`, `TrigToken2`, `TrigYouDmg`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2102,7 +2029,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2115,7 +2041,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPump`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2128,7 +2053,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChange`, `TrigConjure`, `TrigDraw`, `TrigEffect`, `TrigLoseLife`, `TrigMill`, `TrigPump`, `TrigPutCounter`, `TrigSurveil`, `TrigTap`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2147,7 +2071,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2191,7 +2114,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDmg`, `TrigInvestigate`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2208,7 +2130,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBAnimate`, `DBPain`, `DBTokens`, `ExileSelf`, `StoreVar`, `TrigAnimate`, `TrigBounce`, `TrigBranch`, `TrigConjure`, `TrigCopyLand`, `TrigCounter`, `TrigDamage`, `TrigDealDamage`, `TrigDraw`, `TrigDropLand`, `TrigExileTop`, `TrigFind`, `TrigFood`, `TrigGainLife`, `TrigHiddenStagAnimateOppLand`, `TrigHiddenStagAnimateYourLand`, `TrigLoseLife`, `TrigPutCounter`, `TrigRemoveSelf`, `TrigSac`, `TrigToken`, `TrigTransform`, `TrigUntap`, `WarningGiven`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.Self+Creature`, `Card.Self+Enchantment`
 - `NotFirstLand$`: TODO: Describe this parameter.
@@ -2241,7 +2162,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBToken`, `LightOfPromisePutCounter`, `SunbondPutCounter`, `TrigChange`, `TrigChoose`, `TrigConvert`, `TrigDamage`, `TrigDealDamage`, `TrigDrain`, `TrigDraw`, `TrigDraw2`, `TrigEnergy`, `TrigExplore`, `TrigGainLife`, `TrigImmediateTrig`, `TrigLoseLife`, `TrigPrepare`, `TrigPump`, `TrigPumpAll`, `TrigPut`, `TrigPutCounter`, `TrigPutCounter1`, `TrigPutCounterAll`, `TrigPutCounters`, `TrigReturn`, `TrigStore`, `TrigSurveil`, `TrigToken`, `TrigUntap`, `VizkopaMageDrain`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -2270,7 +2190,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDamageOpp`, `TrigDiscard`, `TrigDraw`, `TrigEnergy`, `TrigExile`, `TrigLifeGain`, `TrigLimDulSac`, `TrigMill`, `TrigPump`, `TrigPutCounter`, `TrigSac`, `TrigToken`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `PlayerTurn$`: TODO: Describe this parameter.
@@ -2289,7 +2208,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPlay`, `TrigPutCounter`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `ResolvedLimit$`: TODO: Describe this parameter.
@@ -2308,7 +2226,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigCounter`, `TrigExile`, `TrigGainLife`, `TrigWinGame`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2323,7 +2240,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigMana`
 - `Player$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Produced$`: TODO: Describe this parameter.
@@ -2369,7 +2285,6 @@ TODO: Write documentation.
 - `Amount$`: TODO: Describe this parameter.
   Observed values: `4`, `6`, `8`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DealDamage`, `TrigChangeZone`, `TrigDraw`, `TrigExile`, `TrigGainControl`, `TrigGainLife`, `TrigPump`, `TrigPutCounter`
 - `Player$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2384,7 +2299,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigReturn`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2397,7 +2311,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2410,7 +2323,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigGainLife`, `TrigReturn`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.StrictlySelf`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -2433,7 +2345,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`, `TrigPutCounter`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `ResolvedLimit$`: TODO: Describe this parameter.
@@ -2452,7 +2363,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounterAll`, `TrigToken`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2504,7 +2414,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigBounce`, `TrigChange`, `TrigChangeZone`, `TrigDealDamage`, `TrigDestroy`, `TrigDigUntil`, `TrigDiscard`, `TrigDraw`, `TrigExile`, `TrigGainControl`, `TrigGainLife`, `TrigLoseLife`, `TrigPlay`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigSac`, `TrigTap`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2519,7 +2428,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChooseCT`, `TrigDiscard`, `TrigPayLife`, `TrigToken`, `TrigWorldknit`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2577,7 +2485,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDmg`, `TrigExileAll`, `TrigPump`, `TrigSearch`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Paid$`: TODO: Describe this parameter.
@@ -2592,7 +2499,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDraw`
 - `Paid$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2605,7 +2511,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2632,7 +2537,6 @@ TODO: Write documentation.
 - `EffectZone$`: TODO: Describe this parameter.
   Observed values: `Command`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Abandon`, `ABGainLife`, `AcademicDraw`, `AcquireScrolls`, `AddUpkeep`, `AgyremReturn`, `AgyremReturn2`, `AnimateDB`, `ApathyDiscard`, `ArtifactMana`, `AtlasDraw`, `AvariceUpkeepSVar`, `Bleed`, `BloodExile`, `Boost`, `BounceAethermage`, `BreachReturn`, `BuildCounter`, `BuildPressure`, `CaptiveClash`, `ChandraDmg`, `ChangeControl`, `ChargeCounter`, `ChooseCreature`, `ChooseName`, `ChooseNumber`, `ChooseType`, `CleanupAndRemember`, `CommanderToken`, `ConjurerExile`, `ConsumingFervorPutCounter`, `CopyArtifact`, `CryptoplasmCopy`, `DalekCreation`, `DBAbandon`, `DBAbandonCheck`, `DBAnimate`, `DBAttach`, `DBChoice`, `DBChooseCard`, `DBCleanup`, `DBCleanupStatic`, `DBCopy`, `DBCopyPermanent`, `DBDestroy`, `DBDig`, `DBDisease`, `DBDragon`, `DBDrawSeven`, `DBExchangeLife`, `DBForget`, `DBImmediateTrig`, `DBImmediateTrigger`, `DBLife`, `DBLose`, `DBMana`, `DBPay`, `DBPump`, `DBPutCounter`, `DBRemoveCounter`, `DBRepeat`, `DBReset`, `DBReturn`, `DBReveal`, `DBSacSelf`, `DBScry`, `DBSelectRecipient`, `DBTap`, `DBToken`, `DBTransform`, `DBTreasureToken`, `DBTrigger`, `DBWin`, `DelayedBoon`, `DelayedScars`, `DelinaTrigExile`, `DestroyRemembered`, `Detain`, `DrainLife`, `DrawDamageOther`, `DrawLoselife`, `DreampodsDig`, `EffMana`, `EffSetLife`, `EffToken`, `EffTrigTutor`, `EmblemTrigChangeZone`, `EmblemTrigToken`, `EvosCounter`, `ExchangeCards`, `Exile`, `ExileEffect`, `ExileSelf`, `ExileTwo`, `FarmsteadGainLife`, `Filter`, `FlickerformReturn`, `FluesSacrifice`, `FourthSac`, `FurnaceDiscard`, `GainLife`, `GhostClear`, `GhostCounter`, `GimmeSome`, `ImpatientDamage`, `InevitableSac`, `InstillTrigSac`, `InvocationTrigExile`, `IrmaCopy`, `JustCleanup`, `KaloniaCounter`, `KioraToken`, `LetheMill`, `LiegesSearch`, `Lose3`, `LoseGlyph`, `LoseSpores`, `LyzoldasDiscard`, `MagmaticDamage`, `ManaGain`, `Meld`, `Mill`, `MusiciansSpite`, `NecroticPlagueSac`, `NettlevineSac`, `NUCounter`, `ObsidianBlazeDmg`, `OppPick`, `PanopticonDraw`, `PilloryLoseLife`, `PlagueTrigDmg`, `PreventEffect`, `ProgenitorCopy`, `PseudoDraw`, `PsychicSlap`, `PutCounter`, `PutCounterAll`, `PutCounterOneEach`, `PutPlagueCounter`, `QuicksilverScry`, `RaiseDead`, `RelicBaneLoseLife`, `RemoveCounters`, `RepeatOpp`, `RepeatOpps`, `RepeatPlayer`, `ReturnedBattlefield`, `RivalDamage`, `RonsoCounter`, `SacAllOthers`, `SacrificeEquippee`, `SacToAbandon`, `SacToIdol`, `SakuraManaSingle`, `SakuraManaTriple`, `SarkhanDiscard`, `SarkhanDraw`, `SelfDestruct`, `SenEffect`, `ShadowDestroyEnchanted`, `SituationalEthics`, `Solved`, `SolveFalcon`, `SorinSac`, `SyphonLife`, `TabernacleDestroy`, `TapCreature`, `TapThis`, `TeaseYou`, `TezzeretAnimate`, `ThuneCounter`, `Trig1Damage`, `TrigAbandon`, `TrigAch`, `TrigAddCounter`, `TrigAdditionalCombat`, `TrigAddMana`, `TrigAddOrRemoveCounter`, `TrigAddPhase`, `TrigAetherDig`, `TrigAllDamage`, `TrigAmass`, `TrigAnimate`, `TrigAnimateAll`, `TrigAttach`, `TrigAttacks`, `TrigBanding`, `TrigBolster`, `TrigBounce`, `TrigBranch`, `TrigCantAttack`, `TrigCast`, `TrigChange`, `TrigChangeAll`, `TrigChangeBattlefield`, `TrigChangeHandExile`, `TrigChangeZone`, `TrigChangeZoneYou`, `TrigChangZone`, `TrigCharm`, `TrigCheatCreature`, `TrigChoice`, `TrigChoose`, `TrigChooseCard`, `TrigChooseCardType`, `TrigChooseColor`, `TrigChooseCurse`, `TrigChooseDirection`, `TrigChooseDmg`, `TrigChooseNumber`, `TrigChooseOneToDestroy`, `TrigChooseOpp`, `TrigChoosePlayer`, `TrigChoosePlayer1`, `TrigChooseRandom`, `TrigChooseToTap`, `TrigCL`, `TrigClash`, `TrigCloak`, `TrigClone`, `TrigCloneCopy`, `TrigColor`, `TrigConjure`, `TrigConnive`, `TrigControl`, `TrigConvert`, `TrigCopy`, `TrigCopyPermanent`, `TrigCoralDiscard`, `TrigCorrode`, `TrigCount`, `TrigCounter`, `TrigCounters`, `TrigCreateAndMill`, `TrigCruelDiscard`, `TrigCumUpkeep`, `TrigCurseArtifactSacrifice`, `TrigCursePayUP`, `TrigDamage`, `TrigDamage4`, `TrigDamageAll`, `TrigDamageOpp`, `TrigDealDamage`, `TrigDealDamage2`, `TrigDestroy`, `TrigDestroyAll`, `TrigDig`, `TrigDigUntil`, `TrigDiscard`, `TrigDiscover`, `TrigDisruptionAura`, `TrigDmg`, `TrigDmg2`, `TrigDmgOpp`, `TrigDoom`, `TrigDouble`, `TrigDoubleCounters`, `TrigDraft`, `TrigDrain`, `TrigDraw`, `TrigDraw1`, `TrigDraw2`, `TrigDrawCard`, `TrigDrawUpkeep`, `TrigDread`, `TrigEarthbend`, `TrigEffect`, `TrigElderSpawnSacrifice`, `TrigEndure`, `TrigEnergy`, `TrigEquipoise`, `TrigEssenceLeak`, `TrigEvidence`, `TrigEvoke`, `TrigExchange`, `TrigExchangeChoose`, `TrigExile`, `TrigExileDelirium`, `TrigExileEnchanted`, `TrigExileSelf`, `TrigExperience`, `TrigExplore`, `TrigExtraTurn`, `TrigFerociousDraw`, `TrigFlip`, `TrigFlipCoin`, `TrigFlipUpkeep`, `TrigFlying`, `TrigFood`, `TrigFoodToken`, `TrigForget`, `TrigGain`, `TrigGainControl`, `TrigGainControl2`, `TrigGainCtrl`, `TrigGainLife`, `TrigGenericChoice`, `TrigGeo`, `TriggeredParoxysm`, `TrigGetCreature`, `TrigGetMana`, `TrigGoad`, `TrigGraveyard`, `TrigHeist`, `TrigHorror`, `TrigImmediate`, `TrigImmediateTrig`, `TrigImmediateTrigger`, `TrigInvestigate`, `TrigInvestigateEach`, `TrigKinship`, `TrigKyrenExile`, `TrigLandship`, `TrigLife`, `TrigLook`, `TrigLoop`, `TrigLoot`, `TrigLose`, `TrigLose1`, `TrigLoseDelay`, `TrigLoseLife`, `TrigLoseLifeDiscard`, `TrigLoseLifeEachOpp`, `TrigMana`, `TrigManifest`, `TrigMarkCouldAttack`, `TrigMaySacorDiscard`, `TrigMend`, `TrigMill`, `TrigMill2`, `TrigMillSK`, `TrigMillYou`, `TrigMisfortune`, `TrigMoveCounter`, `TrigMustAttackBlock`, `TrigNecromancy`, `TrigNight`, `TrigNoKeeper`, `TrigNotKicked`, `TrigNoZombies`, `TrigOathofDruids`, `TrigOathofGhouls`, `TrigOathofMages`, `TrigOathofScholars`, `TrigOmenExileCard`, `TrigOppControl`, `TrigPayCost`, `TrigPeek`, `TrigPendrellFlux`, `TrigPerpetual`, `TrigPerpetualP1P1`, `TrigPhase`, `TrigPhaseLands`, `TrigPhoenix`, `TrigPlay`, `TrigPoison`, `TrigPopulate`, `TrigPrepare`, `TrigPrivateResearchPutCounter`, `TrigProliferate`, `TrigPump`, `TrigPump1`, `TrigPumpAll`, `TrigPut`, `TrigPutCounter`, `TrigPutCounter1`, `TrigPutCounter2`, `TrigPutCounterAll`, `TrigPutCounters`, `TrigPutHunger`, `TrigRandom`, `TrigRandomPump`, `TrigRearrange`, `TrigRem`, `TrigRemove`, `TrigRemoveAll`, `TrigRemoveCounter`, `TrigRemoveCtr`, `TrigRepeat`, `TrigRepeatEach`, `TrigReroll`, `TrigReset`, `TrigRetrieve`, `TrigReturn`, `TrigReturnAll`, `TrigReveal`, `TrigRevealToWin`, `TrigRoll`, `TrigRollDice`, `TrigRollEnd`, `TrigRollUpkeep`, `TrigRope`, `TrigSac`, `TrigSac2`, `TrigSacDiscard`, `TrigSacrifice`, `TrigSacrificeSwamp`, `TrigSacSelf`, `TrigSacYou`, `TrigSaddle`, `TrigSands`, `TrigScry`, `TrigSearch`, `TrigSeek`, `TrigSetLife`, `TrigSkipPhase`, `TrigSolve`, `TrigStore`, `TrigStrife`, `TrigSubCounter`, `TrigSurveil`, `TrigTap`, `TrigTapAll`, `TrigTapOrUntap`, `TrigTarget`, `TrigTargetAuraEquip`, `TrigTempt`, `TrigToken`, `TrigToken1`, `TrigToken2`, `TrigTokenDemon`, `TrigTorment`, `TrigTough`, `TrigToughDraw`, `TrigTransform`, `TrigTransform2`, `TrigTransformBis`, `TrigTreasure`, `TrigTwoPile`, `TrigUnblockable`, `TrigUntap`, `TrigUntapAll`, `TrigUpkeep`, `TrigVenture`, `TrigVote`, `TrigWarp`, `TrigWarrior`, `TrigWin`, `TrigWinGame`, `TrigWinsGame`, `TrigWinsLife`, `TrigWish`, `TrigZarielCombat`, `TripPumpOpp`, `TripTapOpp`, `UntapMerfolk`, `UntapMyr`, `ValkasCounter`, `VerdantToken`, `VesDopCopy`, `VesShapeTurn`, `VillainousChoice`, `WinGame`, `XanEffect`, `XathridCounter`
 - `FirstCombat$`: TODO: Describe this parameter.
   Observed values: `True`
 - `FirstUpkeep$`: TODO: Describe this parameter.
@@ -2708,7 +2612,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigBuff`, `TrigDraw`, `TrigToken`, `TrigWarp`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2721,7 +2624,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDiscard`, `TrigMill`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `ValidCard$`: TODO: Describe this parameter.
   Observed values: `Card.phasedOutSelf`
@@ -2732,7 +2634,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounter`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -2745,7 +2646,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `RolledDie`, `TrigScry`
 - `Result$`: TODO: Describe this parameter.
   Observed values: `Blank`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2760,7 +2660,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Eruption`, `ExileSelf`, `OrzhovaDeal`, `TrigChangeZoneAll`, `TrigDestroy`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -2773,7 +2672,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `AcquireScrolls`, `Aether`, `AgyremCleanup`, `DBCleanup`, `DBPhaseIn`, `Disaster`, `DreampodsDig`, `Epiphany`, `ExileSelf`, `FluesSacrifice`, `FurnaceDiscard`, `PanopticonDraw`, `PutCounter`, `QuicksilverScry`, `TrigBolster`, `TrigChaos`, `TrigChoice`, `TrigChoose`, `TrigChooseCard`, `TrigCounter`, `TrigDig`, `TrigEffect`, `TrigExile`, `TrigInvestigate`, `TrigLife`, `TrigLoseLife`, `TrigMill`, `TrigPhaseIn`, `TrigPut`, `TrigPutCounter`, `TrigPutFromHand`, `TrigRepeatEach`, `TrigReverse`, `TrigSurveil`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2794,7 +2692,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `LoseGain`, `TrigChoose`, `TrigDraft`, `TrigDraw`, `TrigPerpetualBuff`, `TrigReturn`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.Self`, `Card.StrictlySelf`
 - `PlayerTurn$`: TODO: Describe this parameter.
@@ -2883,7 +2780,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigCounters`, `TrigDigUntil`, `TrigDraw`, `TrigPutCounters`, `TrigReturn`, `TrigScry`, `TrigToken`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`, `Graveyard`
@@ -2898,7 +2794,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Pump1`, `TrigBranch`, `TrigCounter`, `TrigCounters`, `TrigDrain`, `TrigDraw`, `TrigPhaseIn`, `TrigPump`, `TrigPutCounter`, `TrigRemove`, `TrigReturn`, `TrigReveal`, `TrigToken`, `TrigTrample`, `TrigUntap`
 - `Natural$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Number$`: TODO: Describe this parameter.
@@ -2927,7 +2822,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDamage`, `TrigDamageSelf`, `TrigPump`, `TrigPut`, `TrigPutCounter`, `TrigToken`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Secondary$`: TODO: Describe this parameter.
@@ -2948,7 +2842,6 @@ TODO: Write documentation.
 - `Destination$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBSurveil`, `TrigAlly`, `TrigAnimate`, `TrigBranch`, `TrigChange`, `TrigChoose`, `TrigChooseCard`, `TrigClone`, `TrigCopy`, `TrigCounter`, `TrigCounters`, `TrigDamage`, `TrigDealDamage`, `TrigDelay`, `TrigDelayedTrig`, `TrigDig`, `TrigDiscard`, `TrigDmg`, `TrigDraft`, `TrigDraw`, `TrigDrawCard`, `TrigDread`, `TrigEffect`, `TrigExile`, `TrigExplore`, `TrigGainLife`, `TrigLoseLife`, `TrigMana`, `TrigMill`, `TrigPoison`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigReturn`, `TrigSacrifice`, `TrigSearch`, `TrigToken`, `TrigTransform`, `TrigTreasure`, `TrigUnblockable`, `TrigVenture`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `Origin$`: TODO: Describe this parameter.
@@ -2977,7 +2870,6 @@ TODO: Write documentation.
 - `BoonAmount$`: TODO: Describe this parameter.
   Observed values: `2`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigSeek`, `TrigToken`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`, `Command`
@@ -2992,7 +2884,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPump`
 - `Phase$`: TODO: Describe this parameter.
   Observed values: `Main1,Main2`
 - `PlayerTurn$`: TODO: Describe this parameter.
@@ -3011,7 +2902,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDraw`, `DBReveal`, `TrigCharm`, `TrigDmg`, `TrigDraw`, `TrigEff`, `TrigExile`, `TrigPeek`, `TrigPump`, `TrigPutCounter`, `TrigTap`, `TrigUntap`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card`, `Card.tapped`, `Island.YouCtrl`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -3038,7 +2928,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigGainLife`, `TrigPutCounter`, `TrigPutCounter2`, `TrigSac`
 - `SearchOwnLibrary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Secondary$`: TODO: Describe this parameter.
@@ -3055,7 +2944,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigConjure`, `TrigDmg`, `TrigToken`
 - `PlayerTurn$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Secondary$`: TODO: Describe this parameter.
@@ -3074,7 +2962,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `X`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `Abandon`, `BloodyCombat`, `ChooseChampion`, `ChooseCreature`, `ChooseOpponent`, `ChooseTheWretch`, `ConstructDestiny`, `DarkEffect`, `DBAddMana`, `DBChoose`, `DBChoosePerms`, `DBChoosePlayer`, `DBCopyCommander`, `DBDestroy`, `DBDig`, `DBDraw`, `DBExile`, `DBGainControl`, `DBRepeat`, `DBSac`, `DBSearch`, `DBToken`, `DiscardHope`, `DmgAll`, `ExileFlying`, `GeniusLife`, `GetRealms`, `GetSaps`, `GoodTimes`, `GraveEmbrace`, `GreatMind`, `Ignite`, `LibraryDance`, `MakeUseful`, `MoltenEffect`, `MoveToBottom`, `MyWish`, `NewEvil`, `OppTutor`, `PlotEffect`, `RevealFate`, `ShowTheWeakness`, `TrigBranch`, `TrigChangeZone`, `TrigCharm`, `TrigChoose`, `TrigControl`, `TrigCopyPermanent`, `TrigDamageAll`, `TrigDigUntil`, `TrigDmg`, `TrigEffect1`, `TrigExtraTurn`, `TrigMill`, `TrigRedistribute`, `TrigRepeat`, `TrigRepeatEach`, `TrigSacEach`, `TrigToken`, `TwoPiles`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `SVarCompare$`: TODO: Describe this parameter.
@@ -3091,7 +2978,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ExileEffect`, `TrigChangeZone`, `TrigDamage`, `TrigDig`, `TrigPutCounter`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `ShuffleBySelfControlled$`: TODO: Describe this parameter.
@@ -3112,7 +2998,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigBoon`, `TrigChoose`, `TrigConjure`, `TrigCopy`, `TrigDestroy`, `TrigDraw`, `TrigEffect`, `TrigImmediateTrig`, `TrigPump`, `TrigRemoveCounters`, `TrigReturn`, `TrigSeek`, `TrigTap`, `TrigTargetC`, `TrigToken`, `TrigUntap`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -3129,7 +3014,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChangeTarget`, `TrigChoose`, `TrigCopy`, `TrigCopyMain`, `TrigCopySpell`, `TrigDraw`, `TrigPutCounter`
 - `HasXManaCost$`: TODO: Describe this parameter.
   Observed values: `True`
 - `IsSingleTarget$`: TODO: Describe this parameter.
@@ -3154,7 +3038,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigChangeTarget`
 - `IsSingleTarget$`: TODO: Describe this parameter.
   Observed values: `True`
 - `Secondary$`: TODO: Describe this parameter.
@@ -3181,7 +3064,6 @@ TODO: Write documentation.
 - `EffectZone$`: TODO: Describe this parameter.
   Observed values: `Command`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `AddRebound`, `ApproachingSuns`, `BloodPump`, `BountysGift`, `Buybacked`, `CountCorruptedPlayers`, `CounterSpellOpp`, `DamageSomeone`, `DBAnimate`, `DBBlink`, `DBCopy`, `DBCount`, `DBCounter`, `DBDamageAll`, `DBDealDamage`, `DBDigUntil`, `DBDraw`, `DBEffect`, `DBExileSelf`, `DBGainLife`, `DBGoad`, `DBInvestigate`, `DBLoseLife`, `DBPump`, `DBPutCounter`, `DBRemoveCounters`, `DBReveal`, `DBScry`, `DBSearch`, `DBSurveil`, `DBToken`, `DBTokens`, `DelayedBuyback`, `DelayedTrigEff`, `DevourPump`, `DjinnisGift`, `DreamCounters`, `EffSpellCast`, `EffSpellCast12U`, `ExchangeControlSpell`, `ExileSelf`, `ExileTop`, `Grind`, `LifeSummer`, `NorinExile`, `PutCounter`, `RememberCaster`, `RemoveEffect`, `ReplEffAddCounter`, `SavageSummon`, `StealAbs`, `TakeOneEach`, `Trig5Damage`, `TrigAbandon`, `TrigAddCounter`, `TrigAddTurn`, `TrigAirbend`, `TrigAmass`, `TrigAnimate`, `TrigArtisanCopy`, `TrigBird`, `TrigBounce`, `TrigBranch`, `TrigCanNotBlock`, `TrigCast`, `TrigCastInstant`, `TrigCastSorcery`, `TrigCatToken`, `TrigChange`, `TrigChangePT`, `TrigChangeTarget`, `TrigChangeZone`, `TrigCharge`, `TrigCharm`, `TrigChoose`, `TrigChooseTgt`, `TrigClone`, `TrigConjure`, `TrigConnive`, `TrigControl`, `TrigControlPlayer`, `TrigConvert`, `TrigConvertLaserbeak`, `TrigConvertRavage`, `TrigCopy`, `TrigCopyMain`, `TrigCopySpell`, `TrigCopyTarget`, `TrigCounter`, `TrigCounters`, `TrigCounterSameGrave`, `TrigCounterSpell`, `TrigCurse`, `TrigDamage`, `TrigDamageAll`, `TrigDaw`, `TrigDealDamage`, `TrigDealOneDamage`, `TrigDebuff`, `TrigDestroy`, `TrigDestroyAll`, `TrigDig`, `TrigDigUntil`, `TrigDiscard`, `TrigDiscover`, `TrigDmg`, `TrigDogToken`, `TrigDouble`, `TrigDraft`, `TrigDrain`, `TrigDraw`, `TrigDraw2`, `TrigDrawCard`, `TrigDS`, `TrigEarthbend`, `TrigEffect`, `TrigEffectBis`, `TrigEnergy`, `TrigExile`, `TrigExileSpell`, `TrigExileTop`, `TrigExperience`, `TrigFight`, `TrigFind`, `TrigFirstStrike`, `TrigFlashback`, `TrigFlip`, `TrigFlipYouCast`, `TrigFlying`, `TrigFood`, `TrigForEach`, `TrigGainControl`, `TrigGainLife`, `TrigGoad`, `TrigHatchlingAnimate`, `TrigHerd`, `TrigImmediateTrig`, `TrigImpulsiveDraw`, `TrigIncubate`, `TrigInvestigate`, `TrigKnowledgeExileSpell`, `TrigLand`, `TrigLoot`, `TrigLose`, `TrigLoseLife`, `TrigLoyalty`, `TrigMana`, `TrigManifest`, `TrigMayCast`, `TrigMill`, `TrigOpenAttraction`, `TrigPerpetualP1P1`, `TrigPoison`, `TrigPowerStone`, `TrigPrepare`, `TrigProliferate`, `TrigProtect`, `TrigPump`, `TrigPump11`, `TrigPump2`, `TrigPumpAll`, `TrigPumpCurse`, `TrigPumpFear`, `TrigPumpKW`, `TrigPumpP1P1`, `TrigPut`, `TrigPutBottom`, `TrigPutCounter`, `TrigPutCounter1`, `TrigPutCounterAll`, `TrigPutCounters`, `TrigPutCountersAll1`, `TrigPutCountersAll2`, `TrigRadiation`, `TrigRebound`, `TrigRegen`, `TrigRegenerate`, `TrigRem`, `TrigRemove`, `TrigRemoveCounter`, `TrigRemoveSelf`, `TrigReturn`, `TrigReturnThis`, `TrigReveal`, `TrigRollDice`, `TrigSac`, `TrigSacrifice`, `TrigScry`, `TrigSearch`, `TrigSeek`, `TrigSpellweaverCopy`, `TrigSurveil`, `TrigTap`, `TrigTapOrUntap`, `TrigToken`, `TrigToken2`, `TrigTokenBis`, `TrigTokenDragon`, `TrigTokenKobold`, `TrigTransform`, `TrigTreasure`, `TrigTremor`, `TrigUnblock`, `TrigUnblockable`, `TrigUntap`, `TrigUntap2`, `TrigUntapAll`, `TrigVenture`, `TrigWolf`, `WarningGiven`
 - `GameActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `HasXManaCost$`: TODO: Describe this parameter.
@@ -3242,7 +3124,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBScry`, `LifeGain`, `TrigAnimate`, `TrigChoice`, `TrigDealDamage`, `TrigDig`, `TrigDiscard`, `TrigDrain`, `TrigDraw`, `TrigEffect`, `TrigOctify`, `TrigPower`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigReturn`, `TrigToken`, `TrigUnblockable`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -3257,7 +3138,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDamage`, `TrigDrain`, `TrigPumpAll`, `TrigPutCounter`, `TrigTarget`
 - `Secondary$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -3274,7 +3154,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPump`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -3289,7 +3168,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigBounce`, `TrigCopy`, `TrigDamageAll`, `TrigDmg`, `TrigDraw`, `TrigPeek`, `TrigPutCounter`, `TrigReturn`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `IsPresent$`: TODO: Describe this parameter.
@@ -3316,7 +3194,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigToken`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -3333,7 +3210,6 @@ TODO: Write documentation.
 - `Attacker$`: TODO: Describe this parameter.
   Observed values: `False`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBExileTopCard`, `ExileTwo`, `TrigBounce`, `TrigBuff`, `TrigCanNotBlock`, `TrigCharm`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDestroy1`, `TrigDig`, `TrigDiscard`, `TrigDrain`, `TrigDraw`, `TrigExile`, `TrigFight`, `TrigGain`, `TrigGainLife`, `TrigImmediateTrig`, `TrigLose`, `TrigMill`, `TrigPoison`, `TrigProliferate`, `TrigPump`, `TrigPutCounter`, `TrigRemoveCounter`, `TrigScry`, `TrigSry`, `TrigSurveil`, `TrigTap`, `TrigToken`, `TrigUntap`
 - `FirstTime$`: TODO: Describe this parameter.
   Observed values: `True`
 - `IsPresent$`: TODO: Describe this parameter.
@@ -3366,7 +3242,6 @@ TODO: Write documentation.
 - `CheckDefinedPlayer$`: TODO: Describe this parameter.
   Observed values: `You.isMonarch`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `AddMana`, `DarkMana`, `DBRepeat`, `TrigBounce`, `TrigControl`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDmg`, `TrigGainLife`, `TrigMana`, `TrigPump`, `TrigPutCounter`, `TrigRemoveCounter`, `TrigTapAll`, `TrigToken`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Card.tapped`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -3389,7 +3264,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigCounter`, `TrigLoseLife`, `TrigTransform`
 - `IsPresent$`: TODO: Describe this parameter.
   Observed values: `Blood.token+YouCtrl`
 - `PresentCompare$`: TODO: Describe this parameter.
@@ -3408,7 +3282,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounter`, `TrigToken`
 - `OnlyFirst$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -3423,7 +3296,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigExile`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `TriggerZones$`: TODO: Describe this parameter.
   Observed values: `Battlefield`
@@ -3436,7 +3308,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DamageAndMoreDamage`, `Token`, `TokenAndLife`, `TrigAddTurn`, `TrigAnimate`, `TrigChange`, `TrigChangeZone`, `TrigDamageAll`, `TrigDestroy`, `TrigDig`, `TrigDraw`, `TrigExile`, `TrigFight`, `TrigMana`, `TrigMill`, `TrigPeek`, `TrigProt`, `TrigPump`, `TrigPumpAll`, `TrigPut`, `TrigPutCounter`, `TrigReturn`, `TrigReveal`, `TrigSacrifice`, `TrigToken`, `TrigTransform`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `ResolvedLimit$`: TODO: Describe this parameter.
@@ -3455,7 +3326,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ClearActivePlayer`, `DBCleanup`, `DBCleanup2`, `DBDuration`, `ResetTurnCount`, `TrigReset`
 - `Static$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerZones$`: TODO: Describe this parameter.
@@ -3471,7 +3341,6 @@ TODO: Write documentation.
 - `ActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBWeaverofLiesSetState`, `KaronaEffect`, `TrigAttach`, `TrigBounce`, `TrigChange`, `TrigChangeTgts`, `TrigChangeZone`, `TrigChangeZoneAll`, `TrigChoice`, `TrigChoose`, `TrigChooseType`, `TrigCopy`, `TrigCounter`, `TrigCounters`, `TrigCurseNonSoldiers`, `TrigDamage`, `TrigDealDamage`, `TrigDermoplasmChangeZone`, `TrigDestroy`, `TrigDig`, `TrigDiscard`, `TrigDjinnVanishing`, `TrigDmg`, `TrigDonate`, `TrigDraw`, `TrigEffect`, `TrigEndure`, `TrigExile`, `TrigFaceUp`, `TrigFight`, `TrigGainLife`, `TrigLook`, `TrigLoseLife`, `TrigMana`, `TrigProtect`, `TrigProvoke`, `TrigPump`, `TrigPumpAll`, `TrigPutCounter`, `TrigPutCounterAll`, `TrigPutCounters`, `TrigRandom`, `TrigRegenerate`, `TrigRemember`, `TrigReturn`, `TrigScry`, `TrigSearch`, `TrigSeek`, `TrigSetState`, `TrigSkipUntap`, `TrigTapOrUntap`, `TrigTapUnTap`, `TrigToken`, `TrigUntap`
 - `GameActivationLimit$`: TODO: Describe this parameter.
   Observed values: `1`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -3496,7 +3365,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigDestroy`, `TrigSac`
 - `TriggerDescription$`: TODO: Describe this parameter.
 - `ValidAttachment$`: TODO: Describe this parameter.
   Observed values: `Card.Self`
@@ -3509,7 +3377,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `DBDealDamage`, `TrigChangeZone`, `TrigConjure`, `TrigCopy`, `TrigDamage`, `TrigDealDamage`, `TrigDestroy`, `TrigDig`, `TrigDraw`, `TrigDread`, `TrigManifest`, `TrigMill`, `TrigPlay`, `TrigPutCounter`, `TrigReturn`, `TrigSearch`, `TrigSurveil`, `TrigTap`, `TrigToken`
 - `ThisDoor$`: TODO: Describe this parameter.
   Observed values: `True`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -3535,7 +3402,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigPutCounter`
 - `Phase$`: TODO: Describe this parameter.
   Observed values: `Untap`
 - `PlayerTurn$`: TODO: Describe this parameter.
@@ -3569,7 +3435,6 @@ TODO: Write documentation.
 - `CheckSVar$`: TODO: Describe this parameter.
   Observed values: `X`
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `ClearRemembered`, `DBDestroy`, `DBPhaseIn`, `DBPutCounter`, `GFGToken`, `RemoveCounters`, `SeerDig`, `TrigAddPhase`, `TrigCopy`, `TrigCounters`, `TrigDiscard`, `TrigDrain`, `TrigDraw`, `TrigDraw1`, `TrigExchangeControl`, `TrigExile`, `TrigGainLife`, `TrigMill`, `TrigPump`, `TrigPutCounter`, `TrigRemoveCounter`, `TrigReturn`, `TrigReveal`, `TrigSearch`, `TrigToken`, `TrigVenture`
 - `OneOff$`: TODO: Describe this parameter.
   Observed values: `True`
 - `OptionalDecider$`: TODO: Describe this parameter.
@@ -3594,7 +3459,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigAttach`, `TrigCopy`
 - `OptionalDecider$`: TODO: Describe this parameter.
   Observed values: `You`
 - `TriggerDescription$`: TODO: Describe this parameter.
@@ -3611,7 +3475,6 @@ TODO: Write documentation.
 
 **Parameters:**
 - `Execute$`: TODO: Describe this parameter.
-  Observed values: `TrigLoseLife`, `TrigScry`, `TrigTreasure`
 - `List$`: TODO: Describe this parameter.
   Observed values: `OppVotedDiff`, `OppVotedSame`, `OppVotedSame,OppVotedDiff`
 - `TriggerDescription$`: TODO: Describe this parameter.
