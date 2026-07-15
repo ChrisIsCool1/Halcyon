@@ -1,10 +1,10 @@
-"""Constants used throughout the Forge Custom Content Manager."""
+"""Constants used throughout Halcyon."""
 
 from __future__ import annotations
 
 from typing import Final
 
-APP_NAME: Final[str] = "Forge Custom Content Manager"
+APP_NAME: Final[str] = "Halcyon"
 APP_VERSION: Final[str] = "0.1.0"
 SET_TYPE_CUSTOM: Final[str] = "Custom"
 PACKAGE_EXTENSION: Final[str] = ".forgepkg.zip"

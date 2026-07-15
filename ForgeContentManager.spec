@@ -25,7 +25,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name="ForgeContentManager",
+    name="Halcyon",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

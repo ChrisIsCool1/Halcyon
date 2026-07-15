@@ -1,1 +1,1 @@
-"""Tab implementations for the Forge Custom Content Manager UI."""
+"""Tab implementations for the Halcyon UI."""

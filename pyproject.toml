@@ -3,9 +3,9 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "forge-content-manager"
+name = "halcyon"
 version = "0.1.0"
-description = "Desktop manager for Forge custom MTG cards and sets"
+description = "Halcyon desktop manager for Forge custom MTG cards and sets"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-forge-content-manager = "forge_content_manager.main:main"
+halcyon = "forge_content_manager.main:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

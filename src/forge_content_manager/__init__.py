@@ -1,4 +1,4 @@
-"""Forge Custom Content Manager package."""
+"""Halcyon package."""
 
 __all__ = ["__version__"]
 

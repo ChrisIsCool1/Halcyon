@@ -1,2 +1,2 @@
 [console_scripts]
-forge-content-manager = forge_content_manager.main:main
+halcyon = forge_content_manager.main:main

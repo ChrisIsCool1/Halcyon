@@ -311,7 +311,7 @@ def main(argv: list[str] | None = None) -> None:
         SystemExit: If argument parsing fails or a command reports an error.
         ValueError: If a discovery pattern or catalog has an invalid scope.
     """
-    parser = argparse.ArgumentParser(prog="forge-content-manager docs")
+    parser = argparse.ArgumentParser(prog="halcyon docs")
     commands = parser.add_subparsers(dest="command", required=True)
     
     extract = commands.add_parser("extract")

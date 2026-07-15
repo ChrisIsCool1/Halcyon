@@ -1,1 +1,1 @@
-"""Business logic services for the Forge Custom Content Manager."""
+"""Business logic services for Halcyon."""

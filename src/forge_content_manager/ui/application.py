@@ -25,7 +25,7 @@ from forge_content_manager.ui.dialogs import show_error
 
 
 class ForgeContentManagerApp(ctk.CTk):
-    """Main application window for Forge Custom Content Manager."""
+    """Main application window for Halcyon."""
 
     def __init__(self, content_service: ForgeContentService, settings_service: SettingsService) -> None:
         """Initialize the root window, persisted settings, and all tab content."""

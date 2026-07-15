@@ -2,7 +2,7 @@
 
 ## Project overview
 
-Forge Custom Content Manager is a Windows 10/11 desktop application for managing custom Magic: The Gathering card content used by MTG Forge. It is a Python 3.12 project using `customtkinter` for the UI and Pillow for card-image conversion.
+Halcyon is a Windows 10/11 desktop application for managing custom Magic: The Gathering card content used by MTG Forge. It is a Python 3.12 project using `customtkinter` for the UI and Pillow for card-image conversion.
 
 ## Repository layout
 
@@ -46,6 +46,6 @@ Keep UI code focused on display, event handling, and user feedback. Put file ope
 ## Validation and verification
 
 - Run the project with `python -m forge_content_manager` after installing it in editable mode.
-- Build the distributable with `pyinstaller ForgeContentManager.spec` when packaging-related files change.
+- Build the Halcyon distributable with `pyinstaller ForgeContentManager.spec` when packaging-related files change.
 - When changing Forge script handling, test filenames with punctuation, Unicode/display names, missing metadata, absent images, and cards that belong to multiple sets.
 - Do not commit generated output such as `.venv/`, `build/`, `dist/`, cache files, or copied card scripts under `scripting_docs/cards/`.

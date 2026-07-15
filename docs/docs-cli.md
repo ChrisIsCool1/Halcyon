@@ -1,6 +1,6 @@
-# `forge-content-manager docs` CLI reference
+# `halcyon docs` CLI reference
 
-`forge-content-manager docs` contains maintainer tools for discovering Forge script
+`halcyon docs` contains maintainer tools for discovering Forge script
 terms and building the SQLite documentation pack used by the Script Editor. These
 commands work from local text and Markdown files; they do not modify a Forge
 installation or include source card scripts in the generated documentation pack.
@@ -9,7 +9,7 @@ Run the commands after installing the project in editable mode:
 
 ```powershell
 python -m pip install -e .
-forge-content-manager docs --help
+halcyon docs --help
 ```
 
 ## Typical workflow
@@ -23,15 +23,15 @@ forge-content-manager docs --help
 For example:
 
 ```powershell
-forge-content-manager docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
-forge-content-manager docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
-forge-content-manager docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
+halcyon docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
+halcyon docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
+halcyon docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
 ```
 
 To regenerate the ability and trigger catalogs and rebuild the pack in one command:
 
 ```powershell
-forge-content-manager docs refresh --cards-dir scripting_docs/cards/cardsfolder
+halcyon docs refresh --cards-dir scripting_docs/cards/cardsfolder
 ```
 
 Replace `<cardsfolder>` with the directory containing Forge's card-script `.txt`
@@ -41,7 +41,7 @@ a smaller directory while authoring a focused catalog.
 ## `extract`
 
 ```text
-forge-content-manager docs extract --cards-dir PATH (--preset NAME | --pattern REGEX) --output PATH [--title TEXT]
+halcyon docs extract --cards-dir PATH (--preset NAME | --pattern REGEX) --output PATH [--title TEXT]
 ```
 
 Scans every `*.txt` file below `--cards-dir` as UTF-8 and writes a Markdown
@@ -97,7 +97,7 @@ Use a raw regex appropriate for your shell. This example finds values in `SVars`
 the form `Foo$Bar`:
 
 ```powershell
-forge-content-manager docs extract --cards-dir <cardsfolder> --pattern '(?m)^SVar:[^:]+:Foo\$([^|\r\n]+)' --output discoveries/foo.md --title 'Foo values'
+halcyon docs extract --cards-dir <cardsfolder> --pattern '(?m)^SVar:[^:]+:Foo\$([^|\r\n]+)' --output discoveries/foo.md --title 'Foo values'
 ```
 
 The regular expression must have a capture group for the value to record. If it has
@@ -107,7 +107,7 @@ both `--preset` and `--pattern`, or neither of them.
 ## `sync`
 
 ```text
-forge-content-manager docs sync --discoveries PATH --catalog PATH
+halcyon docs sync --discoveries PATH --catalog PATH
 ```
 
 Adds complete missing `##` sections from a discovery file to a catalog Markdown file.
@@ -129,7 +129,7 @@ compiling, because the compiler requires each final entry to have a description.
 ## `refresh`
 
 ```text
-forge-content-manager docs refresh --cards-dir PATH [--catalog-dir PATH] [--guides-dir PATH] [--output PATH] [--version TEXT]
+halcyon docs refresh --cards-dir PATH [--catalog-dir PATH] [--guides-dir PATH] [--output PATH] [--version TEXT]
 ```
 
 Regenerates `ability-mode.md` and `trigger-mode.md` from the card scripts, then
@@ -141,7 +141,7 @@ the repository's `scripting_docs/catalog`, `scripting_docs`, and
 ## `compile`
 
 ```text
-forge-content-manager docs compile --catalog-dir PATH [--guides-dir PATH] --output PATH [--version TEXT]
+halcyon docs compile --catalog-dir PATH [--guides-dir PATH] --output PATH [--version TEXT]
 ```
 
 Builds a deterministic SQLite documentation pack. The output contains searchable
@@ -191,8 +191,8 @@ Use the built-in help when you need the exact parser usage or the current preset
 names:
 
 ```powershell
-forge-content-manager docs --help
-forge-content-manager docs extract --help
-forge-content-manager docs sync --help
-forge-content-manager docs compile --help
+halcyon docs --help
+halcyon docs extract --help
+halcyon docs sync --help
+halcyon docs compile --help
 ```

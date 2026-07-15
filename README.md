@@ -1,4 +1,4 @@
-# Forge Custom Content Manager
+# Halcyon
 
 Desktop application for managing custom Magic: The Gathering cards and sets for MTG Forge on Windows 10 and 11.
 
@@ -48,7 +48,7 @@ Build the executable:
 pyinstaller ForgeContentManager.spec
 ```
 
-The bundled executable will be created under `dist/ForgeContentManager/`.
+The bundled executable will be created under `dist/Halcyon/`.
 
 The Script Editor bundles the Forge scripting Markdown guides. To search full reference
 card scripts in a packaged build, choose a local Forge `cardsfolder` directory in Settings.
@@ -63,9 +63,9 @@ For command options, preset behavior, catalog format, and the full authoring wor
 see [the documentation CLI reference](docs/docs-cli.md).
 
 ```powershell
-forge-content-manager docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
-forge-content-manager docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
-forge-content-manager docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
+halcyon docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
+halcyon docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
+halcyon docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
 ```
 
 `extract` also accepts `--pattern <regex>` with one capture group for custom term families.
