@@ -5,9 +5,11 @@ from __future__ import annotations
 import logging
 import os
 import shutil
+import sys
 from pathlib import Path
 
 import customtkinter as ctk
+from PIL import Image
 
 from forge_content_manager.constants import APP_NAME
 from forge_content_manager.services.content_service import ForgeContentService
@@ -50,12 +52,25 @@ class ForgeContentManagerApp(ctk.CTk):
         header.grid(row=0, column=0, sticky="ew")
         header.grid_columnconfigure(0, weight=1)
 
+        title_row = ctk.CTkFrame(header, fg_color="transparent")
+        title_row.grid(row=0, column=0, sticky="w", padx=24, pady=(14, 4))
+
+        logo_path = self._asset_path("logo.png")
+        logo_source = Image.open(logo_path)
+        self._logo_image = ctk.CTkImage(
+            light_image=logo_source,
+            dark_image=logo_source,
+            size=(40, 45),
+        )
+        logo = ctk.CTkLabel(title_row, text="", image=self._logo_image)
+        logo.grid(row=0, column=0, padx=(0, 12))
+
         title = ctk.CTkLabel(
-            header,
+            title_row,
             text=APP_NAME,
             font=ctk.CTkFont(size=30, weight="bold"),
         )
-        title.grid(row=0, column=0, sticky="w", padx=24, pady=(18, 4))
+        title.grid(row=0, column=1, sticky="w")
 
         subtitle = ctk.CTkLabel(
             header,
@@ -113,6 +128,12 @@ class ForgeContentManagerApp(ctk.CTk):
         self.settings_tab.grid(row=0, column=0, sticky="nsew")
 
         self.refresh_data_views()
+
+    @staticmethod
+    def _asset_path(filename: str) -> Path:
+        """Resolve an asset from either the source tree or a PyInstaller bundle."""
+        bundle_root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3]))
+        return bundle_root / filename
 
     def refresh_data_views(self) -> None:
         """Refresh all data-driven tabs after content has changed."""
