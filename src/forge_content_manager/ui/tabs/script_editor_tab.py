@@ -374,7 +374,15 @@ class ScriptEditorTab(ctk.CTkFrame):
 
     def _handle_editor_focus_out(self, _event=None) -> None:
         """Dismiss completion when focus leaves the script editor."""
-        self.dismiss_completion()
+        if self._completion is not None:
+            focus_widget = self.winfo_toplevel().focus_get()
+            if focus_widget is not None and focus_widget.winfo_toplevel() is self._completion:
+                # Don't dismiss completion if the user is interacting with the popup.
+                return
+        # TODO: Make it so you can click the completion list, but still dismiss it when clicking elsewhere. 
+        # Right now, clicking the list dismisses it and then the click is lost.
+        # self.dismiss_completion()
+        return
 
     def _update_documentation(self, item: ScriptDocumentation | None) -> None:
         text = "Place the cursor on a recognized Forge term to view its help.\n\nCompletion suggestions appear after two characters."
