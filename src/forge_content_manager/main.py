@@ -14,13 +14,8 @@ from forge_content_manager.services.settings_service import SettingsService
 from forge_content_manager.ui.application import ForgeContentManagerApp
 
 
-def main() -> None:
+def start() -> None:
     """Start the desktop application."""
-    if len(sys.argv) > 1 and sys.argv[1] == "docs":
-        from forge_content_manager.devtools import main as documentation_main
-
-        documentation_main(sys.argv[2:])
-        return
     paths = get_forge_paths()
     configure_logging(paths.logs_dir / LOG_FILENAME)
     backup_service = BackupService(paths)
@@ -37,3 +32,16 @@ def main() -> None:
     settings_service = SettingsService(paths)
     app = ForgeContentManagerApp(content_service=content_service, settings_service=settings_service)
     app.mainloop()
+
+
+def main() -> None:
+    """Dispatch the Halcyon command-line entry point."""
+    if len(sys.argv) > 1 and sys.argv[1] == "docs":
+        from forge_content_manager.devtools import main as documentation_main
+
+        documentation_main(sys.argv[2:])
+        return
+    if len(sys.argv) > 1 and sys.argv[1] == "start":
+        start()
+        return
+    start()
