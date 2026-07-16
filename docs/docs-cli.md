@@ -61,35 +61,40 @@ Arguments:
 - `--title TEXT`: Heading for the generated Markdown document. The default is
   `Discovered Forge Terms`.
 
+`extract` also accepts `--pattern <regex>` with one capture group for custom term families.
+The presets colon-delimit keyword forms into one Markdown entry per
+keyword title. For example, `Affinity:Bird` and `Affinity:Creature.Artifact:artifact creature` become one editable
+`Affinity:<Selector>:[<Label>]` entry in the keywords doc. The generated entry lists observed values
+for each argument slot; these values are taken directly from the scanned scripts, but they aren't a complete validity list.
+The cardsfolder scripts themselves are still the source of truth in case of conflict!
+
+Whenever you see something like `TODO: Write documentation.` or `Describe parameter` in the outputted docs, that's where you
+can go and make edits. These will be visible to the Script Editor after running `halcyon compile` or `halcyon refresh`.
+
 ### Presets
 
-| Preset | Finds |
-| --- | --- |
-| `keyword` | Values on `K:` lines. Unlike other presets, it groups related colon-delimited forms by keyword title. |
-| `ability-mode` | Ability families from `A:` lines and `SVar` ability definitions using `DB$`, `SP$`, or `AB$`, including observed pipe-delimited parameter values. |
-| `trigger-mode` | Trigger families from `T:` lines and `SVar` definitions using `Mode$`, including observed pipe-delimited parameter values. |
-| `static-mode` | Static modes from `S:Mode$` lines. |
-| `replacement-mode` | Replacement events from `R:Event$` lines. |
-| `parameter` | Pipe-delimited parameter names ending in `$`, such as `ValidTgts$`. |
+| Preset             | Finds                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keyword`          | Values on `K:` lines. Unlike other presets, it groups related colon-delimited forms by keyword title.                                             |
+| `ability-mode`     | Ability families from `A:` lines and `SVar` ability definitions using `DB$`, `SP$`, or `AB$`, including observed pipe-delimited parameter values. |
+| `trigger-mode`     | Trigger families from `T:` lines and `SVar` definitions using `Mode$`, including observed pipe-delimited parameter values.                        |
+| `static-mode`      | Static modes from `S:Mode$` lines.                                                                                                                |
+| `replacement-mode` | Replacement events from `R:Event$` lines.                                                                                                         |
+| `parameter`        | Pipe-delimited parameter names ending in `$`, such as `ValidTgts$`.                                                                               |
 
 The `ability-mode` and `trigger-mode` presets produce one section per mode family,
 with a `**Parameters:**` list containing editable documentation and observed values
 for each `Label$`. Their compiled parameter records stay scoped to that family, so
-autocomplete values are offered only in the matching ability or trigger.
-Free-text parameters (`SpellDescription$`, `TriggerDescription$`,
-`StackDescription$`, and `TgtPrompt$`) omit their observed text. `Cost$` retains
-only the first ten distinct values encountered.
+autocomplete values are offered only in the matching ability or trigger. Parameters for abilities, triggers,
+and replacement effects are delimited by pipes.
 
-Other non-keyword modes produce one `## \`term\`` section for each distinct exact
-match, sorted case-insensitively. The body starts with `TODO: Write documentation.`
+- Free-text parameters (like `SpellDescription$`, `TriggerDescription$`,
+  `StackDescription$`, and `TgtPrompt$`) omit their observed text.
+- Parameters like `Cost$` retain only the first ten distinct values encountered. They're useful to have references for, but
+  there's a lot of them to sift through.
 
-The `keyword` preset produces one section per keyword title. It retains the values
-seen in each colon-delimited argument position, so its generated signature can be
-used to document a family rather than one individual card spelling. For example,
-`Affinity:Bird` and `Affinity:Creature.Artifact:artifact creature` are combined into
-an `Affinity:<Selector>:[<Label>]` entry. The generated entry lists observed values
-for each argument slot; these values are evidence from the scanned scripts, not a
-complete validity list.
+Other non-keyword modes produce one `## \`term\``section for each distinct exact
+match, sorted case-insensitively. The body starts with`TODO: Write documentation.`
 
 ### Custom-pattern example
 
@@ -101,8 +106,8 @@ halcyon docs extract --cards-dir <cardsfolder> --pattern '(?m)^SVar:[^:]+:Foo\$(
 ```
 
 The regular expression must have a capture group for the value to record. If it has
-more than one group, only the first is used. `extract` rejects invocations that give
-both `--preset` and `--pattern`, or neither of them.
+more than one group, only the first is used. If you try to run `extract`
+with both `--preset` and `--pattern` defined, or neither of them, it won't let you. Exactly one is required.
 
 ## `sync`
 
@@ -113,7 +118,8 @@ halcyon docs sync --discoveries PATH --catalog PATH
 Adds complete missing `##` sections from a discovery file to a catalog Markdown file.
 Section names are compared case-sensitively. Existing catalog sections are never
 edited, replaced, reordered, or refreshed, which makes this safe to run repeatedly
-while preserving authored documentation.
+while preserving authored documentation. Use this when a new Forge release drops and you need to write
+documentation updates for new stuff.
 
 Arguments:
 
@@ -176,7 +182,7 @@ Its value identifies the Forge line prefix (`K:`, `A:`, `T:`, `S:`, or `R:`), an
 editor only considers entries with the matching scope for the current line. The heading
 is case-sensitive, so distinct Forge-exported spellings remain distinct entries. The first
 non-empty line that is not a `**Signature:**`, `**Example:**`, or HTML comment is
-used as the description. `Signature` is optional and uses ` | ` to separate required
+used as the description. `Signature` is optional and uses `|` to separate required
 parameters. `Example` is optional.
 
 When both `--guides-dir` and `--catalog-dir` contain the same heading in the same

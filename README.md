@@ -1,23 +1,25 @@
 # Halcyon
 
-Desktop application for managing custom Magic: The Gathering cards and sets for MTG Forge on Windows 10 and 11.
+A custom content editor for MTG Forge.
+
+## Introduction
+
+Named after the Thran capital, this is a small desktop application for managing custom cards on MTG Forge. I found the default way of going through folders manually a bit tedious, so this should automate the process a little. It can install custom cards, images, and sets that you can then use in whatever version of Forge you have. And it comes with a script editor that should be nicer to work with than editing scripts in a text document.
 
 ## Features
 
-- Create, edit, rename, delete, import, and export custom Forge sets.
-- Batch import multiple card scripts with optional image conversion and installation.
-- Browse installed custom cards, edit scripts in place, replace images, and delete cards.
-- Preserve Forge script contents exactly and validate only basic metadata requirements.
-- Create timestamped backups before edition, script, or image changes.
+- `Begone: File Explorer`: Create, edit, rename, delete, import, and export custom Forge sets, all in app!
+- `Create a Set in One Click`: Jot down a bunch of scripts, import a few images, click Import and you're done!
+- `Easy Set Editing`: Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
 - Import and export `.forgepkg.zip` packages with collision handling.
-- Switch between system, light, and dark appearance modes.
-- Draft Forge card scripts with syntax highlighting, keyword help, completion, and optional reference-card search.
+- `The Script Editor`: Think of this as VS Code for Forge! Draft Forge card scripts with syntax highlighting, keyword help, and autocompletion. If you import a cardsfolder from Forge, it even gives you a handy crossreference search of all existing cards right in the editor. The Script Editor also comes with some basic validation for things like SVar references.
 
 ## Requirements
 
 - Python 3.12
 - Windows 10 or 11
 - MTG Forge custom content folders available under `%APPDATA%` and `%LOCALAPPDATA%`
+- MTG Forge version newer than or equal to 2.0.12 (Secrets of Strixhaven Release)
 
 ## Install
 
@@ -29,10 +31,10 @@ python -m pip install -e .
 ## Run
 
 ```powershell
-python -m forge_content_manager
+halcyon start
 ```
 
-The application creates any missing Forge custom content directories automatically.
+The application creates any missing Forge custom content directories automatically, so don't worry about creating them if they aren't present.
 
 ## Build With PyInstaller
 
@@ -50,29 +52,23 @@ pyinstaller ForgeContentManager.spec
 
 The bundled executable will be created under `dist/Halcyon/`.
 
-The Script Editor bundles the Forge scripting Markdown guides. To search full reference
-card scripts in a packaged build, choose a local Forge `cardsfolder` directory in Settings.
+The Script Editor bundles the Forge scripting Markdown guides for easy reference. To search full reference
+card scripts in a packaged build, import a local unzipped Forge `cardsfolder` directory in Settings, and it will generate a lookup SQLite database that it can search through.
 
 ## Maintaining Script Documentation
 
-The editor ships with a compact SQLite documentation pack and can import a replacement
-pack from Settings. Maintainers can discover Forge terms and rebuild that pack without
-shipping any reference card scripts:
+The Script Editor ships with a compact SQLite documentation pack and can import a replacement
+pack from Settings if a newer one is released. When new versions of Forge release new features or keywords, keeping up with the
+tabletop game, there are also dev commands you can run in Halcyon to update the documentation.
 
 For command options, preset behavior, catalog format, and the full authoring workflow,
 see [the documentation CLI reference](docs/docs-cli.md).
 
-```powershell
-halcyon docs extract --cards-dir <cardsfolder> --preset keyword --output discoveries.md
-halcyon docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/keywords.md
-halcyon docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
-```
+Run this command to extract keywords from the given unzipped cardsfolder and update the database all in one step:
 
-`extract` also accepts `--pattern <regex>` with one capture group for custom term families.
-The `keyword` preset groups colon-delimited keyword forms into one Markdown entry per
-keyword title, listing the observed values for each argument slot. For example,
-`Affinity:Bird` and `Affinity:Creature.Artifact:artifact creature` become one editable
-`Affinity:<Selector>:[<Label>]` entry. Other presets continue to list exact terms.
+```powershell
+halcyon docs refresh --cards-dir scripting_docs/cards/cardsfolder
+```
 
 ## Project Structure
 
@@ -88,6 +84,6 @@ src/forge_content_manager/
 
 ## Notes
 
-- Forge remains the authority for advanced script validation and gameplay logic correctness.
+- Forge remains the authority for advanced script validation and gameplay logic correctness. This thing won't be what errors at you if your card scripts don't make sense.
 - The manager only reads metadata fields such as `Name`, `Types`, `Oracle`, and `ManaCost` when required.
 - Card images are converted to JPEG using Pillow and installed using Forge's `.fullborder.jpg` naming convention.

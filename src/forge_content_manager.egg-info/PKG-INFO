@@ -41,6 +41,12 @@ python -m pip install -e .
 python -m forge_content_manager
 ```
 
+The equivalent named command is:
+
+```powershell
+halcyon start
+```
+
 The application creates any missing Forge custom content directories automatically.
 
 ## Build With PyInstaller

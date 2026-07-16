@@ -11,6 +11,7 @@ Halcyon is a Windows 10/11 desktop application for managing custom Magic: The Ga
 - `src/forge_content_manager/services/` contains filesystem, parsing, backup, package, image, and content workflows.
 - `src/forge_content_manager/ui/` contains CustomTkinter views, dialogs, reusable widgets, and tabs.
 - `scripting_docs/` is reference material for the Forge card-scripting API. Consult it when work concerns card-script semantics.
+- `scripting_docs/cards/cardsfolder` contains a local unzipped Forge `cardsfolder` for testing and documentation purposes. It is not part of the application’s runtime content. Use as the source of truth for card-script reference and keyword extraction.
 
 Keep UI code focused on display, event handling, and user feedback. Put file operations and reusable business workflows in services. `ForgeContentService` is the UI-facing façade for coordinated content operations; preserve that boundary when practical.
 
