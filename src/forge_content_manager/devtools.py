@@ -105,16 +105,17 @@ def extract_keyword_families(cards_dir: Path, progress: Callable[[int, int], Non
 
 
 def extract_ability_families(cards_dir: Path, scope: str, progress: Callable[[int, int], None] | None = None) -> list[AbilityFamily]:
-    """Group A or T declarations by mode and retain their pipe-delimited values.
+    """Group mode declarations by family and retain their pipe-delimited values.
 
     ``SVar`` labels deliberately do not participate in the family key: an SVar is
-    a local name, while the mode after ``DB$``, ``SP$``, ``AB$``, or ``Mode$`` is
-    the reusable Forge construct being documented.
+    a local name, while the mode after ``DB$``, ``SP$``, ``AB$``, ``Mode$``, or
+    ``Event$`` is the reusable Forge construct being documented.
     """
-    if scope not in {"A", "T"}:
-        raise ValueError("Ability families can only be extracted for A or T scopes.")
-    first_field = r"(?:DB|SP|AB)" if scope == "A" else "Mode"
-    expression = re.compile(rf"(?m)^(?:{scope}|SVar:[^:\r\n]+):{first_field}\$\s*([^|\r\n]+)(.*)$")
+    if scope not in {"A", "T", "S", "R"}:
+        raise ValueError("Mode families can only be extracted for A, T, S, or R scopes.")
+    first_field = {"A": r"(?:DB|SP|AB)", "T": "Mode", "S": "Mode", "R": "Event"}[scope]
+    prefix = rf"(?:{scope}|SVar:[^:\r\n]+)" if scope in {"A", "T"} else scope
+    expression = re.compile(rf"(?m)^{prefix}:{first_field}\$\s*([^|\r\n]+)(.*)$")
     parameter_expression = re.compile(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)")
     paths = list(cards_dir.rglob("*.txt"))
     families: dict[str, AbilityFamily] = {}
@@ -349,7 +350,7 @@ def main(argv: list[str] | None = None) -> None:
             families = extract_keyword_families(args.cards_dir, terminal_progress)
             write_keyword_discoveries(args.output, families, args.title, scope)
             print(f"Wrote {len(families):,} keyword families to {args.output}", file=sys.stderr)
-        elif args.preset in {"ability-mode", "trigger-mode"}:
+        elif args.preset in {"ability-mode", "trigger-mode", "static-mode", "replacement-mode"}:
             families = extract_ability_families(args.cards_dir, scope, terminal_progress)
             write_ability_discoveries(args.output, families, args.title, scope)
             print(f"Wrote {len(families):,} {scope} families to {args.output}", file=sys.stderr)

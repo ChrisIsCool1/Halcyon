@@ -82,11 +82,11 @@ can go and make edits. These will be visible to the Script Editor after running 
 | `replacement-mode` | Replacement events from `R:Event$` lines.                                                                                                         |
 | `parameter`        | Pipe-delimited parameter names ending in `$`, such as `ValidTgts$`.                                                                               |
 
-The `ability-mode` and `trigger-mode` presets produce one section per mode family,
+The `ability-mode`, `trigger-mode`, `static-mode`, and `replacement-mode` presets produce one section per mode family,
 with a `**Parameters:**` list containing editable documentation and observed values
 for each `Label$`. Their compiled parameter records stay scoped to that family, so
-autocomplete values are offered only in the matching ability or trigger. Parameters for abilities, triggers,
-and replacement effects are delimited by pipes.
+autocomplete values are offered only in the matching mode family. Parameters for abilities, triggers,
+static effects, and replacement effects are delimited by pipes.
 
 - Free-text parameters (like `SpellDescription$`, `TriggerDescription$`,
   `StackDescription$`, and `TgtPrompt$`) omit their observed text.

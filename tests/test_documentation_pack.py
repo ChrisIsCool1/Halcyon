@@ -73,6 +73,22 @@ class DocumentationPackTests(unittest.TestCase):
             write_ability_discoveries(output, list(abilities.values()), "Abilities", "A")
             self.assertIn("- `Destination$`: TODO: Describe this parameter.", output.read_text(encoding="utf-8"))
 
+    def test_static_and_replacement_extraction_groups_parameters(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "modes.txt").write_text(
+                "S:Mode$ Continuous | Affected$ Creature | AddPower$ 2\n"
+                "R:Event$ Untap | ValidCard$ Creature | Layer$ CantHappen\n",
+                encoding="utf-8",
+            )
+            statics = {family.title: family for family in extract_ability_families(root, "S")}
+            replacements = {family.title: family for family in extract_ability_families(root, "R")}
+            self.assertEqual(statics["Continuous"].parameters["AddPower"], ["2"])
+            self.assertEqual(replacements["Untap"].parameters["Layer"], ["CantHappen"])
+            output = root / "static.md"
+            write_ability_discoveries(output, list(statics.values()), "Static Modes", "S")
+            self.assertIn("- `Affected$`: TODO: Describe this parameter.", output.read_text(encoding="utf-8"))
+
     def test_catalog_parameter_records_are_scoped_to_their_family(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
