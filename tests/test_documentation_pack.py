@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_keyword_families, extract_terms, refresh_documentation, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
+from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_keyword_families, extract_preset, extract_terms, refresh_documentation, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
 from forge_content_manager.services.documentation_pack import DocumentationRecord, compile_pack, load_pack, parse_markdown_catalog, validate_pack
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
 
@@ -28,6 +28,31 @@ class DocumentationPackTests(unittest.TestCase):
             extract_terms(root, r"(?m)^K:(.+)$", lambda completed, total: updates.append((completed, total)))
             self.assertEqual(updates[0], (0, 2))
             self.assertEqual(updates[-1], (2, 2))
+
+    def test_extracts_scripts_from_multiple_subdirectories(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "a").mkdir()
+            (root / "b").mkdir()
+            (root / "a" / "one.txt").write_text("S:Mode$ Continuous | Affected$ Creature\n", encoding="utf-8")
+            (root / "b" / "two.txt").write_text("S:Mode$ Continuous | Affected$ Artifact\n", encoding="utf-8")
+            updates: list[tuple[int, int]] = []
+            families = extract_ability_families(root, "S", lambda completed, total: updates.append((completed, total)))
+            self.assertEqual(families[0].parameters["Affected"], ["Creature", "Artifact"])
+            self.assertEqual(updates[0], (0, 2))
+            self.assertEqual(updates[-1], (2, 2))
+
+    def test_extract_preset_writes_the_requested_output_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cards = root / "cards"
+            output = root / "discoveries" / "keyword.md"
+            cards.mkdir()
+            (cards / "sample.txt").write_text("K:Trample\n", encoding="utf-8")
+
+            self.assertEqual(extract_preset(cards, "keyword", output), 1)
+            self.assertEqual(output.read_text(encoding="utf-8").splitlines()[0], "# Discovered Forge Terms")
+            self.assertIn("## `Trample`", output.read_text(encoding="utf-8"))
 
     def test_keyword_extraction_groups_argument_slots(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -6,8 +6,12 @@ import argparse
 import re
 import sys
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
+from queue import SimpleQueue
+from threading import Lock
+from typing import TypeVar
 
 from forge_content_manager.services.documentation_pack import compile_pack, parse_legacy_guides, parse_markdown_catalog
 
@@ -37,6 +41,65 @@ FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "ValidDescr
 # These parameters can have many different values, but we only want to show a limited number of them in the documentation.
 LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "Affected", "ValidTarget", "Spellbook", "ValidTargets", "ValidZone", "ChangeValid", "IsPresent", "ValidSource"})
 LIMIT_FOR_LIMITED_PARAMETERS = 10
+ScanResult = TypeVar("ScanResult")
+
+
+def scan_card_scripts(
+    cards_dir: Path,
+    extract: Callable[[str], ScanResult],
+    progress: Callable[[int, int], None] | None = None,
+) -> list[ScanResult | None]:
+    """Read and extract every card script concurrently by top-level subdirectory.
+
+    Results are collected in a thread-safe queue and restored to sorted path order
+    before returning. This keeps discoveries deterministic while allowing the
+    independent card-script directories to overlap filesystem reads and parsing.
+
+    Args:
+        cards_dir: Root directory containing Forge card-script text files.
+        extract: Function that extracts one result from a readable script.
+        progress: Optional callback receiving completed and total script counts.
+
+    Returns:
+        One result per script, in sorted path order; unreadable scripts are ``None``.
+    """
+    paths = sorted(cards_dir.rglob("*.txt"))
+    total = len(paths)
+    if progress:
+        progress(0, total)
+    if not paths:
+        return []
+
+    groups: dict[str, list[tuple[int, Path]]] = {}
+    for index, path in enumerate(paths):
+        relative_parts = path.relative_to(cards_dir).parts
+        group_name = relative_parts[0] if len(relative_parts) > 1 else ""
+        groups.setdefault(group_name, []).append((index, path))
+
+    results: SimpleQueue[tuple[int, ScanResult | None]] = SimpleQueue()
+    completed = 0
+    progress_lock = Lock()
+
+    def scan_group(group: list[tuple[int, Path]]) -> None:
+        nonlocal completed
+        for index, path in group:
+            try:
+                result = extract(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError):
+                result = None
+            results.put((index, result))
+            if progress:
+                with progress_lock:
+                    completed += 1
+                    progress(completed, total)
+
+    max_workers = min(32, len(groups))
+    with ThreadPoolExecutor(max_workers=max_workers, thread_name_prefix="halcyon-extract") as executor:
+        futures = [executor.submit(scan_group, group) for group in groups.values()]
+        for future in futures:
+            future.result()
+
+    return [result for _, result in sorted((results.get() for _ in paths), key=lambda item: item[0])]
 
 
 def extract_terms(cards_dir: Path, pattern: str, progress: Callable[[int, int], None] | None = None) -> list[str]:
@@ -44,20 +107,14 @@ def extract_terms(cards_dir: Path, pattern: str, progress: Callable[[int, int], 
     expression = re.compile(pattern)
     if expression.groups < 1:
         raise ValueError("The extraction pattern must contain one capture group for the discovered term.")
-    paths = list(cards_dir.rglob("*.txt"))
-    total = len(paths)
     values: set[str] = set()
-    if progress:
-        progress(0, total)
-    for index, path in enumerate(paths, start=1):
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeError):
-            pass
-        else:
-            values.update(match.group(1).strip() for match in expression.finditer(text) if match.group(1).strip())
-        if progress:
-            progress(index, total)
+    for matches in scan_card_scripts(
+        cards_dir,
+        lambda text: {match.group(1).strip() for match in expression.finditer(text) if match.group(1).strip()},
+        progress,
+    ):
+        if matches:
+            values.update(matches)
     return sorted(values, key=str.casefold)
 
 
@@ -79,28 +136,29 @@ class AbilityFamily:
 
 def extract_keyword_families(cards_dir: Path, progress: Callable[[int, int], None] | None = None) -> list[KeywordFamily]:
     """Group K declarations by title while retaining every observed argument value."""
-    paths = list(cards_dir.rglob("*.txt"))
     families: dict[str, KeywordFamily] = {}
-    if progress:
-        progress(0, len(paths))
-    for index, path in enumerate(paths, start=1):
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeError):
-            text = ""
-        for match in re.finditer(PRESETS["keyword"], text):
+    expression = re.compile(PRESETS["keyword"])
+
+    def extract_keywords(text: str) -> list[tuple[str, list[str]]]:
+        discoveries: list[tuple[str, list[str]]] = []
+        for match in expression.finditer(text):
             parts = [part.strip() for part in match.group(1).split(":")]
             if not parts or not parts[0]:
                 continue
-            title, values = parts[0], parts[1:]
+            discoveries.append((parts[0], parts[1:]))
+
+        return discoveries
+
+    for discoveries in scan_card_scripts(cards_dir, extract_keywords, progress):
+        if not discoveries:
+            continue
+        for title, values in discoveries:
             family = families.setdefault(title, KeywordFamily(title, []))
             while len(family.arguments) < len(values):
                 family.arguments.append(set())
             for argument_index, value in enumerate(values):
                 if value:
                     family.arguments[argument_index].add(value)
-        if progress:
-            progress(index, len(paths))
     return sorted(families.values(), key=lambda item: item.title.casefold())
 
 
@@ -117,27 +175,34 @@ def extract_ability_families(cards_dir: Path, scope: str, progress: Callable[[in
     prefix = rf"(?:{scope}|SVar:[^:\r\n]+)" if scope in {"A", "T"} else scope
     expression = re.compile(rf"(?m)^{prefix}:{first_field}\$\s*([^|\r\n]+)(.*)$")
     parameter_expression = re.compile(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)")
-    paths = list(cards_dir.rglob("*.txt"))
     families: dict[str, AbilityFamily] = {}
-    if progress:
-        progress(0, len(paths))
-    for index, path in enumerate(paths, start=1):
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeError):
-            text = ""
+    seen_parameters: dict[tuple[str, str], set[str]] = {}
+
+    def extract_families(text: str) -> list[tuple[str, list[tuple[str, str]]]]:
+        discoveries: list[tuple[str, list[tuple[str, str]]]] = []
         for match in expression.finditer(text):
             title = match.group(1).strip()
             if not title:
                 continue
+            parameters = [
+                (parameter.group(1), parameter.group(2).strip())
+                for parameter in parameter_expression.finditer(match.group(2))
+            ]
+            discoveries.append((title, parameters))
+
+        return discoveries
+
+    for discoveries in scan_card_scripts(cards_dir, extract_families, progress):
+        if not discoveries:
+            continue
+        for title, parameters in discoveries:
             family = families.setdefault(title, AbilityFamily(title, {}))
-            for parameter in parameter_expression.finditer(match.group(2)):
-                label, value = parameter.group(1), parameter.group(2).strip()
+            for label, value in parameters:
                 observed = family.parameters.setdefault(label, [])
-                if value and value not in observed:
+                seen = seen_parameters.setdefault((title, label), set())
+                if value and value not in seen:
+                    seen.add(value)
                     observed.append(value)
-        if progress:
-            progress(index, len(paths))
     return sorted(families.values(), key=lambda item: item.title.casefold())
 
 
@@ -148,28 +213,36 @@ def extract_ability_and_trigger_families(cards_dir: Path, progress: Callable[[in
         "T": re.compile(r"(?m)^(?:T|SVar:[^:\r\n]+):Mode\$\s*([^|\r\n]+)(.*)$"),
     }
     parameter_expression = re.compile(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)")
-    paths = list(cards_dir.rglob("*.txt"))
     families: dict[str, dict[str, AbilityFamily]] = {"A": {}, "T": {}}
-    if progress:
-        progress(0, len(paths))
-    for index, path in enumerate(paths, start=1):
-        try:
-            text = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeError):
-            text = ""
+    seen_parameters: dict[tuple[str, str, str], set[str]] = {}
+
+    def extract_families(text: str) -> dict[str, list[tuple[str, list[tuple[str, str]]]]]:
+        discoveries: dict[str, list[tuple[str, list[tuple[str, str]]]]] = {"A": [], "T": []}
         for scope, expression in expressions.items():
             for match in expression.finditer(text):
                 title = match.group(1).strip()
                 if not title:
                     continue
+                parameters = [
+                    (parameter.group(1), parameter.group(2).strip())
+                    for parameter in parameter_expression.finditer(match.group(2))
+                ]
+                discoveries[scope].append((title, parameters))
+
+        return discoveries
+
+    for discoveries in scan_card_scripts(cards_dir, extract_families, progress):
+        if not discoveries:
+            continue
+        for scope, scope_discoveries in discoveries.items():
+            for title, parameters in scope_discoveries:
                 family = families[scope].setdefault(title, AbilityFamily(title, {}))
-                for parameter in parameter_expression.finditer(match.group(2)):
-                    label, value = parameter.group(1), parameter.group(2).strip()
+                for label, value in parameters:
                     observed = family.parameters.setdefault(label, [])
-                    if value and value not in observed:
+                    seen = seen_parameters.setdefault((scope, title, label), set())
+                    if value and value not in seen:
+                        seen.add(value)
                         observed.append(value)
-        if progress:
-            progress(index, len(paths))
     return (
         sorted(families["A"].values(), key=lambda item: item.title.casefold()),
         sorted(families["T"].values(), key=lambda item: item.title.casefold()),
@@ -242,6 +315,32 @@ def write_ability_discoveries(destination: Path, families: list[AbilityFamily], 
         entries.append("\n".join(lines))
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")
+
+
+def extract_preset(
+    cards_dir: Path,
+    preset: str,
+    output: Path,
+    progress: Callable[[int, int], None] | None = None,
+) -> int:
+    """Extract one bundled preset and write its discovery Markdown file."""
+    if preset not in PRESETS:
+        raise ValueError(f"Unknown extraction preset: {preset}")
+
+    scope = PRESET_SCOPES[preset]
+    title = "Discovered Forge Terms"
+    if preset == "keyword":
+        families = extract_keyword_families(cards_dir, progress)
+        write_keyword_discoveries(output, families, title, scope)
+        return len(families)
+    if preset in {"ability-mode", "trigger-mode", "static-mode", "replacement-mode"}:
+        families = extract_ability_families(cards_dir, scope, progress)
+        write_ability_discoveries(output, families, title, scope)
+        return len(families)
+
+    terms = extract_terms(cards_dir, PRESETS[preset], progress)
+    write_discoveries(output, terms, title, scope)
+    return len(terms)
 
 
 def refresh_documentation(
@@ -322,6 +421,10 @@ def main(argv: list[str] | None = None) -> None:
     extract.add_argument("--output", type=Path, required=True)
     extract.add_argument("--title", default="Discovered Forge Terms")
     extract.add_argument("--scope", help="Documentation scope for a custom pattern, such as K or A.")
+
+    extract_all = commands.add_parser("extract_all_presets", help="Extract every bundled preset into a directory of Markdown files.")
+    extract_all.add_argument("--cards-dir", type=Path, required=True)
+    extract_all.add_argument("--output-dir", type=Path, required=True)
     
     sync = commands.add_parser("sync")
     sync.add_argument("--discoveries", type=Path, required=True)
@@ -358,6 +461,13 @@ def main(argv: list[str] | None = None) -> None:
             terms = extract_terms(args.cards_dir, PRESETS.get(args.preset, args.pattern), terminal_progress)
             write_discoveries(args.output, terms, args.title, scope)
             print(f"Wrote {len(terms):,} discovered terms to {args.output}", file=sys.stderr)
+    elif args.command == "extract_all_presets":
+        args.output_dir.mkdir(parents=True, exist_ok=True)
+        print(f"Finding Forge scripts in {args.cards_dir}…", file=sys.stderr)
+        for preset in PRESETS:
+            output = args.output_dir / f"{preset}.md"
+            count = extract_preset(args.cards_dir, preset, output, terminal_progress)
+            print(f"Wrote {count:,} {preset} discoveries to {output}", file=sys.stderr)
     elif args.command == "sync":
         print(f"Added {sync_catalog(args.discoveries, args.catalog)} documentation stubs.")
     elif args.command == "refresh":

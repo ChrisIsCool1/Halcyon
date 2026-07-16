@@ -28,6 +28,15 @@ halcyon docs sync --discoveries discoveries.md --catalog scripting_docs/catalog/
 halcyon docs compile --guides-dir scripting_docs --catalog-dir scripting_docs/catalog --output scripting_docs/script_documentation.sqlite3 --version 1
 ```
 
+To generate discovery files for every bundled preset at once:
+
+```powershell
+halcyon docs extract_all_presets --cards-dir <cardsfolder> --output-dir discoveries
+```
+
+This creates one Markdown file per preset in the output directory, such as
+`keyword.md`, `ability-mode.md`, and `parameter.md`.
+
 To regenerate the ability and trigger catalogs and rebuild the pack in one command:
 
 ```powershell
@@ -108,6 +117,16 @@ halcyon docs extract --cards-dir <cardsfolder> --pattern '(?m)^SVar:[^:]+:Foo\$(
 The regular expression must have a capture group for the value to record. If it has
 more than one group, only the first is used. If you try to run `extract`
 with both `--preset` and `--pattern` defined, or neither of them, it won't let you. Exactly one is required.
+
+## `extract_all_presets`
+
+```text
+halcyon docs extract_all_presets --cards-dir PATH --output-dir PATH
+```
+
+Scans the card scripts with every bundled preset and writes one Markdown discovery
+file per preset into `--output-dir`. Existing files with the same names are replaced;
+the output directory and its parents are created as needed.
 
 ## `sync`
 

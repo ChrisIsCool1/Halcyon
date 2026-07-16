@@ -131,7 +131,21 @@ class ScriptAuthoringService:
     def complete(self, prefix: str, limit: int = 20, scope: str | None = None) -> list[ScriptDocumentation]:
         """Return case-insensitive documentation matches for a token prefix."""
         needle = prefix.strip().casefold()
-        values = [item for (item_scope, _name), item in self._catalog.items() if scope is None or item_scope in {scope, "*"}]
+        if scope is None:
+            values = list(self._catalog.values())
+        elif scope == "*":
+            values = [item for (item_scope, _name), item in self._catalog.items() if item_scope == "*"]
+        else:
+            # Family-specific records are authoritative.  The global parameter
+            # catalog fills only names that have not been documented for the
+            # active family, preventing duplicate and misleading suggestions.
+            values_by_name: dict[str, ScriptDocumentation] = {
+                name: item for (item_scope, name), item in self._catalog.items() if item_scope == scope
+            }
+            for (item_scope, name), item in self._catalog.items():
+                if item_scope == "*":
+                    values_by_name.setdefault(name, item)
+            values = list(values_by_name.values())
         matches = [item for item in values if not needle or item.name.casefold().startswith(needle)]
         matches.sort(key=lambda item: (not item.name.casefold().startswith(needle), item.name.casefold()))
         return matches[:limit]
@@ -199,12 +213,16 @@ class ScriptAuthoringService:
 
     @staticmethod
     def family_for_line(line: str) -> str | None:
-        """Return the mode family declared by an A, T, or ability-like SVar line."""
+        """Return the mode family declared by an A, T, S, or R line."""
         scope = ScriptAuthoringService.scope_for_line(line)
         if scope == "A":
             match = re.match(r"\s*(?:A|SVar:[^:]+):(?:DB|SP|AB)\$\s*([^|\r\n]+)", line)
         elif scope == "T":
             match = re.match(r"\s*(?:T|SVar:[^:]+):Mode\$\s*([^|\r\n]+)", line)
+        elif scope == "S":
+            match = re.match(r"\s*S:Mode\$\s*([^|\r\n]+)", line)
+        elif scope == "R":
+            match = re.match(r"\s*R:Event\$\s*([^|\r\n]+)", line)
         else:
             return None
         return match.group(1).strip() if match and match.group(1).strip() else None
