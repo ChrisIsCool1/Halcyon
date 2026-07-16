@@ -79,7 +79,11 @@ class ForgeContentManagerApp(ctk.CTk):
         )
         subtitle.grid(row=1, column=0, sticky="w", padx=24, pady=(0, 16))
 
-        self.tabview = ctk.CTkTabview(self, segmented_button_selected_hover_color=("#2559b5", "#2559b5"))
+        self.tabview = ctk.CTkTabview(
+            self,
+            segmented_button_selected_hover_color=("#2559b5", "#2559b5"),
+            command=self._handle_tab_changed,
+        )
         self.tabview.grid(row=1, column=0, sticky="nsew", padx=18, pady=(0, 18))
 
         for tab_name in ("Sets", "Import", "Cards", "Script Editor", "Settings"):
@@ -141,6 +145,10 @@ class ForgeContentManagerApp(ctk.CTk):
         self.card_import_tab.refresh_sets()
         self.card_browser_tab.refresh()
         self.script_editor_tab.refresh_sets()
+
+    def _handle_tab_changed(self) -> None:
+        """Dismiss Script Editor completion when navigating between tabs."""
+        self.script_editor_tab.dismiss_completion()
 
     def _handle_import_complete(self) -> None:
         """Refresh dependent views after a successful import workflow."""

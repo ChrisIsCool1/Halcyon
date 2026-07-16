@@ -144,6 +144,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self.editor.bind("<Down>", lambda _event: self._move_completion(1))
         self.editor.bind("<Up>", lambda _event: self._move_completion(-1))
         self.editor.bind("<Escape>", lambda _event: self._close_completion())
+        self.editor.bind("<FocusOut>", self._handle_editor_focus_out, add="+")
 
         # Build the side frame with documentation and reference cards.
         side = ctk.CTkFrame(self)
@@ -366,6 +367,14 @@ class ScriptEditorTab(ctk.CTkFrame):
         if self._completion is not None:
             self._completion.destroy()
             self._completion = None
+
+    def dismiss_completion(self) -> None:
+        """Close completion UI when the editor is no longer the active view."""
+        self._close_completion()
+
+    def _handle_editor_focus_out(self, _event=None) -> None:
+        """Dismiss completion when focus leaves the script editor."""
+        self.dismiss_completion()
 
     def _update_documentation(self, item: ScriptDocumentation | None) -> None:
         text = "Place the cursor on a recognized Forge term to view its help.\n\nCompletion suggestions appear after two characters."
