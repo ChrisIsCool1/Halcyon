@@ -8,7 +8,7 @@ Named after the Thran capital, this is a small desktop application for managing 
 
 ## Features
 
-- `Begone: File Explorer`: Create, edit, rename, delete, import, and export custom Forge sets, all in app!
+- `Begone, File Explorer`: Create, edit, rename, delete, import, and export custom Forge sets, all in app!
 - `Create a Set in One Click`: Jot down a bunch of scripts, import a few images, click Import and you're done!
 - `Easy Set Editing`: Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
 - Import and export `.forgepkg.zip` packages with collision handling.

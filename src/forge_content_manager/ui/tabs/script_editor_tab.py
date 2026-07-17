@@ -136,7 +136,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         scroll = tk.Scrollbar(editor_frame, command=self.editor.yview)
         scroll.grid(row=1, column=2, sticky="ns", padx=(0, 12), pady=(0, 12))
         self.editor.configure(yscrollcommand=lambda first, last: self.line_numbers.set_scrollbar(first, last, scroll))
-        self._configure_tags()
+        self._configure_tags(self.editor)
         self.editor.bind("<KeyRelease>", self._handle_editor_change)
         self.editor.bind("<ButtonRelease-1>", self._handle_editor_change)
         self.editor.bind("<Tab>", self._accept_completion)
@@ -270,29 +270,35 @@ class ScriptEditorTab(ctk.CTkFrame):
         else:
             self._close_completion()
 
-    def _configure_tags(self) -> None:
-        self.editor.tag_configure("field", foreground="#4c9aff")
-        self.editor.tag_configure("prefix", foreground="#86c599")
-        self.editor.tag_configure("mode", foreground="#4ec9b0")
-        self.editor.tag_configure("parameter", foreground="#f070f0")
-        self.editor.tag_configure("svar", foreground="#ce9178")
-        self.editor.tag_configure("svar-reference", foreground="#569cd6", underline=True)
-        self.editor.tag_configure("invalid-svar-reference", foreground="#f14c4c", underline=True)
+    @staticmethod
+    def _configure_tags(editor: tk.Text) -> None:
+        """Configure the common Forge script syntax colors on an editor."""
+        editor.tag_configure("field", foreground="#4c9aff")
+        editor.tag_configure("prefix", foreground="#86c599")
+        editor.tag_configure("mode", foreground="#4ec9b0")
+        editor.tag_configure("parameter", foreground="#f070f0")
+        editor.tag_configure("svar", foreground="#ce9178")
+        editor.tag_configure("svar-reference", foreground="#569cd6", underline=True)
+        editor.tag_configure("invalid-svar-reference", foreground="#f14c4c", underline=True)
 
     def _highlight(self) -> None:
+        self._highlight_text_widget(self.editor)
+
+    def _highlight_text_widget(self, editor: tk.Text) -> None:
+        """Apply Forge script syntax highlighting to an editor or read-only preview."""
         for tag in ("field", "prefix", "mode", "parameter", "svar", "svar-reference", "invalid-svar-reference"):
-            self.editor.tag_remove(tag, "1.0", "end")
-        text = self.editor.get("1.0", "end-1c")
+            editor.tag_remove(tag, "1.0", "end")
+        text = editor.get("1.0", "end-1c")
         unresolved = {(item.line_number, item.start, item.end) for item in self._authoring_service.unresolved_svar_references(text)}
         for line_number, line in enumerate(text.splitlines(), start=1):
             for tag, pattern in (("field", r"^[A-Za-z][\w]*:"), ("prefix", r"\b(?:A|T|S|R|K|SVar):"), ("mode", r"\b(?:DB|SP|AB)\$\s*\w+"), ("parameter", r"\|\s*\w+\$"), ("svar", r"\bSVar:[\w-]+")):
                 for match in re.finditer(pattern, line):
-                    self.editor.tag_add(tag, f"{line_number}.{match.start()}", f"{line_number}.{match.end()}")
+                    editor.tag_add(tag, f"{line_number}.{match.start()}", f"{line_number}.{match.end()}")
             for match in re.finditer(r"\|\s*(?:Execute|SubAbility)\$\s*([^|\r\n]+)", line):
                 value_start = match.start(1) + len(match.group(1)) - len(match.group(1).lstrip())
                 value_end = value_start + len(match.group(1).strip())
                 tag = "invalid-svar-reference" if (line_number, value_start, value_end) in unresolved else "svar-reference"
-                self.editor.tag_add(tag, f"{line_number}.{value_start}", f"{line_number}.{value_end}")
+                editor.tag_add(tag, f"{line_number}.{value_start}", f"{line_number}.{value_end}")
 
     def _current_token(self) -> str:
         before = self.editor.get("insert linestart", "insert")
@@ -425,14 +431,22 @@ class ScriptEditorTab(ctk.CTkFrame):
         window = ctk.CTkToplevel(self)
         window.title(f"Reference: {self._reference_cards[selection[0]].name}")
         window.geometry("820x620")
-        window.grid_columnconfigure(0, weight=1)
+        window.grid_columnconfigure(1, weight=1)
         window.grid_rowconfigure(0, weight=1)
-        preview = tk.Text(window, wrap="none", font=("Cascadia Mono", 11), state="normal")
-        preview.grid(row=0, column=0, sticky="nsew", padx=12, pady=12)
+        preview = tk.Text(window, wrap="char", font=("Cascadia Mono", 11), state="normal", relief="flat", borderwidth=0)
+        preview.grid(row=0, column=1, sticky="nsew", pady=12)
+        preview_line_numbers = _LineNumberGutter(window, preview, bg=preview.cget("background"))
+        preview_line_numbers.grid(row=0, column=0, sticky="nsew", padx=(12, 0), pady=12)
+        scroll = tk.Scrollbar(window, command=preview.yview)
+        scroll.grid(row=0, column=2, sticky="ns", padx=(0, 12), pady=12)
+        preview.configure(yscrollcommand=lambda first, last: preview_line_numbers.set_scrollbar(first, last, scroll))
         preview.insert("1.0", script)
+        self._configure_tags(preview)
+        self._highlight_text_widget(preview)
+        preview_line_numbers.redraw()
         preview.configure(state="disabled")
         buttons = ctk.CTkFrame(window, fg_color="transparent")
-        buttons.grid(row=1, column=0, sticky="e", padx=12, pady=(0, 12))
+        buttons.grid(row=1, column=0, columnspan=3, sticky="e", padx=12, pady=(0, 12))
         ctk.CTkButton(buttons, text="Insert All", command=lambda: self._insert_reference_text(script)).pack(side="right")
         ctk.CTkButton(buttons, text="Insert Selection", command=lambda: self._insert_preview_selection(preview)).pack(side="right", padx=(0, 8))
 
