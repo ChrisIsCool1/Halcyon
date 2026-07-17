@@ -21,7 +21,7 @@ from forge_content_manager.ui.tabs.card_import_tab import CardImportTab
 from forge_content_manager.ui.tabs.settings_tab import SettingsTab
 from forge_content_manager.ui.tabs.set_manager_tab import SetManagerTab
 from forge_content_manager.ui.tabs.script_editor_tab import ScriptEditorTab
-from forge_content_manager.ui.dialogs import show_error
+from forge_content_manager.ui.dialogs import confirm_action, show_error
 
 
 class ForgeContentManagerApp(ctk.CTk):
@@ -40,6 +40,7 @@ class ForgeContentManagerApp(ctk.CTk):
         self._authoring_service = ScriptAuthoringService(self._settings.reference_cards_dir, reference_database, active_documentation)
 
         self.title(APP_NAME)
+        self.protocol("WM_DELETE_WINDOW", self._handle_close)
         self.geometry("1360x900")
         self.minsize(1180, 760)
         ctk.set_appearance_mode(self._settings.appearance_mode)
@@ -145,6 +146,13 @@ class ForgeContentManagerApp(ctk.CTk):
         self.card_import_tab.refresh_sets()
         self.card_browser_tab.refresh()
         self.script_editor_tab.refresh_sets()
+
+    def _handle_close(self) -> None:
+        """Close the application unless the open card editor has unsaved changes."""
+        if self.card_browser_tab.has_unsaved_changes():
+            if not confirm_action("Unsaved Changes", "Discard your unsaved card changes and close the application?"):
+                return
+        self.destroy()
 
     def _handle_tab_changed(self) -> None:
         """Dismiss Script Editor completion when navigating between tabs."""
