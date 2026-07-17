@@ -14,6 +14,12 @@ from pathlib import Path
 from forge_content_manager.services.documentation_pack import LEGACY_GUIDE_NAMES, load_pack, parse_legacy_guides
 
 
+# Parameter values that name local SVars. Extend this tuple when Forge adds
+# another parameter with the same reference semantics.
+SVAR_REFERENCE_PARAMETERS = ("Execute", "SubAbility", "Triggers", "ReplaceWith")
+SVAR_REFERENCE_PARAMETER_PATTERN = "|".join(map(re.escape, SVAR_REFERENCE_PARAMETERS))
+
+
 @dataclass(frozen=True, slots=True)
 class ScriptDocumentation:
     """Intellisense-style help for one Forge scripting term."""
@@ -43,7 +49,7 @@ class ReferenceCard:
 
 @dataclass(frozen=True, slots=True)
 class SVarReference:
-    """A local Execute or SubAbility reference and whether its target exists."""
+    """A local SVar reference and whether its target exists."""
 
     label: str
     value: str
@@ -229,11 +235,11 @@ class ScriptAuthoringService:
 
     @staticmethod
     def unresolved_svar_references(text: str) -> list[SVarReference]:
-        """Find Execute and SubAbility values that are not declared by an SVar line."""
+        """Find configured SVar-reference values not declared by an SVar line."""
         declared = {match.group(1) for match in re.finditer(r"(?m)^\s*SVar:([^:\r\n]+):", text)}
         unresolved: list[SVarReference] = []
         for line_number, line in enumerate(text.splitlines(), start=1):
-            for match in re.finditer(r"\|\s*(Execute|SubAbility)\$\s*([^|\r\n]+)", line):
+            for match in re.finditer(rf"\|\s*({SVAR_REFERENCE_PARAMETER_PATTERN})\$\s*([^|\r\n]+)", line):
                 value = match.group(2).strip()
                 if value and value not in declared:
                     start = match.start(2) + len(match.group(2)) - len(match.group(2).lstrip())

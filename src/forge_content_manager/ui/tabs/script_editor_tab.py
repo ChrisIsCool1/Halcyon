@@ -12,7 +12,12 @@ import customtkinter as ctk
 
 from forge_content_manager.models import CardImportInput
 from forge_content_manager.services.content_service import ForgeContentService
-from forge_content_manager.services.script_authoring_service import ReferenceCard, ScriptAuthoringService, ScriptDocumentation
+from forge_content_manager.services.script_authoring_service import (
+    SVAR_REFERENCE_PARAMETER_PATTERN,
+    ReferenceCard,
+    ScriptAuthoringService,
+    ScriptDocumentation,
+)
 from forge_content_manager.ui.dialogs import show_error, show_info
 
 
@@ -243,7 +248,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         if unresolved:
             details = ", ".join(f"{item.label}$ {item.value} (line {item.line_number})" for item in unresolved[:5])
             suffix = "" if len(unresolved) <= 5 else f", and {len(unresolved) - 5} more"
-            if not messagebox.askyesno("Unresolved SVar references", f"These Execute/SubAbility values do not name an SVar: {details}{suffix}.\n\nImport anyway?"):
+            if not messagebox.askyesno("Unresolved SVar references", f"These configured SVar-reference values do not name an SVar: {details}{suffix}.\n\nImport anyway?"):
                 return
         summary = self._content_service.import_cards(selected, [CardImportInput(text, None, "Common")])
         result = summary.results[0]
@@ -294,7 +299,7 @@ class ScriptEditorTab(ctk.CTkFrame):
             for tag, pattern in (("field", r"^[A-Za-z][\w]*:"), ("prefix", r"\b(?:A|T|S|R|K|SVar):"), ("mode", r"\b(?:DB|SP|AB)\$\s*\w+"), ("parameter", r"\|\s*\w+\$"), ("svar", r"\bSVar:[\w-]+")):
                 for match in re.finditer(pattern, line):
                     editor.tag_add(tag, f"{line_number}.{match.start()}", f"{line_number}.{match.end()}")
-            for match in re.finditer(r"\|\s*(?:Execute|SubAbility)\$\s*([^|\r\n]+)", line):
+            for match in re.finditer(rf"\|\s*(?:{SVAR_REFERENCE_PARAMETER_PATTERN})\$\s*([^|\r\n]+)", line):
                 value_start = match.start(1) + len(match.group(1)) - len(match.group(1).lstrip())
                 value_end = value_start + len(match.group(1).strip())
                 tag = "invalid-svar-reference" if (line_number, value_start, value_end) in unresolved else "svar-reference"

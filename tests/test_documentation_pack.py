@@ -217,9 +217,12 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertEqual(service.scope_for_line("SVar:Delay:DB$ DelayedTrigger | Mode$ Phase"), "A")
 
     def test_unresolved_svar_references_are_reported_without_rejecting_the_script(self) -> None:
-        text = "T:Mode$ Attacks | Execute$ TrigDraw\nSVar:DBToken:DB$ Token | SubAbility$ Missing\nSVar:TrigDraw:DB$ Draw\n"
+        text = "T:Mode$ Attacks | Execute$ TrigDraw | Triggers$ MissingTrigger\nSVar:DBToken:DB$ Token | SubAbility$ Missing | ReplaceWith$ MissingReplacement\nSVar:TrigDraw:DB$ Draw\n"
         references = ScriptAuthoringService.unresolved_svar_references(text)
-        self.assertEqual([(item.label, item.value, item.line_number) for item in references], [("SubAbility", "Missing", 2)])
+        self.assertEqual(
+            [(item.label, item.value, item.line_number) for item in references],
+            [("Triggers", "MissingTrigger", 1), ("SubAbility", "Missing", 2), ("ReplaceWith", "MissingReplacement", 2)],
+        )
 
     def test_invalid_pack_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
