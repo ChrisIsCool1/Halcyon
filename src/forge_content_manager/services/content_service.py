@@ -136,6 +136,22 @@ class ForgeContentService:
             )
         return records
 
+    def get_card_rarity(self, set_file_path: Path, card_name: str) -> str:
+        """Return the display rarity for a card in a set."""
+        from forge_content_manager.constants import RARITY_CODES_REVERSED
+
+        document = self.edition_service.parse_edition_file(set_file_path)
+        entry = next((card for card in document.cards if card.card_name.casefold() == card_name.casefold()), None)
+        if entry is None:
+            raise ValueError(f"Card '{card_name}' is not in the selected set.")
+        return RARITY_CODES_REVERSED.get(entry.rarity_code.upper(), entry.rarity_code)
+
+    def update_card_rarity(self, set_file_path: Path, card_name: str, rarity: str) -> None:
+        """Update a card's rarity in one set."""
+        if rarity not in RARITY_CODES:
+            raise ValueError(f"Unknown rarity: {rarity}")
+        self.edition_service.add_or_update_card(set_file_path, card_name, RARITY_CODES[rarity])
+
     def load_script(self, script_path: Path) -> str:
         """Load a custom card script from disk."""
         return script_path.read_text(encoding="utf-8")

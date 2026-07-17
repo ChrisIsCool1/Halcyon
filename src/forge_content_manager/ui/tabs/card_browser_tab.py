@@ -10,7 +10,8 @@ from tkinter import ttk
 import customtkinter as ctk
 from PIL import Image, ImageOps
 
-from forge_content_manager.models import CardRecord
+from forge_content_manager.constants import RARITY_LABELS
+from forge_content_manager.models import CardRecord, ForgeSetRecord
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.ui.dialogs import confirm_action, show_error, show_info
 
@@ -24,6 +25,7 @@ class CardBrowserTab(ctk.CTkFrame):
         self._content_service = content_service
         self._on_cards_changed = on_cards_changed
         self._records: dict[str, CardRecord] = {}
+        self._sets: list[ForgeSetRecord] = []
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -33,35 +35,46 @@ class CardBrowserTab(ctk.CTkFrame):
         toolbar.grid(row=0, column=0, columnspan=2, sticky="ew", padx=16, pady=(16, 8))
         toolbar.grid_columnconfigure(0, weight=1)
 
+        ctk.CTkLabel(toolbar, text="Set:").grid(row=0, column=1, padx=(12, 4), pady=12)
+        self.set_menu = ctk.CTkOptionMenu(toolbar, values=["All Sets"], command=lambda _value: self.refresh())
+        self.set_menu.grid(row=0, column=2, padx=4, pady=12)
+
         refresh_button = ctk.CTkButton(toolbar, text="Refresh", command=self.refresh, width=100)
-        refresh_button.grid(row=0, column=1, padx=8, pady=12)
+        refresh_button.grid(row=0, column=3, padx=8, pady=12)
 
         open_button = ctk.CTkButton(toolbar, text="Open Script", command=self.open_selected_script, width=120)
-        open_button.grid(row=0, column=2, padx=8, pady=12)
+        open_button.grid(row=0, column=4, padx=8, pady=12)
 
         save_button = ctk.CTkButton(toolbar, text="Save Script", command=self.save_selected_script, width=120)
-        save_button.grid(row=0, column=3, padx=8, pady=12)
+        save_button.grid(row=0, column=5, padx=8, pady=12)
+
+        self.rarity_menu = ctk.CTkOptionMenu(toolbar, values=list(RARITY_LABELS))
+        self.rarity_menu.set("Common")
+        self.rarity_menu.grid(row=0, column=6, padx=4, pady=12)
+        rarity_button = ctk.CTkButton(toolbar, text="Save Rarity", command=self.save_selected_rarity, width=110)
+        rarity_button.grid(row=0, column=7, padx=8, pady=12)
 
         replace_button = ctk.CTkButton(toolbar, text="Replace Image", command=self.replace_image, width=120)
-        replace_button.grid(row=0, column=4, padx=8, pady=12)
+        replace_button.grid(row=0, column=8, padx=8, pady=12)
 
         delete_button = ctk.CTkButton(toolbar, text="Delete Card", command=self.delete_selected_card, width=120)
-        delete_button.grid(row=0, column=5, padx=(8, 12), pady=12)
+        delete_button.grid(row=0, column=9, padx=(8, 12), pady=12)
 
         table_frame = ctk.CTkFrame(self)
         table_frame.grid(row=1, column=0, sticky="nsew", padx=(16, 8), pady=(0, 16))
         table_frame.grid_columnconfigure(0, weight=1)
         table_frame.grid_rowconfigure(0, weight=1)
 
-        columns = ("name", "set_name", "script_path", "image_present")
+        columns = ("name", "set_name", "rarity", "script_path", "image_present")
         self.tree = ttk.Treeview(table_frame, columns=columns, show="headings")
         headings = {
             "name": "Card Name",
             "set_name": "Set",
+            "rarity": "Rarity",
             "script_path": "Script File Path",
             "image_present": "Image Present",
         }
-        widths = {"name": 200, "set_name": 220, "script_path": 420, "image_present": 110}
+        widths = {"name": 180, "set_name": 180, "rarity": 100, "script_path": 360, "image_present": 110}
         for column in columns:
             self.tree.heading(column, text=headings[column])
             self.tree.column(column, width=widths[column], anchor="w")
@@ -105,14 +118,23 @@ class CardBrowserTab(ctk.CTkFrame):
         self._records.clear()
         for item in self.tree.get_children():
             self.tree.delete(item)
+        self._sets = self._content_service.list_sets()
+        labels = ["All Sets", *[f"{item.name} [{item.code}]" for item in self._sets]]
+        current = self.set_menu.get()
+        self.set_menu.configure(values=labels)
+        self.set_menu.set(current if current in labels else "All Sets")
+        selected_label = self.set_menu.get()
+        selected_set = next((item for item in self._sets if selected_label == f"{item.name} [{item.code}]"), None)
         for record in self._content_service.scan_cards():
+            if selected_set is not None and selected_set.name not in record.set_name.split(", "):
+                continue
             item_id = str(record.script_path)
             self._records[item_id] = record
             self.tree.insert(
                 "",
                 "end",
                 iid=item_id,
-                values=(record.name, record.set_name, str(record.script_path), "Yes" if record.image_present else "No"),
+                values=(record.name, record.set_name, self._rarity_for_record(record, selected_set), str(record.script_path), "Yes" if record.image_present else "No"),
             )
         if selected_script_path is not None and str(selected_script_path) in self._records:
             self.tree.selection_set(str(selected_script_path))
@@ -202,7 +224,39 @@ class CardBrowserTab(ctk.CTkFrame):
         self.script_editor.delete("1.0", "end")
         self.script_editor.insert("1.0", self._content_service.load_script(record.script_path))
         self.selection_label.configure(text=f"Editing: {record.name}")
+        self._update_rarity(record)
         self._update_image_preview(record)
+
+    def _rarity_for_record(self, record: CardRecord, selected_set: ForgeSetRecord | None) -> str:
+        """Resolve rarity for the active set, or the first matching set."""
+        target = selected_set or next((item for item in self._sets if item.name in record.set_name.split(", ")), None)
+        return self._content_service.get_card_rarity(target.file_path, record.name) if target else ""
+
+    def _update_rarity(self, record: CardRecord) -> None:
+        label = self.set_menu.get()
+        selected = next((item for item in self._sets if label == f"{item.name} [{item.code}]"), None)
+        if selected is None:
+            selected = next((item for item in self._sets if item.name in record.set_name.split(", ")), None)
+        if selected:
+            self.rarity_menu.set(self._content_service.get_card_rarity(selected.file_path, record.name))
+
+    def save_selected_rarity(self) -> None:
+        record = self._selected_record()
+        if record is None:
+            return
+        label = self.set_menu.get()
+        selected = next((item for item in self._sets if label == f"{item.name} [{item.code}]"), None)
+        if selected is None:
+            show_error("Set Required", "Choose a specific set before saving rarity.")
+            return
+        try:
+            self._content_service.update_card_rarity(selected.file_path, record.name, self.rarity_menu.get())
+        except Exception as exc:
+            show_error("Rarity Update Failed", str(exc))
+            return
+        self.refresh(selected_script_path=record.script_path)
+        self._on_cards_changed()
+        show_info("Rarity Updated", f"Updated '{record.name}' to {self.rarity_menu.get()}.")
 
     def _clear_image_preview(self) -> None:
         """Remove the currently displayed card image."""
