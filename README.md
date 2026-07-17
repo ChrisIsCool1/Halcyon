@@ -8,11 +8,11 @@ Named after the Thran capital, this is a small desktop application for managing 
 
 ## Features
 
-- `Begone, File Explorer`: Create, edit, rename, delete, import, and export custom Forge sets, all in app!
-- `Create a Set in One Click`: Jot down a bunch of scripts, import a few images, click Import and you're done!
-- `Easy Set Editing`: Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
-- Import and export `.forgepkg.zip` packages with collision handling.
-- `The Script Editor`: Think of this as VS Code for Forge! Draft Forge card scripts with syntax highlighting, keyword help, and autocompletion. If you import a cardsfolder from Forge, it even gives you a handy crossreference search of all existing cards right in the editor. The Script Editor also comes with some basic validation for things like SVar references.
+- **Begone, File Explorer:** Create, edit, rename, delete, import, and export custom Forge sets, all in app!
+- **Create a Set in One Click:** Jot down a bunch of scripts, import a few images, click Import and you're done!
+- **Easy Set Editing:** Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
+- **Import and Export Packages:** Import and export `.forgepkg.zip` packages with collision handling.
+- **The Script Editor:** Think of this as VS Code for Forge! Draft Forge card scripts with syntax highlighting, keyword help, and autocompletion. If you import a cardsfolder from Forge, it even gives you a handy crossreference search of all existing cards right in the editor. The Script Editor also comes with some basic validation for things like SVar references.
 
 ## Requirements
 
@@ -87,3 +87,9 @@ src/forge_content_manager/
 - Forge remains the authority for advanced script validation and gameplay logic correctness. This thing won't be what errors at you if your card scripts don't make sense.
 - The manager only reads metadata fields such as `Name`, `Types`, `Oracle`, and `ManaCost` when required.
 - Card images are converted to JPEG using Pillow and installed using Forge's `.fullborder.jpg` naming convention.
+
+## Links / Shoutouts
+
+- [MTG Forge](https://github.com/Card-Forge/forge)
+- [MTG Forge Discord](https://discord.gg/HcPJNyD66a)
+- [Manabrew](https://github.com/witchesofthehill/manabrew)
