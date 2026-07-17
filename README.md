@@ -34,6 +34,15 @@ python -m pip install -e .
 halcyon start
 ```
 
+If you're a command line fan, you can also create sets and cards directly from the CLI:
+
+```powershell
+halcyon create_set "My Custom Set"
+halcyon create_card "My Custom Set" "Example Card" Common .\example-card.txt .\example-card.png
+```
+
+`create_card` expects the script's `Name:` field to match the card name argument; it will error without creating anything if they're different. The image is converted to Forge's JPEG format when installed.
+
 The application creates any missing Forge custom content directories automatically, so don't worry about creating them if they aren't present.
 
 ## Build With PyInstaller
