@@ -39,7 +39,10 @@ PRESET_SCOPES = {
 FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "ValidDescription", "Name", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt"})
 
 # These parameters can have many different values, but we only want to show a limited number of them in the documentation.
-LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "Affected", "ValidTarget", "Spellbook", "ValidTargets", "ValidZone", "ChangeValid", "IsPresent", "ValidSource"})
+LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "Affected", "ValidTarget", "Spellbook", 
+                                "ValidTargets", "ValidZone", "ChangeValid", "IsPresent", "ValidSource",
+                                "AddAbility", "AddKeyword", "AddSVar", "AddTrigger", "AddType"
+                                })
 LIMIT_FOR_LIMITED_PARAMETERS = 10
 ScanResult = TypeVar("ScanResult")
 
