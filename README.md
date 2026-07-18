@@ -61,14 +61,12 @@ pyinstaller ForgeContentManager.spec
 
 The bundled executable will be created under `dist/Halcyon/`.
 
-The Script Editor bundles the Forge scripting Markdown guides for easy reference. To search full reference
-card scripts in a packaged build, import a local unzipped Forge `cardsfolder` directory in Settings, and it will generate a lookup SQLite database that it can search through.
+The Script Editor bundles the Forge scripting Markdown guides for easy reference. To search full reference card scripts in a packaged build, import a local unzipped Forge `cardsfolder` directory in Settings, and it will generate a lookup SQLite database that it can search through.
 
 ## Maintaining Script Documentation
 
 The Script Editor ships with a compact SQLite documentation pack and can import a replacement
-pack from Settings if a newer one is released. When new versions of Forge release new features or keywords, keeping up with the
-tabletop game, there are also dev commands you can run in Halcyon to update the documentation.
+pack from Settings if a newer one is released. When new versions of Forge release new features or keywords, keeping up with the tabletop game, there are also dev commands you can run in Halcyon to update the documentation.
 
 For command options, preset behavior, catalog format, and the full authoring workflow,
 see [the documentation CLI reference](docs/docs-cli.md).
