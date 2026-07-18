@@ -60,8 +60,8 @@ class CardImportEntryFrame(ctk.CTkFrame):
         self.content_type_menu = ctk.CTkOptionMenu(footer, values=["Card", "Token"], command=self._update_type_controls)
         self.content_type_menu.grid(row=0, column=1, sticky="w")
 
-        rarity_label = ctk.CTkLabel(footer, text="Rarity")
-        rarity_label.grid(row=0, column=2, sticky="w", padx=(16, 8))
+        self.rarity_label = ctk.CTkLabel(footer, text="Rarity")
+        self.rarity_label.grid(row=0, column=2, sticky="w", padx=(16, 8))
 
         self.rarity_menu = ctk.CTkOptionMenu(footer, values=list(RARITY_LABELS))
         self.rarity_menu.set("Common")
@@ -90,12 +90,14 @@ class CardImportEntryFrame(ctk.CTkFrame):
             self.token_script_name.configure(state="normal")
 
             self.rarity_menu.grid_remove()
+            self.rarity_label.grid_remove()
             self.rarity_menu.configure(state="disabled")
         else:
             self.token_script_name.grid_remove()
             self.token_script_name.configure(state="disabled")
 
             self.rarity_menu.grid()
+            self.rarity_label.grid()
             self.rarity_menu.configure(state="normal")
         
         return
