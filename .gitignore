@@ -7,7 +7,7 @@ __pycache__/
 .ruff_cache/
 .venv/
 build/
-scripting_docs/
+scripting_docs/cards
 forge_docs/
 test_cards/
 dist/
