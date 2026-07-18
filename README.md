@@ -11,7 +11,7 @@ Named after the Thran capital, this is a small desktop application for managing 
 - **Begone, File Explorer:** Create, edit, rename, delete, import, and export custom Forge sets, all in app!
 - **Create a Set in One Click:** Jot down a bunch of scripts, import a few images, click Import and you're done!
 - **Easy Set Editing:** Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
-- **Import and Export Packages:** Import and export `.forgepkg.zip` packages with collision handling.
+- **Import and Export Packages:** Import and export sets as `.forgepkg.zip` packages with collision handling.
 - **The Script Editor:** Think of this as VS Code for Forge! Draft Forge card scripts with syntax highlighting, keyword help, and autocompletion. If you import a cardsfolder from Forge, it even gives you a handy crossreference search of all existing cards right in the editor. The Script Editor also comes with some basic validation for things like SVar references.
 
 ## Requirements
