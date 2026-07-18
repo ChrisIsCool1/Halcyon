@@ -8,6 +8,8 @@ __pycache__/
 .venv/
 build/
 scripting_docs/
+forge_docs/
+test_cards/
 dist/
 doc_packs/
 *.spec.bak
