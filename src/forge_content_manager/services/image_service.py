@@ -39,6 +39,23 @@ class ImageService:
         target_path = self._paths.card_images_dir / sanitize_display_filename(set_code) / make_image_filename(card_name)
         return target_path if target_path.exists() else None
 
+    def install_token_image(self, image_source: Path, set_code: str, script_name: str, token_number: int | None) -> Path:
+        """Install token art using Forge's numbered token-script filename convention."""
+        target_dir = self._paths.token_images_dir / sanitize_display_filename(set_code)
+        target_dir.mkdir(parents=True, exist_ok=True)
+        prefix = f"{token_number}_" if token_number is not None else ""
+        target_path = target_dir / f"{prefix}{sanitize_display_filename(script_name)}.jpg"
+        if target_path.exists():
+            self._backup_service.backup_file(target_path)
+        with Image.open(image_source) as image:
+            image.convert("RGB").save(target_path, format="JPEG", quality=95)
+        return target_path
+
+    def find_token_image(self, set_code: str, script_name: str, token_number: int | None) -> Path | None:
+        target_dir = self._paths.token_images_dir / sanitize_display_filename(set_code)
+        names = ([f"{token_number}_{sanitize_display_filename(script_name)}.jpg"] if token_number is not None else []) + [f"{sanitize_display_filename(script_name)}.jpg"]
+        return next((target_dir / name for name in names if (target_dir / name).exists()), None)
+
     def rename_image(self, current_path: Path, set_code: str, card_name: str) -> Path | None:
         """Rename an existing image when a card name changes."""
         if not current_path.exists():

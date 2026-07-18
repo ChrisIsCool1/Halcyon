@@ -34,7 +34,7 @@ class CardImportTab(ctk.CTkFrame):
         self.set_menu = ctk.CTkOptionMenu(toolbar, values=["No sets available"])
         self.set_menu.grid(row=0, column=1, sticky="w", padx=8, pady=12)
 
-        add_button = ctk.CTkButton(toolbar, text="Add Card", command=self.add_card_entry, width=120)
+        add_button = ctk.CTkButton(toolbar, text="Add Item", command=self.add_card_entry, width=120)
         add_button.grid(row=0, column=2, padx=8, pady=12)
 
         import_button = ctk.CTkButton(toolbar, text="Import All", command=self.import_all, width=120)
@@ -91,7 +91,7 @@ class CardImportTab(ctk.CTkFrame):
         if any(not card.script_text.strip() for card in cards):
             show_error("Missing Script", "Each card entry must include Forge script text.")
             return
-        progress_dialog = ProgressDialog(self, "Importing Cards")
+        progress_dialog = ProgressDialog(self, "Importing Content")
         try:
             summary = self._content_service.import_cards(
                 destination_set=selected_set,

@@ -6,7 +6,7 @@ import logging
 from pathlib import Path
 
 from forge_content_manager.constants import SET_TYPE_CUSTOM
-from forge_content_manager.models import EditionCardEntry, EditionDocument, ForgePaths, ForgeSetRecord
+from forge_content_manager.models import EditionCardEntry, EditionDocument, EditionTokenEntry, ForgePaths, ForgeSetRecord
 from forge_content_manager.services.backup_service import BackupService
 from forge_content_manager.services.script_service import make_set_filename
 
@@ -58,6 +58,7 @@ class EditionService:
         """Parse edition content from raw text."""
         metadata: dict[str, str] = {}
         cards: list[EditionCardEntry] = []
+        tokens: list[EditionTokenEntry] = []
         section = ""
         for raw_line in content.splitlines():
             line = raw_line.strip()
@@ -80,7 +81,13 @@ class EditionService:
                             card_name=parts[2],
                         )
                     )
-        return EditionDocument(metadata=metadata, cards=cards, file_path=file_path)
+            if section == "[tokens]":
+                parts = line.split(maxsplit=1)
+                if len(parts) == 2 and parts[0].isdigit():
+                    tokens.append(EditionTokenEntry(collector_number=int(parts[0]), script_name=parts[1]))
+                elif len(parts) == 1:
+                    tokens.append(EditionTokenEntry(collector_number=None, script_name=parts[0]))
+        return EditionDocument(metadata=metadata, cards=cards, tokens=tokens, file_path=file_path)
 
     def serialize_document(self, document: EditionDocument) -> str:
         """Serialize an edition document back into Forge's text format."""
@@ -94,7 +101,14 @@ class EditionService:
             f"{entry.collector_number} {entry.rarity_code} {entry.card_name}"
             for entry in sorted(document.cards, key=lambda item: item.collector_number)
         ]
-        return "\n".join(["[metadata]", *metadata_lines, "", "[cards]", *card_lines, ""])
+        token_lines = [
+            f"{entry.collector_number} {entry.script_name}" if entry.collector_number is not None else entry.script_name
+            for entry in document.tokens
+        ]
+        sections = ["[metadata]", *metadata_lines, "", "[cards]", *card_lines]
+        if token_lines:
+            sections.extend(["", "[tokens]", *token_lines])
+        return "\n".join([*sections, ""])
 
     def write_document(self, document: EditionDocument, backup_existing: bool = True) -> None:
         """Write a parsed edition document to disk, backing up prior content when requested."""
@@ -152,6 +166,35 @@ class EditionService:
         document.cards = remaining_cards
         self.write_document(document)
         return True
+
+    def add_or_update_token(self, file_path: Path, script_name: str) -> EditionTokenEntry:
+        """Add a token script to an edition, assigning the next token number."""
+        document = self.parse_edition_file(file_path)
+        existing = next((token for token in document.tokens if token.script_name.casefold() == script_name.casefold()), None)
+        if existing is not None:
+            return existing
+        number = max((token.collector_number or 0 for token in document.tokens), default=0) + 1
+        entry = EditionTokenEntry(collector_number=number, script_name=script_name)
+        document.tokens.append(entry)
+        self.write_document(document)
+        return entry
+
+    def remove_token(self, file_path: Path, script_name: str) -> bool:
+        """Remove a token script reference from an edition."""
+        document = self.parse_edition_file(file_path)
+        remaining = [token for token in document.tokens if token.script_name.casefold() != script_name.casefold()]
+        if len(remaining) == len(document.tokens):
+            return False
+        document.tokens = remaining
+        self.write_document(document)
+        return True
+
+    def find_sets_for_token(self, script_name: str) -> list[ForgeSetRecord]:
+        """Return all custom sets that reference the specified token script."""
+        return [
+            set_record for set_record in self.list_sets()
+            if any(token.script_name.casefold() == script_name.casefold() for token in self.parse_edition_file(set_record.file_path).tokens)
+        ]
 
     def rename_card_references(self, old_name: str, new_name: str) -> int:
         """Rename card references across all custom set edition files."""

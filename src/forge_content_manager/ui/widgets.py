@@ -43,7 +43,7 @@ class CardImportEntryFrame(ctk.CTkFrame):
         header.grid(row=0, column=0, sticky="ew", padx=12, pady=(10, 8))
         header.grid_columnconfigure(0, weight=1)
 
-        title = ctk.CTkLabel(header, text=f"Card {index}", font=ctk.CTkFont(size=16, weight="bold"))
+        title = ctk.CTkLabel(header, text=f"Import Item {index}", font=ctk.CTkFont(size=16, weight="bold"))
         title.grid(row=0, column=0, sticky="w")
 
         remove_button = ctk.CTkButton(header, text="Remove", command=self._handle_remove, width=90)
@@ -56,23 +56,49 @@ class CardImportEntryFrame(ctk.CTkFrame):
         footer.grid(row=2, column=0, sticky="ew", padx=12, pady=(4, 12))
         footer.grid_columnconfigure(1, weight=1)
 
+        ctk.CTkLabel(footer, text="Type").grid(row=0, column=0, sticky="w", padx=(0, 8))
+        self.content_type_menu = ctk.CTkOptionMenu(footer, values=["Card", "Token"], command=self._update_type_controls)
+        self.content_type_menu.grid(row=0, column=1, sticky="w")
+
         rarity_label = ctk.CTkLabel(footer, text="Rarity")
-        rarity_label.grid(row=0, column=0, sticky="w", padx=(0, 12))
+        rarity_label.grid(row=0, column=2, sticky="w", padx=(16, 8))
 
         self.rarity_menu = ctk.CTkOptionMenu(footer, values=list(RARITY_LABELS))
         self.rarity_menu.set("Common")
-        self.rarity_menu.grid(row=0, column=1, sticky="w")
+        self.rarity_menu.grid(row=0, column=3, sticky="w")
+
+        self.token_script_name = ctk.CTkEntry(footer, placeholder_text="Token script ID (e.g. b_1_1_bird)", width=230)
+        self.token_script_name.grid(row=0, column=4, sticky="w", padx=(12, 0))
 
         image_button = ctk.CTkButton(footer, text="Choose Image", command=self._pick_image, width=140)
-        image_button.grid(row=0, column=2, sticky="e", padx=(12, 12))
+        image_button.grid(row=0, column=5, sticky="e", padx=(12, 12))
 
         self.image_label = ctk.CTkLabel(footer, text="No image selected", width=320, anchor="w")
-        self.image_label.grid(row=0, column=3, sticky="ew")
+        self.image_label.grid(row=0, column=6, sticky="ew")
+        self._update_type_controls("Card")
 
     def get_value(self) -> CardImportInput:
         """Return the current card import input captured by the frame."""
         script_text = self.script_textbox.get("1.0", "end").rstrip()
-        return CardImportInput(script_text=script_text, image_source=self._image_path, rarity=self.rarity_menu.get())
+        content_type = self.content_type_menu.get().casefold()
+        return CardImportInput(script_text=script_text, image_source=self._image_path, rarity=self.rarity_menu.get(), content_type=content_type, token_script_name=self.token_script_name.get().strip() or None)
+
+    def _update_type_controls(self, content_type: str) -> None:
+        is_token = content_type == "Token"
+        if is_token:
+            self.token_script_name.grid()
+            self.token_script_name.configure(state="normal")
+
+            self.rarity_menu.grid_remove()
+            self.rarity_menu.configure(state="disabled")
+        else:
+            self.token_script_name.grid_remove()
+            self.token_script_name.configure(state="disabled")
+
+            self.rarity_menu.grid()
+            self.rarity_menu.configure(state="normal")
+        
+        return
 
     def _pick_image(self) -> None:
         """Open a file dialog for choosing an image source."""

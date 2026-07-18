@@ -96,7 +96,7 @@ class SettingsTab(ctk.CTkFrame):
         ctk.CTkLabel(reference_frame, text="Script Editor Reference Cards", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(16, 4))
         self._reference_label = ctk.CTkLabel(reference_frame, text=self._reference_text(), anchor="w", justify="left", wraplength=720)
         self._reference_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
-        ctk.CTkButton(reference_frame, text="Choose cardsfolder", command=self._choose_reference_cards).grid(row=1, column=1, padx=16, pady=(0, 10))
+        ctk.CTkButton(reference_frame, text="Choose cardsfolder", command=self._choose_reference_cards).grid(row=1, column=1, sticky="e", padx=16, pady=(0, 10))
 
         documentation_frame = ctk.CTkFrame(scrollable_frame)
         documentation_frame.grid(row=2, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
@@ -106,9 +106,9 @@ class SettingsTab(ctk.CTkFrame):
         self._documentation_label = ctk.CTkLabel(documentation_frame, text=self._documentation_text(), anchor="w", justify="left", wraplength=620)
         self._documentation_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
         controls = ctk.CTkFrame(documentation_frame, fg_color="transparent")
-        controls.grid(row=1, column=1, padx=16, pady=(0, 10))
-        ctk.CTkButton(controls, text="Import pack", command=self._import_documentation_pack).pack(side="left")
-        ctk.CTkButton(controls, text="Use bundled", command=self._reset_documentation_pack).pack(side="left", padx=(8, 0))
+        controls.grid(row=1, column=1, sticky="e", padx=16, pady=(0, 10))
+        ctk.CTkButton(controls, text="Import pack", command=self._import_documentation_pack).pack(side="right")
+        ctk.CTkButton(controls, text="Use bundled", command=self._reset_documentation_pack).pack(side="right", padx=(8, 0))
 
     def _change_appearance(self, appearance_mode: str) -> None:
         """Apply the selected appearance mode and persist it."""

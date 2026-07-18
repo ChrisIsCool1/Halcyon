@@ -16,9 +16,11 @@ class ForgePaths:
     """Filesystem locations used by Forge custom content and the manager app."""
 
     custom_cards_dir: Path
+    custom_tokens_dir: Path
     custom_editions_dir: Path
     custom_starter_decks_dir: Path
     card_images_dir: Path
+    token_images_dir: Path
     backups_dir: Path
     logs_dir: Path
     settings_file: Path
@@ -34,11 +36,20 @@ class EditionCardEntry:
 
 
 @dataclass(slots=True)
+class EditionTokenEntry:
+    """A token script reference inside a Forge edition file."""
+
+    collector_number: int | None
+    script_name: str
+
+
+@dataclass(slots=True)
 class EditionDocument:
     """Parsed contents of a Forge edition file."""
 
     metadata: dict[str, str]
     cards: list[EditionCardEntry]
+    tokens: list[EditionTokenEntry] = field(default_factory=list)
     file_path: Path | None = None
 
 
@@ -65,6 +76,8 @@ class CardRecord:
     image_present: bool
     set_name: str
     set_code: str
+    content_type: Literal["card", "token"] = "card"
+    token_script_name: str | None = None
 
 
 @dataclass(slots=True)
@@ -74,6 +87,8 @@ class CardImportInput:
     script_text: str
     image_source: Path | None
     rarity: str
+    content_type: Literal["card", "token"] = "card"
+    token_script_name: str | None = None
 
 
 @dataclass(slots=True)

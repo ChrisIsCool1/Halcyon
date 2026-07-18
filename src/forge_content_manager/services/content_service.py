@@ -26,6 +26,7 @@ from forge_content_manager.services.script_service import (
     make_script_filename,
     normalize_card_name,
     resolve_script_path,
+    resolve_token_script_path,
     validate_script,
 )
 
@@ -85,14 +86,28 @@ class ForgeContentService:
                 results.append(ImportCardResult(card_name=card_name, success=False, warnings=warnings, error="; ".join(errors)))
                 failed_count += 1
                 continue
-            script_path = resolve_script_path(self.paths.custom_cards_dir, card_name)
+            is_token = card.content_type == "token"
+            token_script_name = (card.token_script_name or "").strip()
+            if is_token and not token_script_name:
+                results.append(ImportCardResult(card_name=card_name, success=False, warnings=warnings, error="Token script name is required."))
+                failed_count += 1
+                continue
+            script_path = (
+                resolve_token_script_path(self.paths.custom_tokens_dir, token_script_name)
+                if is_token else resolve_script_path(self.paths.custom_cards_dir, card_name)
+            )
             script_path.parent.mkdir(parents=True, exist_ok=True)
             if script_path.exists():
                 self.backup_service.backup_file(script_path)
             script_path.write_text(card.script_text, encoding="utf-8")
-            if card.image_source is not None:
-                self.image_service.install_image(card.image_source, destination_set.code, card_name)
-            self.edition_service.add_or_update_card(destination_set.file_path, card_name, RARITY_CODES[card.rarity])
+            if is_token:
+                token_entry = self.edition_service.add_or_update_token(destination_set.file_path, token_script_name)
+                if card.image_source is not None:
+                    self.image_service.install_token_image(card.image_source, destination_set.code, token_script_name, token_entry.collector_number)
+            else:
+                if card.image_source is not None:
+                    self.image_service.install_image(card.image_source, destination_set.code, card_name)
+                self.edition_service.add_or_update_card(destination_set.file_path, card_name, RARITY_CODES[card.rarity])
             results.append(ImportCardResult(card_name=card_name, success=True, warnings=warnings))
             imported_count += 1
             self._logger.info("Imported custom card %s into set %s", card_name, destination_set.name)
@@ -134,6 +149,20 @@ class ForgeContentService:
                     set_code=set_code,
                 )
             )
+        for set_record in self.list_sets():
+            document = self.edition_service.parse_edition_file(set_record.file_path)
+            for token in document.tokens:
+                script_path = resolve_token_script_path(self.paths.custom_tokens_dir, token.script_name)
+                if not script_path.exists():
+                    continue
+                script_text = script_path.read_text(encoding="utf-8")
+                name = extract_card_name(script_text) or token.script_name
+                image_path = self.image_service.find_token_image(set_record.code, token.script_name, token.collector_number)
+                records.append(CardRecord(
+                    name=name, normalized_name=normalize_card_name(token.script_name), script_path=script_path,
+                    image_path=image_path, image_present=image_path is not None, set_name=set_record.name,
+                    set_code=set_record.code, content_type="token", token_script_name=token.script_name,
+                ))
         return records
 
     def get_card_rarity(self, set_file_path: Path, card_name: str) -> str:
@@ -166,7 +195,10 @@ class ForgeContentService:
         errors = [message.message for message in validation_messages if message.level == "error"]
         if errors:
             raise ValueError("; ".join(errors))
-        new_script_path = resolve_script_path(self.paths.custom_cards_dir, new_name)
+        new_script_path = (
+            resolve_token_script_path(self.paths.custom_tokens_dir, card.token_script_name or card.script_path.stem)
+            if card.content_type == "token" else resolve_script_path(self.paths.custom_cards_dir, new_name)
+        )
         if new_script_path != card.script_path and new_script_path.exists():
             self.backup_service.backup_file(new_script_path)
         self.backup_service.backup_file(card.script_path)
@@ -174,7 +206,7 @@ class ForgeContentService:
         new_script_path.write_text(new_text, encoding="utf-8")
         if new_script_path != card.script_path and card.script_path.exists():
             card.script_path.unlink()
-        if old_name.casefold() != new_name.casefold():
+        if card.content_type == "card" and old_name.casefold() != new_name.casefold():
             self.edition_service.rename_card_references(old_name, new_name)
             if card.image_path is not None and card.set_code:
                 card.image_path = self.image_service.rename_image(card.image_path, card.set_code, new_name)
@@ -186,13 +218,20 @@ class ForgeContentService:
             image_present=card.image_path is not None and card.image_path.exists(),
             set_name=card.set_name,
             set_code=card.set_code,
+            content_type=card.content_type,
+            token_script_name=card.token_script_name,
         )
 
     def replace_image(self, card: CardRecord, image_source: Path) -> CardRecord:
         """Replace or install the image associated with a card."""
         if not card.set_code:
             raise ValueError("Card is not associated with a set, so its image target cannot be resolved.")
-        image_path = self.image_service.install_image(image_source, card.set_code, card.name)
+        if card.content_type == "token":
+            document = next((self.edition_service.parse_edition_file(item.file_path) for item in self.list_sets() if item.code == card.set_code), None)
+            token = next((item for item in document.tokens if item.script_name == card.token_script_name), None) if document else None
+            image_path = self.image_service.install_token_image(image_source, card.set_code, card.token_script_name or card.script_path.stem, token.collector_number if token else None)
+        else:
+            image_path = self.image_service.install_image(image_source, card.set_code, card.name)
         return CardRecord(
             name=card.name,
             normalized_name=card.normalized_name,
@@ -201,6 +240,8 @@ class ForgeContentService:
             image_present=True,
             set_name=card.set_name,
             set_code=card.set_code,
+            content_type=card.content_type,
+            token_script_name=card.token_script_name,
         )
 
     def delete_card(self, card: CardRecord) -> None:
@@ -211,8 +252,12 @@ class ForgeContentService:
         if card.image_path is not None and card.image_path.exists():
             self.backup_service.backup_file(card.image_path)
             card.image_path.unlink()
-        for set_record in self.edition_service.find_sets_for_card(card.name):
-            self.edition_service.remove_card(set_record.file_path, card.name)
+        if card.content_type == "token":
+            for set_record in self.edition_service.find_sets_for_token(card.token_script_name or card.script_path.stem):
+                self.edition_service.remove_token(set_record.file_path, card.token_script_name or card.script_path.stem)
+        else:
+            for set_record in self.edition_service.find_sets_for_card(card.name):
+                self.edition_service.remove_card(set_record.file_path, card.name)
 
     def delete_set(self, set_record: ForgeSetRecord) -> None:
         """Delete a custom set and remove uniquely-owned assets referenced by it."""
@@ -224,6 +269,16 @@ class ForgeContentService:
                 self.backup_service.backup_file(script_path)
                 script_path.unlink()
             image_path = self.image_service.find_image(set_record.code, card_entry.card_name)
+            if image_path is not None and image_path.exists():
+                self.backup_service.backup_file(image_path)
+                image_path.unlink()
+        for token_entry in document.tokens:
+            other_sets = [record for record in self.edition_service.find_sets_for_token(token_entry.script_name) if record.file_path != set_record.file_path]
+            script_path = resolve_token_script_path(self.paths.custom_tokens_dir, token_entry.script_name)
+            if not other_sets and script_path.exists():
+                self.backup_service.backup_file(script_path)
+                script_path.unlink()
+            image_path = self.image_service.find_token_image(set_record.code, token_entry.script_name, token_entry.collector_number)
             if image_path is not None and image_path.exists():
                 self.backup_service.backup_file(image_path)
                 image_path.unlink()

@@ -128,6 +128,12 @@ def resolve_script_path(cards_dir: Path, card_name: str) -> Path:
     return cards_dir / folder_name / filename
 
 
+def resolve_token_script_path(tokens_dir: Path, script_name: str) -> Path:
+    """Resolve a token script path, retaining Forge's token script identifier."""
+    stem = sanitize_display_filename(Path(script_name).stem)
+    return tokens_dir / f"{stem}.txt"
+
+
 def sanitize_display_filename(value: str) -> str:
     """Remove Windows-invalid characters while retaining a readable name.
 
