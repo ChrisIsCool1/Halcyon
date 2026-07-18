@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+from dataclasses import asdict
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -50,7 +51,7 @@ class PackageService:
             card_count=len(document.cards),
         )
         with ZipFile(output_file, "w", compression=ZIP_DEFLATED) as archive:
-            archive.writestr("manifest.json", json.dumps(manifest.__dict__, indent=2))
+            archive.writestr("manifest.json", json.dumps(asdict(manifest), indent=2))
             archive.writestr("edition.txt", set_file.read_text(encoding="utf-8"))
             for card in document.cards:
                 script_path = resolve_script_path(self._paths.custom_cards_dir, card.card_name)
