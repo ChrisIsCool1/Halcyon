@@ -9,9 +9,9 @@ Named after the Thran capital, this is a small desktop application for managing 
 ## Features
 
 - **Begone, File Explorer:** Create, edit, rename, delete, import, and export custom Forge sets, all in app!
-- **Create a Set in One Click:** Jot down a bunch of scripts, import a few images, click Import and you're done!
+- **Create a Set in Two Clicks:** One click to name and date it, and another to create it! Switch to the Import tab to quickly populate it with cards and images.
 - **Easy Set Editing:** Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
-- **Import and Export Packages:** Import and export sets as `.forgepkg.zip` packages with collision handling.
+- **Import and Export Packages:** Import and export custom sets as `.forgepkg.zip` packages with collision handling. Share your wacky card sets with your friends!
 - **The Script Editor:** Think of this as VS Code for Forge! Draft Forge card scripts with syntax highlighting, keyword help, and autocompletion. If you import a cardsfolder from Forge, it even gives you a handy crossreference search of all existing cards right in the editor. The Script Editor also comes with some basic validation for things like SVar references.
 
 ## Requirements
@@ -65,11 +65,9 @@ The Script Editor bundles the Forge scripting Markdown guides for easy reference
 
 ## Maintaining Script Documentation
 
-The Script Editor ships with a compact SQLite documentation pack and can import a replacement
-pack from Settings if a newer one is released. When new versions of Forge release new features or keywords, keeping up with the tabletop game, there are also dev commands you can run in Halcyon to update the documentation.
+The Script Editor ships with a compact SQLite documentation pack and can import a replacement pack from Settings if a newer one is released. When new versions of Forge release new features or keywords, keeping up with the tabletop game, there are also dev commands you can run in Halcyon to update the documentation.
 
-For command options, preset behavior, catalog format, and the full authoring workflow,
-see [the documentation CLI reference](docs/docs-cli.md).
+For command options, preset behavior, catalog format, and the full authoring workflow, see [the documentation CLI reference](docs/docs-cli.md).
 
 Run this command to extract keywords from the given unzipped cardsfolder and update the database all in one step:
 
