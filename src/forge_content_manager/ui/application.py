@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 import customtkinter as ctk
-from PIL import Image
+from PIL import Image, ImageTk
 
 from forge_content_manager.constants import APP_NAME
 from forge_content_manager.services.content_service import ForgeContentService
@@ -40,6 +40,7 @@ class ForgeContentManagerApp(ctk.CTk):
         self._authoring_service = ScriptAuthoringService(self._settings.reference_cards_dir, reference_database, active_documentation)
 
         self.title(APP_NAME)
+        self._set_window_icon()
         self.protocol("WM_DELETE_WINDOW", self._handle_close)
         self.geometry("1360x900")
         self.minsize(1180, 760)
@@ -139,6 +140,15 @@ class ForgeContentManagerApp(ctk.CTk):
         """Resolve an asset from either the source tree or a PyInstaller bundle."""
         bundle_root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3]))
         return bundle_root / filename
+
+    def _set_window_icon(self) -> None:
+        """Set the title-bar and taskbar icon from the bundled application logo."""
+        try:
+            icon_source = Image.open(self._asset_path("logo.png"))
+            self._window_icon = ImageTk.PhotoImage(icon_source)
+            self.iconphoto(True, self._window_icon)
+        except (OSError, RuntimeError) as exc:
+            self._logger.warning("Could not load application window icon: %s", exc)
 
     def refresh_data_views(self) -> None:
         """Refresh all data-driven tabs after content has changed."""

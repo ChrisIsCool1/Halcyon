@@ -30,6 +30,7 @@ exe = EXE(
     a.datas,
     [],
     name="Halcyon",
+    icon="assets/Halcyon.ico",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
