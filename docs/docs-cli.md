@@ -151,18 +151,6 @@ Arguments:
 or validate the prose in the copied sections. Review generated `TODO` entries before
 compiling, because the compiler requires each final entry to have a description.
 
-## `refresh`
-
-```text
-halcyon docs refresh --cards-dir PATH [--catalog-dir PATH] [--guides-dir PATH] [--output PATH] [--version TEXT]
-```
-
-Regenerates `ability-mode.md` and `trigger-mode.md` from the card scripts, then
-compiles the complete documentation pack. It replaces those two catalog files, so
-make any authored edits elsewhere or commit them before refreshing. Defaults target
-the repository's `scripting_docs/catalog`, `scripting_docs`, and
-`scripting_docs/script_documentation.sqlite3`; only `--cards-dir` is required.
-
 ## `compile`
 
 ```text
@@ -209,6 +197,20 @@ scope, the catalog record wins. Compilation fails if any final record has no nam
 description, or if two final records use the same exact scope and heading. Fix
 those catalog issues and rerun the command; the existing output pack is left intact
 until the replacement has been built successfully.
+
+## `refresh`
+
+This essentially extracts, syncs, and compiles in one command.
+
+```text
+halcyon docs refresh --cards-dir PATH [--catalog-dir PATH] [--guides-dir PATH] [--output PATH] [--version TEXT]
+```
+
+Regenerates `ability-mode.md` and `trigger-mode.md` from the card scripts, then
+compiles the complete documentation pack. It replaces those two catalog files, so
+make any authored edits elsewhere or commit them before refreshing. Defaults target
+the repository's `scripting_docs/catalog`, `scripting_docs`, and
+`scripting_docs/script_documentation.sqlite3`; only `--cards-dir` is required.
 
 ## Useful checks
 

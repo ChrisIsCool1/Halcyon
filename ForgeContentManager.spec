@@ -5,10 +5,14 @@ from PyInstaller.utils.hooks import collect_submodules
 hiddenimports = collect_submodules("customtkinter")
 
 a = Analysis(
-    ["src/forge_content_manager/main.py"],
+    ["src/forge_content_manager/__main__.py"],
     pathex=["src"],
     binaries=[],
-    datas=[("logo.png", "."), ("scripting_docs/*.md", "scripting_docs"), ("scripting_docs/*.sqlite3", "scripting_docs")],
+    datas=[
+        ("logo.png", "."),
+        ("scripting_docs/catalog", "scripting_docs/catalog"),
+        ("scripting_docs/*.sqlite3", "scripting_docs"),
+    ],
     hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},

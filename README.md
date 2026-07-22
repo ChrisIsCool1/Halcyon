@@ -30,6 +30,8 @@ python -m pip install -e .
 
 ## Run
 
+If you have a release ZIP, extract it and run the EXE. Otherwise, you can run it from source with:
+
 ```powershell
 halcyon start
 ```
@@ -45,47 +47,11 @@ halcyon create_card "My Custom Set" "Example Card" Common .\example-card.txt .\e
 
 The application creates any missing Forge custom content directories automatically, so don't worry about creating them if they aren't present.
 
-## Build With PyInstaller
-
-Install PyInstaller:
-
-```powershell
-python -m pip install pyinstaller
-```
-
-Build the executable:
-
-```powershell
-pyinstaller ForgeContentManager.spec
-```
-
-The bundled executable will be created under `dist/Halcyon/`.
-
-The Script Editor bundles the Forge scripting Markdown guides for easy reference. To search full reference card scripts in a packaged build, import a local unzipped Forge `cardsfolder` directory in Settings, and it will generate a lookup SQLite database that it can search through.
-
 ## Maintaining Script Documentation
 
 The Script Editor ships with a compact SQLite documentation pack and can import a replacement pack from Settings if a newer one is released. When new versions of Forge release new features or keywords, keeping up with the tabletop game, there are also dev commands you can run in Halcyon to update the documentation.
 
 For command options, preset behavior, catalog format, and the full authoring workflow, see [the documentation CLI reference](docs/docs-cli.md).
-
-Run this command to extract keywords from the given unzipped cardsfolder and update the database all in one step:
-
-```powershell
-halcyon docs refresh --cards-dir scripting_docs/cards/cardsfolder
-```
-
-## Project Structure
-
-```text
-src/forge_content_manager/
-	constants.py
-	logging_config.py
-	main.py
-	models.py
-	services/
-	ui/
-```
 
 ## Notes
 

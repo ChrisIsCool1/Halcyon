@@ -11,6 +11,8 @@ scripting_docs/cards
 forge_docs/
 test_cards/
 dist/
+release/
+.release-build/
 doc_packs/
 *.spec.bak
 discoveries.md
