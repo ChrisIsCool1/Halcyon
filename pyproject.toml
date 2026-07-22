@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "halcyon"
-version = "0.1.0"
+version = "1.0.0"
 description = "Halcyon desktop manager for Forge custom MTG cards and sets"
 readme = "README.md"
 requires-python = ">=3.12"
