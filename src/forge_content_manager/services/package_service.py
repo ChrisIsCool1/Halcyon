@@ -14,6 +14,7 @@ from forge_content_manager.services.backup_service import BackupService
 from forge_content_manager.services.edition_service import EditionService
 from forge_content_manager.services.script_service import (
     extract_card_name,
+    extract_card_face_names,
     make_image_filename,
     make_script_filename,
     make_set_filename,
@@ -57,9 +58,11 @@ class PackageService:
                 script_path = resolve_script_path(self._paths.custom_cards_dir, card.card_name)
                 if script_path.exists():
                     archive.write(script_path, f"cards/{script_path.relative_to(self._paths.custom_cards_dir).as_posix()}")
-                image_path = self._paths.card_images_dir / sanitize_display_filename(manifest.code) / make_image_filename(card.card_name)
-                if image_path.exists():
-                    archive.write(image_path, f"images/{image_path.name}")
+                script_text = script_path.read_text(encoding="utf-8") if script_path.exists() else ""
+                for face_name in extract_card_face_names(script_text) or [card.card_name]:
+                    image_path = self._paths.card_images_dir / sanitize_display_filename(manifest.code) / make_image_filename(face_name)
+                    if image_path.exists():
+                        archive.write(image_path, f"images/{image_path.name}")
         self._logger.info("Exported set package %s", output_file)
         return output_file
 

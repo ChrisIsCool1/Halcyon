@@ -1,0 +1,2 @@
+[console_scripts]
+halcyon = forge_content_manager.main:main

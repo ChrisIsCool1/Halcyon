@@ -27,6 +27,7 @@ class CardBrowserTab(ctk.CTkFrame):
         self._records: dict[str, CardRecord] = {}
         self._sets: list[ForgeSetRecord] = []
         self._editor_image_source: Path | None = None
+        self._editor_image_face_index = 0
         self._editor_original_script = ""
         self._editor_original_rarity = ""
 
@@ -99,6 +100,8 @@ class CardBrowserTab(ctk.CTkFrame):
         editor_controls.grid(row=3, column=0, sticky="ew", padx=12, pady=(0, 12))
         self.rarity_menu = ctk.CTkOptionMenu(editor_controls, values=list(RARITY_LABELS))
         self.rarity_menu.pack(side="left")
+        self.face_menu = ctk.CTkOptionMenu(editor_controls, values=["Front"], command=lambda _value: self._update_image_preview_for_selected_face())
+        self.face_menu.pack(side="left", padx=(8, 0))
         ctk.CTkButton(editor_controls, text="Replace Image", command=self.replace_image, width=120).pack(side="left", padx=8)
         ctk.CTkButton(editor_controls, text="Save Changes", command=self.save_changes, width=120).pack(side="right")
         ctk.CTkButton(editor_controls, text="Back", command=self.show_table, width=90).pack(side="right", padx=8)
@@ -247,7 +250,7 @@ class CardBrowserTab(ctk.CTkFrame):
             if updated.content_type == "card":
                 self._content_service.update_card_rarity(selected.file_path, updated.name, self.rarity_menu.get())
             if self._editor_image_source is not None:
-                self._content_service.replace_image(updated, self._editor_image_source)
+                self._content_service.replace_image(updated, self._editor_image_source, self._editor_image_face_index)
         except Exception as exc:
             show_error("Save Failed", str(exc))
             return
@@ -304,6 +307,10 @@ class CardBrowserTab(ctk.CTkFrame):
         self._editor_original_script = script_text.rstrip()
         self._editor_original_rarity = self.rarity_menu.get()
         self._editor_image_source = None
+        self._editor_image_face_index = 0
+        face_names = record.face_names or [record.name]
+        self.face_menu.configure(values=face_names)
+        self.face_menu.set(face_names[0])
         self._update_image_preview(record)
 
     def has_unsaved_changes(self) -> bool:
@@ -355,15 +362,20 @@ class CardBrowserTab(ctk.CTkFrame):
     def _update_image_preview(self, record: CardRecord) -> None:
         """Display a scaled preview when the selected card has an image."""
         self._clear_image_preview()
-        if record.image_path is None or not record.image_path.exists():
+        face_names = record.face_names or [record.name]
+        selected_face = self.face_menu.get()
+        face_index = face_names.index(selected_face) if selected_face in face_names else 0
+        self._editor_image_face_index = face_index
+        image_path = record.image_paths[face_index] if face_index < len(record.image_paths) else record.image_path
+        if image_path is None or not image_path.exists():
             return
         try:
-            image_mtime = record.image_path.stat().st_mtime_ns
-            cached_preview = self._image_preview_cache.get(record.image_path)
+            image_mtime = image_path.stat().st_mtime_ns
+            cached_preview = self._image_preview_cache.get(image_path)
             if cached_preview is None or cached_preview[0] != image_mtime:
-                with Image.open(record.image_path) as source_image:
+                with Image.open(image_path) as source_image:
                     preview_image = ImageOps.contain(source_image.convert("RGB"), (260, 360), Image.Resampling.LANCZOS)
-                self._image_preview_cache[record.image_path] = (
+                self._image_preview_cache[image_path] = (
                     image_mtime,
                     ctk.CTkImage(
                         light_image=preview_image,
@@ -371,8 +383,14 @@ class CardBrowserTab(ctk.CTkFrame):
                         size=preview_image.size,
                     ),
                 )
-            self._image_preview = self._image_preview_cache[record.image_path][1]
+            self._image_preview = self._image_preview_cache[image_path][1]
         except (OSError, ValueError):
             self.image_preview.configure(text="Unable to load image")
             return
         self.image_preview.configure(image=self._image_preview, text="")
+
+    def _update_image_preview_for_selected_face(self) -> None:
+        """Refresh the preview and replacement target when the selected face changes."""
+        record = self._selected_record()
+        if record is not None:
+            self._update_image_preview(record)

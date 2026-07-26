@@ -90,6 +90,7 @@ can go and make edits. These will be visible to the Script Editor after running 
 | `static-mode`      | Static modes from `S:Mode$` lines.                                                                                                                |
 | `replacement-mode` | Replacement events from `R:Event$` lines.                                                                                                         |
 | `parameter`        | Pipe-delimited parameter names ending in `$`, such as `ValidTgts$`.                                                                               |
+| `alternate-mode`   | Values on `AlternateMode:` lines, such as `Modal`, `DoubleFaced`, and `Meld`.                                                                    |
 
 The `ability-mode`, `trigger-mode`, `static-mode`, and `replacement-mode` presets produce one section per mode family,
 with a `**Parameters:**` list containing editable documentation and observed values

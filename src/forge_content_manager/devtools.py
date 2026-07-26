@@ -22,6 +22,7 @@ PRESETS = {
     "trigger-mode": r"(?m)^(?:T|SVar:[^:]+):Mode\$\s*([^|\r\n]+)",
     "static-mode": r"(?m)^S:Mode\$\s*([^|\r\n]+)",
     "replacement-mode": r"(?m)^R:Event\$\s*([^|\r\n]+)",
+    "alternate-mode": r"(?mi)^AlternateMode:\s*([^\r\n]+)",
     "parameter": r"\|\s*([A-Za-z][\w]*\$)",
 }
 
@@ -32,6 +33,7 @@ PRESET_SCOPES = {
     "trigger-mode": "T",
     "static-mode": "S",
     "replacement-mode": "R",
+    "alternate-mode": "AlternateMode",
     "parameter": "*",
 }
 

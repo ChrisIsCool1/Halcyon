@@ -37,6 +37,7 @@ class CardImportEntryFrame(ctk.CTkFrame):
         super().__init__(master)
         self._on_remove = on_remove
         self._image_path: Path | None = None
+        self._alternate_image_path: Path | None = None
         self.grid_columnconfigure(0, weight=1)
 
         header = ctk.CTkFrame(self, fg_color="transparent")
@@ -70,18 +71,22 @@ class CardImportEntryFrame(ctk.CTkFrame):
         self.token_script_name = ctk.CTkEntry(footer, placeholder_text="Token script ID (e.g. b_1_1_bird)", width=230)
         self.token_script_name.grid(row=0, column=4, sticky="w", padx=(12, 0))
 
-        image_button = ctk.CTkButton(footer, text="Choose Image", command=self._pick_image, width=140)
+        image_button = ctk.CTkButton(footer, text="Choose Front Image", command=self._pick_image, width=140)
         image_button.grid(row=0, column=5, sticky="e", padx=(12, 12))
 
         self.image_label = ctk.CTkLabel(footer, text="No image selected", width=320, anchor="w")
         self.image_label.grid(row=0, column=6, sticky="ew")
+        alternate_image_button = ctk.CTkButton(footer, text="Choose Alternate Image", command=self._pick_alternate_image, width=170)
+        alternate_image_button.grid(row=1, column=5, sticky="e", padx=(12, 12), pady=(8, 0))
+        self.alternate_image_label = ctk.CTkLabel(footer, text="No alternate image selected", width=320, anchor="w")
+        self.alternate_image_label.grid(row=1, column=6, sticky="ew", pady=(8, 0))
         self._update_type_controls("Card")
 
     def get_value(self) -> CardImportInput:
         """Return the current card import input captured by the frame."""
         script_text = self.script_textbox.get("1.0", "end").rstrip()
         content_type = self.content_type_menu.get().casefold()
-        return CardImportInput(script_text=script_text, image_source=self._image_path, rarity=self.rarity_menu.get(), content_type=content_type, token_script_name=self.token_script_name.get().strip() or None)
+        return CardImportInput(script_text=script_text, image_source=self._image_path, alternate_image_source=self._alternate_image_path, rarity=self.rarity_menu.get(), content_type=content_type, token_script_name=self.token_script_name.get().strip() or None)
 
     def _update_type_controls(self, content_type: str) -> None:
         is_token = content_type == "Token"
@@ -112,6 +117,17 @@ class CardImportEntryFrame(ctk.CTkFrame):
             return
         self._image_path = Path(file_name)
         self.image_label.configure(text=self._image_path.name)
+
+    def _pick_alternate_image(self) -> None:
+        """Choose the image for the script's Alternate face, when it has one."""
+        file_name = filedialog.askopenfilename(
+            title="Choose Alternate Card Image",
+            filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.webp;*.bmp")],
+        )
+        if not file_name:
+            return
+        self._alternate_image_path = Path(file_name)
+        self.alternate_image_label.configure(text=self._alternate_image_path.name)
 
     def _handle_remove(self) -> None:
         """Invoke the owning tab's removal callback."""

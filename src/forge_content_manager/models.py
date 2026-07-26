@@ -76,6 +76,8 @@ class CardRecord:
     image_present: bool
     set_name: str
     set_code: str
+    face_names: list[str] = field(default_factory=list)
+    image_paths: list[Path | None] = field(default_factory=list)
     content_type: Literal["card", "token"] = "card"
     token_script_name: str | None = None
 
@@ -87,6 +89,7 @@ class CardImportInput:
     script_text: str
     image_source: Path | None
     rarity: str
+    alternate_image_source: Path | None = None
     content_type: Literal["card", "token"] = "card"
     token_script_name: str | None = None
 

@@ -43,10 +43,21 @@ def extract_card_name(script_text: str) -> str | None:
     return extract_metadata_fields(script_text).get("Name")
 
 
+def extract_card_face_names(script_text: str) -> list[str]:
+    """Return every face name declared by a Forge card script, in order."""
+    return [match.group(1).strip() for match in re.finditer(r"(?mi)^Name:\s*(.+?)\s*$", script_text) if match.group(1).strip()]
+
+
+def supports_alternate_face(script_text: str) -> bool:
+    """Return whether the script declares Forge's alternate-face metadata."""
+    return bool(re.search(r"(?mi)^\s*Alternate(?:Mode)?\s*:", script_text))
+
+
 def validate_script(
     script_text: str,
     destination_set: str | None,
     image_source: Path | None,
+    alternate_image_source: Path | None = None,
 ) -> list[ValidationMessage]:
     """Perform metadata and file checks before importing a card.
 
@@ -75,6 +86,13 @@ def validate_script(
         messages.append(
             ValidationMessage(level="error", message="Selected image file does not exist.", card_name=card_name)
         )
+    if alternate_image_source is not None:
+        if not supports_alternate_face(script_text):
+            messages.append(ValidationMessage(level="error", message="A second image requires an Alternate or AlternateMode field.", card_name=card_name))
+        elif len(extract_card_face_names(script_text)) < 2:
+            messages.append(ValidationMessage(level="error", message="A second image requires a Name field for the alternate face.", card_name=card_name))
+        elif not alternate_image_source.exists():
+            messages.append(ValidationMessage(level="error", message="Selected alternate image file does not exist.", card_name=card_name))
     if not fields.get("Oracle"):
         messages.append(
             ValidationMessage(level="warning", message="Missing Oracle field.", card_name=card_name)
