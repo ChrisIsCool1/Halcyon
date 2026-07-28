@@ -120,6 +120,66 @@ class CollisionStrategyDialog(ctk.CTkToplevel):
         self.destroy()
 
 
+class CardsFolderHelpDialog(ctk.CTkToplevel):
+    """Explain how to obtain and configure Forge's reference cardsfolder."""
+
+    def __init__(self, master: tk.Misc) -> None:
+        """Build a modal, readable walkthrough for the cardsfolder workflow."""
+        super().__init__(master)
+        self.title("How to import a Forge cardsfolder")
+        self.geometry("680x610")
+        self.minsize(560, 500)
+        self.transient(master)
+        self.grab_set()
+
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+
+        ctk.CTkLabel(
+            self,
+            text="Add Forge's card scripts to the Script Editor",
+            font=ctk.CTkFont(size=22, weight="bold"),
+            anchor="w",
+        ).grid(row=0, column=0, sticky="ew", padx=24, pady=(22, 8))
+
+        instructions = ctk.CTkTextbox(self, wrap="word", activate_scrollbars=True)
+        instructions.grid(row=1, column=0, sticky="nsew", padx=24, pady=(0, 16))
+        instructions.insert(
+            "1.0",
+            "This optional library lets the Script Editor search the card scripts that ship with Forge. "
+            "It does not change your installed Forge cards.\n\n"
+            "1. Find Forge's card archive\n"
+            "Open the folder where you extracted a Forge release. Inside it, look for:\n\n"
+            "    res\\cardsfolder\\cardsfolder.zip\n\n"
+            "This is the Forge release's ZIP, not the Halcyon release ZIP. The `res` folder may be beside "
+            "the Forge launcher or application files.\n\n"
+            "2. Copy the ZIP somewhere convenient\n"
+            "Copy `cardsfolder.zip` to a location you can keep, such as a folder under Documents. "
+            "Copy it rather than moving it out of the Forge release.\n\n"
+            "3. Extract the ZIP\n"
+            "Right-click the copied ZIP and choose Extract All. Keep the extracted folder. The folder you "
+            "choose below should contain Forge card-script `.txt` files, either directly or somewhere inside it.\n\n"
+            "4. Point Halcyon to the extracted folder\n"
+            "Return to Settings, under Script Editor Reference Cards, click Choose cardsfolder, and select "
+            "the extracted folder. Do not select the ZIP file itself.\n\n"
+            "5. Wait for indexing\n"
+            "Halcyon builds a searchable index in the background. When it finishes, open Script Editor and "
+            "use Reference Cards to search the Forge card scripts. Large releases can take a little while.\n\n"
+            "If it does not find any cards\n"
+            "Check that you selected the extracted folder and that it contains `.txt` card scripts. If the "
+            "archive extracted into another `cardsfolder` subfolder, select that inner folder instead. You can "
+            "return here and choose a different folder at any time.",
+        )
+        instructions.configure(state="disabled")
+
+        ctk.CTkButton(self, text="Close", command=self.destroy, width=110).grid(
+            row=2, column=0, sticky="e", padx=24, pady=(0, 22)
+        )
+        self.protocol("WM_DELETE_WINDOW", self.destroy)
+        self.wait_visibility()
+        self.focus()
+
+
 class ProgressDialog(ctk.CTkToplevel):
     """Progress dialog for longer-running import operations."""
 

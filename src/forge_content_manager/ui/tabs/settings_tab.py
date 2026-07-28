@@ -11,6 +11,7 @@ import customtkinter as ctk
 from forge_content_manager.constants import APPEARANCE_MODES
 from forge_content_manager.models import AppSettings
 from forge_content_manager.services.settings_service import SettingsService
+from forge_content_manager.ui.dialogs import CardsFolderHelpDialog
 from forge_content_manager.ui.widgets import LabeledValue
 
 
@@ -93,7 +94,16 @@ class SettingsTab(ctk.CTkFrame):
         reference_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
         reference_frame.grid_columnconfigure(0, weight=1)
         reference_frame.grid_columnconfigure(1, weight=1)
-        ctk.CTkLabel(reference_frame, text="Script Editor Reference Cards", font=ctk.CTkFont(size=20, weight="bold")).grid(row=0, column=0, sticky="w", padx=16, pady=(16, 4))
+        reference_title = ctk.CTkFrame(reference_frame, fg_color="transparent")
+        reference_title.grid(row=0, column=0, columnspan=2, sticky="w", padx=16, pady=(16, 4))
+        ctk.CTkLabel(reference_title, text="Script Editor Reference Cards", font=ctk.CTkFont(size=20, weight="bold")).pack(side="left")
+        ctk.CTkButton(
+            reference_title,
+            text="?",
+            width=28,
+            height=28,
+            command=self._show_reference_cards_help,
+        ).pack(side="left", padx=(10, 0))
         self._reference_label = ctk.CTkLabel(reference_frame, text=self._reference_text(), anchor="w", justify="left", wraplength=720)
         self._reference_label.grid(row=1, column=0, sticky="ew", padx=16, pady=(0, 10))
         ctk.CTkButton(reference_frame, text="Choose cardsfolder", command=self._choose_reference_cards).grid(row=1, column=1, sticky="e", padx=16, pady=(0, 10))
@@ -126,6 +136,10 @@ class SettingsTab(ctk.CTkFrame):
         self._settings_service.save(self._settings)
         self._reference_label.configure(text=self._reference_text())
         self._on_reference_cards_changed(path)
+
+    def _show_reference_cards_help(self) -> None:
+        """Open the walkthrough for finding and importing Forge's cardsfolder."""
+        CardsFolderHelpDialog(self.winfo_toplevel())
 
     def _reference_text(self) -> str:
         if self._settings.reference_cards_dir is None:
