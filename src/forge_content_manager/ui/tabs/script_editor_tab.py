@@ -109,6 +109,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._dirty = False
         self._completion: tk.Toplevel | None = None
         self._completion_items: list[ScriptDocumentation] = []
+        self._completion_span: tuple[str, str] | None = None
         self._completion_just_accepted = False
         self._reference_cards: list[ReferenceCard] = []
 
@@ -313,6 +314,12 @@ class ScriptEditorTab(ctk.CTkFrame):
     def _show_completion(self, token: str) -> None:
         line = self.editor.get("insert linestart", "insert lineend")
         cursor = len(self.editor.get("insert linestart", "insert"))
+        span = self._completion_span_for(line, cursor)
+        if span is None:
+            self._close_completion()
+            return
+        line_start = self.editor.index("insert linestart")
+        self._completion_span = tuple(self.editor.index(f"{line_start} + {offset} chars") for offset in span)
         self._completion_items = self._authoring_service.complete_context(line, cursor, token)
         if not self._completion_items:
             self._close_completion()
@@ -346,9 +353,11 @@ class ScriptEditorTab(ctk.CTkFrame):
         if not selection:
             return "break"
         item = self._completion_items[selection[0]]
-        token = self._current_token()
-        self.editor.delete(f"insert-{len(token)}c", "insert")
-        self.editor.insert("insert", item.name)
+        if self._completion_span is None:
+            return "break"
+        start, end = self._completion_span
+        self.editor.delete(start, end)
+        self.editor.insert(start, item.name)
         self._update_documentation(item)
         self._completion_just_accepted = True
         self._close_completion()
@@ -378,6 +387,20 @@ class ScriptEditorTab(ctk.CTkFrame):
         if self._completion is not None:
             self._completion.destroy()
             self._completion = None
+        self._completion_span = None
+
+    @staticmethod
+    def _completion_span_for(line: str, cursor: int) -> tuple[int, int] | None:
+        """Return the full identifier span containing the completion caret.
+
+        Completion is suggested from the text to the left of the caret, but
+        accepting it must replace the whole identifier.  This is especially
+        important when a user places the caret in the middle of a term.
+        """
+        for match in re.finditer(r"[A-Za-z][\w]*", line):
+            if match.start() <= cursor <= match.end():
+                return match.span()
+        return None
 
     def dismiss_completion(self) -> None:
         """Close completion UI when the editor is no longer the active view."""
