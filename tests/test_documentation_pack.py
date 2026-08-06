@@ -140,6 +140,19 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertEqual(content.count("`0`"), 1)
             self.assertNotIn("`10`", content)
 
+    def test_ability_discovery_supports_wildcard_free_text_parameters(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "abilities.md"
+            write_ability_discoveries(output, [AbilityFamily("Draw", {
+                "ConditionDescription": ["A creature enters."],
+                "RepeatSubAbility": ["FollowUp"],
+                "UnrelatedParameter": ["Observed"],
+            })], "Abilities", "A")
+            content = output.read_text(encoding="utf-8")
+            self.assertNotIn("A creature enters.", content)
+            self.assertNotIn("FollowUp", content)
+            self.assertIn("Observed values: `Observed`", content)
+
     def test_refresh_regenerates_families_and_compiles_the_pack(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -223,6 +236,11 @@ class DocumentationPackTests(unittest.TestCase):
             [(item.label, item.value, item.line_number) for item in references],
             [("Triggers", "MissingTrigger", 1), ("SubAbility", "Missing", 2), ("ReplaceWith", "MissingReplacement", 2)],
         )
+
+    def test_unresolved_svar_references_support_wildcard_parameter_names(self) -> None:
+        text = "A:SP$ Draw | RepeatSubAbility$ MissingFollowUp | ConditionDescription$ MissingText\n"
+        references = ScriptAuthoringService.unresolved_svar_references(text)
+        self.assertEqual([(item.label, item.value) for item in references], [("RepeatSubAbility", "MissingFollowUp")])
 
     def test_invalid_pack_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

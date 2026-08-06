@@ -14,6 +14,7 @@ from threading import Lock
 from typing import TypeVar
 
 from forge_content_manager.services.documentation_pack import compile_pack, parse_legacy_guides, parse_markdown_catalog
+from forge_content_manager.parameter_matching import matches_parameter
 
 # These regex patterns are used to extract terms from Forge text scripts. Each pattern must contain one capture group for the discovered term.
 PRESETS = {
@@ -38,7 +39,7 @@ PRESET_SCOPES = {
 }
 
 # These paramaters are expected to contain free-form text, so we don't attempt to enumerate their values.
-FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "ValidDescription", "GiftDescription", "Name", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt"})
+FREE_TEXT_PARAMETERS = frozenset({"SpellDescription", "Description", "ValidDescription", "GiftDescription", "Name", "Execute", "SubAbility", "TriggerDescription", "StackDescription", "TgtPrompt", "*Description*", "*SubAbility*"})
 
 # These parameters can have many different values, but we only want to show a limited number of them in the documentation.
 LIMITED_PARAMETERS = frozenset({"Cost", "ValidCard", "ValidCards", "Affected", "ValidTarget", "Spellbook", 
@@ -313,10 +314,14 @@ def write_ability_discoveries(destination: Path, families: list[AbilityFamily], 
             lines.extend(("", "**Parameters:**"))
             for label, values in sorted(family.parameters.items(), key=lambda item: item[0].casefold()):
                 lines.append(f"- `{label}$`: TODO: Describe this parameter.")
-                if label not in FREE_TEXT_PARAMETERS:
-                    observed_values = values[:LIMIT_FOR_LIMITED_PARAMETERS] if label in LIMITED_PARAMETERS else sorted(values, key=str.casefold)
-                    observed = ", ".join(f"`{value}`" for value in observed_values) or "_No values observed_"
-                    lines.append(f"  Observed values: {observed}")
+                if matches_parameter(label, FREE_TEXT_PARAMETERS):
+                    continue
+                if matches_parameter(label, LIMITED_PARAMETERS):
+                    observed_values = values[:LIMIT_FOR_LIMITED_PARAMETERS]
+                else:
+                    observed_values = sorted(values, key=str.casefold)
+                observed = ", ".join(f"`{value}`" for value in observed_values) or "_No values observed_"
+                lines.append(f"  Observed values: {observed}")
         entries.append("\n".join(lines))
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(f"# {title}\n\n<!-- forge-doc-scope: {scope}: -->\n\n" + "\n\n".join(entries) + ("\n" if entries else ""), encoding="utf-8")

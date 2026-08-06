@@ -11,15 +11,17 @@ from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 
+from forge_content_manager.parameter_matching import matches_parameter, wildcard_patterns_to_regex
 from forge_content_manager.services.documentation_pack import LEGACY_GUIDE_NAMES, load_pack, parse_legacy_guides
 
 
 # Parameter values that name local SVars. Extend this tuple when Forge adds
 # another parameter with the same reference semantics.
-SVAR_REFERENCE_PARAMETERS = ("Execute", "SubAbility", "Triggers", "ReplaceWith", "HeadsSubAbility", "TailsSubAbility", 
-                             "TrueSubAbility", "FalseSubAbility", "VoteSubAbility", "WinSubAbility"
-                             )
-SVAR_REFERENCE_PARAMETER_PATTERN = "|".join(map(re.escape, SVAR_REFERENCE_PARAMETERS))
+SVAR_REFERENCE_PARAMETERS = (
+    "Execute", "SubAbility", "Triggers", "ReplaceWith", "HeadsSubAbility", "TailsSubAbility",
+    "TrueSubAbility", "FalseSubAbility", "VoteSubAbility", "WinSubAbility", "*SubAbility*",
+)
+SVAR_REFERENCE_PARAMETER_PATTERN = wildcard_patterns_to_regex(SVAR_REFERENCE_PARAMETERS)
 
 
 @dataclass(frozen=True, slots=True)
@@ -241,7 +243,9 @@ class ScriptAuthoringService:
         declared = {match.group(1) for match in re.finditer(r"(?m)^\s*SVar:([^:\r\n]+):", text)}
         unresolved: list[SVarReference] = []
         for line_number, line in enumerate(text.splitlines(), start=1):
-            for match in re.finditer(rf"\|\s*({SVAR_REFERENCE_PARAMETER_PATTERN})\$\s*([^|\r\n]+)", line):
+            for match in re.finditer(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]+)", line):
+                if not matches_parameter(match.group(1), SVAR_REFERENCE_PARAMETERS):
+                    continue
                 value = match.group(2).strip()
                 if value and value not in declared:
                     start = match.start(2) + len(match.group(2)) - len(match.group(2).lstrip())
