@@ -331,7 +331,7 @@ class ScriptAuthoringService:
             return f"Reference database failed: {error}"
         if ready:
             return "Reference database ready."
-        return "Reference library unavailable. Choose a Forge cardsfolder in Settings."
+        return "Create a reference database in Settings."
 
     def _reference_directory_available(self) -> bool:
         return self._reference_cards_dir is not None and self._reference_cards_dir.is_dir()
