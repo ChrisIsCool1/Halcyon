@@ -18,8 +18,7 @@ from forge_content_manager.services.documentation_pack import LEGACY_GUIDE_NAMES
 # Parameter values that name local SVars. Extend this tuple when Forge adds
 # another parameter with the same reference semantics.
 SVAR_REFERENCE_PARAMETERS = (
-    "Execute", "SubAbility", "Triggers", "ReplaceWith", "HeadsSubAbility", "TailsSubAbility",
-    "TrueSubAbility", "FalseSubAbility", "VoteSubAbility", "WinSubAbility", "*SubAbility*",
+    "Execute", "Triggers", "ReplaceWith", "*SubAbility*",
 )
 SVAR_REFERENCE_PARAMETER_PATTERN = wildcard_patterns_to_regex(SVAR_REFERENCE_PARAMETERS)
 
