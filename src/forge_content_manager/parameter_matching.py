@@ -7,6 +7,17 @@ import re
 from collections.abc import Iterable
 
 
+# Parameter values that name local SVars. Keep this in the shared matching
+# module so documentation discovery and editor validation use the same rules.
+SVAR_REFERENCE_PARAMETERS = (
+    "Execute", "Triggers", "ReplaceWith", "*SubAbility*",
+)
+
+# Any Forge parameter whose name contains Description can provide a natural
+# language description that is useful for Script Editor autofill.
+DESCRIPTION_PARAMETERS = ("*Description*",)
+
+
 def matches_parameter(name: str, patterns: Iterable[str]) -> bool:
     """Return whether ``name`` matches one of the configured glob patterns."""
     return any(fnmatch.fnmatchcase(name, pattern) for pattern in patterns)

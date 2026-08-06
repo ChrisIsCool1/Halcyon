@@ -11,15 +11,10 @@ from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 
-from forge_content_manager.parameter_matching import matches_parameter, wildcard_patterns_to_regex
-from forge_content_manager.services.documentation_pack import LEGACY_GUIDE_NAMES, load_pack, parse_legacy_guides
+from forge_content_manager.parameter_matching import SVAR_REFERENCE_PARAMETERS, matches_parameter, wildcard_patterns_to_regex
+from forge_content_manager.services.documentation_pack import LEGACY_GUIDE_NAMES, load_description_autofills, load_pack, parse_legacy_guides
 
 
-# Parameter values that name local SVars. Extend this tuple when Forge adds
-# another parameter with the same reference semantics.
-SVAR_REFERENCE_PARAMETERS = (
-    "Execute", "Triggers", "ReplaceWith", "*SubAbility*",
-)
 SVAR_REFERENCE_PARAMETER_PATTERN = wildcard_patterns_to_regex(SVAR_REFERENCE_PARAMETERS)
 
 
@@ -39,6 +34,34 @@ class ScriptDocumentation:
         """Return a compact display signature."""
         parameters = list(self.parameters) + [f"[{value}]" for value in self.optional_parameters]
         return f"{self.name} | " + " | ".join(parameters) if parameters else self.name
+
+
+@dataclass(frozen=True, slots=True)
+class DescriptionAutofill:
+    """A card-derived natural-language description and its script expansion."""
+
+    description: str
+    script_text: str
+
+    @property
+    def name(self) -> str:
+        """Use the description as the popup label."""
+        return self.description
+
+    @property
+    def category(self) -> str:
+        """Return the category shown beside an autofill."""
+        return "Description autofill"
+
+    @property
+    def signature(self) -> str:
+        """Return the description as the compact popup signature."""
+        return self.description
+
+    @property
+    def example(self) -> None:
+        """Keep the shared documentation renderer's optional field shape."""
+        return None
 
 
 @dataclass(frozen=True, slots=True)
@@ -103,6 +126,13 @@ class ScriptAuthoringService:
         """Reload documentation from a bundled or user-installed pack."""
         self._documentation_path = path or self._bundled_documentation_path()
         self._catalog = self._load_catalog()
+
+    def complete_autofill(self, prefix: str, limit: int = 20) -> list[DescriptionAutofill]:
+        """Return card-derived script expansions matching an ``Auto:`` query."""
+        needle = self._normalize_autofill_query(prefix).casefold()
+        matches = [item for item in self._autofills if not needle or item.description.casefold().startswith(needle)]
+        matches.sort(key=lambda item: (item.description.casefold(), item.script_text.casefold()))
+        return matches[:limit]
 
     def start_indexing(self) -> bool:
         """Start a background rebuild when a valid source folder is configured."""
@@ -364,14 +394,25 @@ class ScriptAuthoringService:
 
     def _load_catalog(self) -> dict[str, ScriptDocumentation]:
         catalog: dict[tuple[str, str], ScriptDocumentation] = {}
+        self._autofills: list[DescriptionAutofill] = []
         try:
             records = load_pack(self._documentation_path)
+            autofills = load_description_autofills(self._documentation_path)
         except ValueError:
             root = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parents[3])) / "scripting_docs"
             records = parse_legacy_guides(root)
+            autofills = []
         for record in records:
             self._add(catalog, record.scope, ScriptDocumentation(record.name, record.category, record.description, record.parameters, record.optional_parameters, record.example))
+        self._autofills = [DescriptionAutofill(item.description, item.script_text) for item in autofills]
         return catalog
+
+    @staticmethod
+    def _normalize_autofill_query(prefix: str) -> str:
+        """Strip the editor marker and an optional rules-text cost prefix."""
+        query = prefix.strip()
+        query = re.sub(r"^Auto\s*:\s*", "", query, flags=re.IGNORECASE)
+        return re.sub(r"^(?:\{[^}\r\n]+\}\s*,?\s*)+:\s*", "", query)
 
     @staticmethod
     def _current_word(line: str, cursor: int) -> str:

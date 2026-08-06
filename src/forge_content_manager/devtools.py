@@ -13,8 +13,13 @@ from queue import SimpleQueue
 from threading import Lock
 from typing import TypeVar
 
-from forge_content_manager.services.documentation_pack import compile_pack, parse_legacy_guides, parse_markdown_catalog
-from forge_content_manager.parameter_matching import matches_parameter
+from forge_content_manager.services.documentation_pack import (
+    DescriptionAutofillRecord,
+    compile_pack,
+    parse_legacy_guides,
+    parse_markdown_catalog,
+)
+from forge_content_manager.parameter_matching import DESCRIPTION_PARAMETERS, SVAR_REFERENCE_PARAMETERS, matches_parameter
 
 # These regex patterns are used to extract terms from Forge text scripts. Each pattern must contain one capture group for the discovered term.
 PRESETS = {
@@ -255,6 +260,64 @@ def extract_ability_and_trigger_families(cards_dir: Path, progress: Callable[[in
     )
 
 
+def extract_description_autofills(cards_dir: Path, progress: Callable[[int, int], None] | None = None) -> list[DescriptionAutofillRecord]:
+    """Find every card description and recursively attach its SVar dependencies.
+
+    The root line remains the only line whose description is used as the
+    lookup key. Referenced SVars are appended in traversal order, allowing a
+    replacement or trigger description to expand into the effect it invokes.
+    """
+    field_expression = re.compile(r"\|\s*([A-Za-z][\w]*)\$\s*([^|\r\n]*)")
+    svar_expression = re.compile(r"(?m)^\s*SVar:([^:\r\n]+):[^\r\n]*$")
+    results: set[tuple[str, str]] = set()
+
+    def extract(text: str) -> list[tuple[str, str]]:
+        lines = text.splitlines()
+        svar_lines = {
+            match.group(1).strip(): lines[text[:match.start()].count("\n")]
+            for match in svar_expression.finditer(text)
+            if match.group(1).strip()
+        }
+
+        def expand(root_line: str) -> str:
+            expanded = [root_line]
+            visited: set[str] = set()
+            root_name = re.match(r"\s*SVar:([^:\r\n]+):", root_line)
+            if root_name:
+                visited.add(root_name.group(1).strip())
+
+            def visit(line: str) -> None:
+                for field in field_expression.finditer(line):
+                    if not matches_parameter(field.group(1), SVAR_REFERENCE_PARAMETERS):
+                        continue
+                    target_name = field.group(2).strip()
+                    target_line = svar_lines.get(target_name)
+                    if not target_line or target_name in visited:
+                        continue
+                    visited.add(target_name)
+                    expanded.append(target_line)
+                    visit(target_line)
+
+            visit(root_line)
+            return "\n".join(expanded)
+
+        discoveries: list[tuple[str, str]] = []
+        for line in lines:
+            for field in field_expression.finditer(line):
+                description = field.group(2).strip()
+                if description and matches_parameter(field.group(1), DESCRIPTION_PARAMETERS):
+                    discoveries.append((description, expand(line)))
+        return discoveries
+
+    for discoveries in scan_card_scripts(cards_dir, extract, progress):
+        if discoveries:
+            results.update(discoveries)
+    return [
+        DescriptionAutofillRecord(description, script_text)
+        for description, script_text in sorted(results, key=lambda item: (item[0].casefold(), item[1]))
+    ]
+
+
 def terminal_progress(completed: int, total: int) -> None:
     """Render extraction progress without mixing status text into command output."""
     if completed == 0:
@@ -379,13 +442,19 @@ def refresh_documentation(
         ValueError: If the compiled records are incomplete or duplicate.
     """
     abilities, triggers = extract_ability_and_trigger_families(cards_dir, progress)
+    description_autofills = extract_description_autofills(cards_dir, progress)
     write_ability_discoveries(catalog_dir / "ability-mode.md", abilities, "Ability Modes", "A")
     write_ability_discoveries(catalog_dir / "trigger-mode.md", triggers, "Trigger Modes", "T")
     
     records = parse_legacy_guides(guides_dir) if guides_dir else []
     authored = parse_markdown_catalog(catalog_dir)
     authored_keys = {(record.scope, record.name) for record in authored}
-    compile_pack(output, [record for record in records if (record.scope, record.name) not in authored_keys] + authored, version)
+    compile_pack(
+        output,
+        [record for record in records if (record.scope, record.name) not in authored_keys] + authored,
+        version,
+        description_autofills,
+    )
     return len(abilities), len(triggers)
 
 

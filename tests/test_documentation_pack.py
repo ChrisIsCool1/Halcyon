@@ -6,8 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_keyword_families, extract_preset, extract_terms, refresh_documentation, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
-from forge_content_manager.services.documentation_pack import DocumentationRecord, compile_pack, load_pack, parse_markdown_catalog, validate_pack
+from forge_content_manager.devtools import AbilityFamily, extract_ability_families, extract_description_autofills, extract_keyword_families, extract_preset, extract_terms, refresh_documentation, sync_catalog, write_ability_discoveries, write_discoveries, write_keyword_discoveries
+from forge_content_manager.services.documentation_pack import DescriptionAutofillRecord, DocumentationRecord, compile_pack, load_description_autofills, load_pack, parse_markdown_catalog, validate_pack
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
 
 
@@ -152,6 +152,40 @@ class DocumentationPackTests(unittest.TestCase):
             self.assertNotIn("A creature enters.", content)
             self.assertNotIn("FollowUp", content)
             self.assertIn("Observed values: `Observed`", content)
+
+    def test_description_autofills_expand_recursive_svar_dependencies(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            cards = Path(directory)
+            (cards / "rest_in_peace.txt").write_text(
+                "R:Event$ Moved | ReplaceWith$ Exile | Description$ If a card would enter a graveyard, exile it instead.\n"
+                "SVar:Exile:DB$ ChangeZone | Destination$ Exile | SubAbility$ FollowUp\n"
+                "SVar:FollowUp:DB$ Draw | ReplaceWith$ Final\n"
+                "SVar:Final:DB$ GainLife | LifeAmount$ 1\n",
+                encoding="utf-8",
+            )
+            records = extract_description_autofills(cards)
+            self.assertEqual(len(records), 1)
+            self.assertEqual(records[0].description, "If a card would enter a graveyard, exile it instead.")
+            self.assertEqual(
+                records[0].script_text,
+                "R:Event$ Moved | ReplaceWith$ Exile | Description$ If a card would enter a graveyard, exile it instead.\n"
+                "SVar:Exile:DB$ ChangeZone | Destination$ Exile | SubAbility$ FollowUp\n"
+                "SVar:FollowUp:DB$ Draw | ReplaceWith$ Final\n"
+                "SVar:Final:DB$ GainLife | LifeAmount$ 1",
+            )
+
+    def test_compiled_pack_stores_description_autofills(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            pack = Path(directory) / "documentation.sqlite3"
+            autofill = DescriptionAutofillRecord(
+                "Add one mana of any color.",
+                "A:AB$ Mana | Cost$ T | Produced$ Any | SpellDescription$ Add one mana of any color.",
+            )
+            compile_pack(pack, [], "test-1", [autofill])
+            self.assertEqual(load_description_autofills(pack), [autofill])
+            service = ScriptAuthoringService(Path("missing"), Path(directory) / "cards.sqlite3", pack)
+            matches = service.complete_autofill("{T}: Add one mana")
+            self.assertEqual([item.script_text for item in matches], [autofill.script_text])
 
     def test_refresh_regenerates_families_and_compiles_the_pack(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

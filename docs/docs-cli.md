@@ -43,6 +43,12 @@ To regenerate the ability and trigger catalogs and rebuild the pack in one comma
 halcyon docs refresh --cards-dir scripting_docs/cards/cardsfolder
 ```
 
+`refresh` also records every card effect parameter matching `*Description*` in
+the SQLite pack. Each entry points to its complete effect line plus the
+recursively referenced `SVar` lines. In the Script Editor, type `Auto:` followed
+by part of a rules description, such as `Auto: {T}: Add one mana`, and accept a
+suggestion to insert that script expansion.
+
 Replace `<cardsfolder>` with the directory containing Forge's card-script `.txt`
 files. Scanning is recursive, so it can be the root of the complete cards folder or
 a smaller directory while authoring a focused catalog.

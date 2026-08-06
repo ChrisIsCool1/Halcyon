@@ -14,6 +14,7 @@ from forge_content_manager.models import CardImportInput
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.services.script_authoring_service import (
     SVAR_REFERENCE_PARAMETER_PATTERN,
+    DescriptionAutofill,
     ReferenceCard,
     ScriptAuthoringService,
     ScriptDocumentation,
@@ -108,8 +109,9 @@ class ScriptEditorTab(ctk.CTkFrame):
         self._draft_path: Path | None = None
         self._dirty = False
         self._completion: tk.Toplevel | None = None
-        self._completion_items: list[ScriptDocumentation] = []
+        self._completion_items: list[ScriptDocumentation | DescriptionAutofill] = []
         self._completion_span: tuple[str, str] | None = None
+        self._completion_replaces_line = False
         self._completion_just_accepted = False
         self._reference_cards: list[ReferenceCard] = []
 
@@ -267,11 +269,14 @@ class ScriptEditorTab(ctk.CTkFrame):
         token = self._current_token()
         line = self.editor.get("insert linestart", "insert lineend")
         cursor = len(self.editor.get("insert linestart", "insert"))
+        autofill_query = self._autofill_query_for(line, cursor)
         self._update_documentation(self._authoring_service.lookup_context(line, cursor))
         if self._completion_just_accepted and _event is not None and _event.keysym in {"Return", "Tab"}:
             self._completion_just_accepted = False
             return
-        if token and len(token) >= 2:
+        if autofill_query is not None:
+            self._show_autofill(autofill_query)
+        elif token and len(token) >= 2:
             self._show_completion(token)
         else:
             self._close_completion()
@@ -318,6 +323,7 @@ class ScriptEditorTab(ctk.CTkFrame):
         if span is None:
             self._close_completion()
             return
+        self._completion_replaces_line = False
         line_start = self.editor.index("insert linestart")
         self._completion_span = tuple(self.editor.index(f"{line_start} + {offset} chars") for offset in span)
         self._completion_items = self._authoring_service.complete_context(line, cursor, token)
@@ -346,6 +352,38 @@ class ScriptEditorTab(ctk.CTkFrame):
         if bbox:
             self._completion.geometry(f"300x160+{self.editor.winfo_rootx() + bbox[0]}+{self.editor.winfo_rooty() + bbox[1] + bbox[3]}")
 
+    def _show_autofill(self, query: str) -> None:
+        """Show card-derived expansions for an explicit ``Auto:`` line."""
+        line_start = self.editor.index("insert linestart")
+        line_end = self.editor.index("insert lineend")
+        self._completion_span = (line_start, line_end)
+        self._completion_replaces_line = True
+        self._completion_items = self._authoring_service.complete_autofill(query)
+        if not self._completion_items:
+            self._close_completion()
+            return
+        if self._completion is None:
+            self._completion = tk.Toplevel(self)
+            self._completion.overrideredirect(True)
+            self._completion.attributes("-topmost", True)
+            self._completion_list = tk.Listbox(self._completion, height=8, exportselection=False)
+            self._completion_list.pack(fill="both", expand=True)
+            self._completion_list.bind("<Double-Button-1>", self._accept_completion)
+            self._completion_list.bind("<Return>", self._accept_completion)
+            self._completion_list.bind("<<ListboxSelect>>", self._update_completion_documentation)
+        selected = self._completion_list.curselection()
+        selected_name = self._completion_list.get(selected[0]) if selected else None
+        self._completion_list.delete(0, "end")
+        for item in self._completion_items:
+            self._completion_list.insert("end", item.name)
+        selected_index = next((index for index, item in enumerate(self._completion_items) if item.name == selected_name), 0)
+        self._completion_list.selection_set(selected_index)
+        self._completion_list.see(selected_index)
+        self._update_documentation(self._completion_items[selected_index])
+        bbox = self.editor.bbox("insert")
+        if bbox:
+            self._completion.geometry(f"300x160+{self.editor.winfo_rootx() + bbox[0]}+{self.editor.winfo_rooty() + bbox[1] + bbox[3]}")
+
     def _accept_completion(self, _event=None):
         if self._completion is None:
             return None
@@ -357,7 +395,7 @@ class ScriptEditorTab(ctk.CTkFrame):
             return "break"
         start, end = self._completion_span
         self.editor.delete(start, end)
-        self.editor.insert(start, item.name)
+        self.editor.insert(start, item.script_text if isinstance(item, DescriptionAutofill) else item.name)
         self._update_documentation(item)
         self._completion_just_accepted = True
         self._close_completion()
@@ -388,6 +426,16 @@ class ScriptEditorTab(ctk.CTkFrame):
             self._completion.destroy()
             self._completion = None
         self._completion_span = None
+        self._completion_replaces_line = False
+
+    @staticmethod
+    def _autofill_query_for(line: str, cursor: int) -> str | None:
+        """Return the text after ``Auto:`` when the caret is on an Auto line."""
+        match = re.match(r"\s*Auto\s*:\s*", line, re.IGNORECASE)
+        if match is None or cursor < match.end():
+            return None
+        query = line[match.end():cursor]
+        return query if query.strip() else None
 
     @staticmethod
     def _completion_span_for(line: str, cursor: int) -> tuple[int, int] | None:

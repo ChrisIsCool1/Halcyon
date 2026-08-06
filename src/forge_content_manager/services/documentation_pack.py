@@ -25,6 +25,14 @@ class DocumentationRecord:
     scope: str = "*"
 
 
+@dataclass(frozen=True, slots=True)
+class DescriptionAutofillRecord:
+    """One natural-language description mapped to its reusable script text."""
+
+    description: str
+    script_text: str
+
+
 LEGACY_GUIDE_NAMES = (
     "Card-scripting-API.md",
     "AbilityFactory.md",
@@ -106,6 +114,24 @@ def load_pack(path: Path) -> list[DocumentationRecord]:
                             tuple(filter(None, row[5].split("\x1f"))), row[6] or None, row[3])
         for row in rows
     ]
+
+
+def load_description_autofills(path: Path) -> list[DescriptionAutofillRecord]:
+    """Load card-derived description expansions when a pack contains them."""
+    validate_pack(path)
+    connection = sqlite3.connect(path)
+    try:
+        table = connection.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'description_autofill'"
+        ).fetchone()
+        if table is None:
+            return []
+        rows = connection.execute(
+            "SELECT description, script_text FROM description_autofill ORDER BY description COLLATE NOCASE, script_text"
+        ).fetchall()
+    finally:
+        connection.close()
+    return [DescriptionAutofillRecord(row[0], row[1]) for row in rows]
 
 
 def parse_markdown_catalog(root: Path) -> list[DocumentationRecord]:
@@ -198,7 +224,12 @@ def _parameters(body: str) -> tuple[list[str], list[str]]:
     return required, optional
 
 
-def compile_pack(destination: Path, records: list[DocumentationRecord], content_version: str = "1") -> None:
+def compile_pack(
+    destination: Path,
+    records: list[DocumentationRecord],
+    content_version: str = "1",
+    description_autofills: list[DescriptionAutofillRecord] | None = None,
+) -> None:
     """Validate records and atomically write a deterministic SQLite pack.
 
     Args:
@@ -219,6 +250,14 @@ def compile_pack(destination: Path, records: list[DocumentationRecord], content_
         if key in seen:
             raise ValueError(f"Duplicate documentation entry: {record.scope}: {record.name}")
         seen.add(key)
+    autofill_seen: set[tuple[str, str]] = set()
+    for item in description_autofills or []:
+        key = (item.description, item.script_text)
+        if not item.description or not item.script_text:
+            raise ValueError("Description autofills need both description and script text.")
+        if key in autofill_seen:
+            raise ValueError(f"Duplicate description autofill: {item.description}")
+        autofill_seen.add(key)
     destination.parent.mkdir(parents=True, exist_ok=True)
     # Build beside the final file so a failed compile never leaves a partial pack in use.
     temporary = destination.with_suffix(destination.suffix + ".building")
@@ -228,10 +267,16 @@ def compile_pack(destination: Path, records: list[DocumentationRecord], content_
         connection.execute("CREATE TABLE metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
         connection.execute("CREATE TABLE documentation (scope TEXT NOT NULL, name TEXT NOT NULL, category TEXT NOT NULL, description TEXT NOT NULL, parameters TEXT NOT NULL, optional_parameters TEXT NOT NULL, example TEXT NOT NULL, PRIMARY KEY(scope, name))")
         connection.execute("CREATE INDEX documentation_name ON documentation(name)")
+        connection.execute("CREATE TABLE description_autofill (description TEXT NOT NULL, script_text TEXT NOT NULL, PRIMARY KEY(description, script_text))")
+        connection.execute("CREATE INDEX description_autofill_description ON description_autofill(description COLLATE NOCASE)")
         connection.executemany("INSERT INTO metadata VALUES (?, ?)", (("format", PACK_FORMAT), ("format_version", PACK_VERSION), ("content_version", content_version)))
         connection.executemany(
             "INSERT INTO documentation VALUES (?, ?, ?, ?, ?, ?, ?)",
             [(item.scope, item.name, item.category, item.description, "\x1f".join(item.parameters), "\x1f".join(item.optional_parameters), item.example or "") for item in sorted(records, key=lambda item: (item.scope, item.name))],
+        )
+        connection.executemany(
+            "INSERT INTO description_autofill VALUES (?, ?)",
+            [(item.description, item.script_text) for item in sorted(description_autofills or [], key=lambda item: (item.description.casefold(), item.script_text))],
         )
         connection.commit()
     finally:

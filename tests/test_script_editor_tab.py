@@ -22,6 +22,12 @@ class ScriptEditorTabTests(unittest.TestCase):
     def test_completion_span_rejects_non_identifier_positions(self) -> None:
         self.assertIsNone(ScriptEditorTab._completion_span_for("A:AB$ ChangeZone", 5))
 
+    def test_auto_line_query_is_only_active_after_the_marker(self) -> None:
+        line = "Auto: {T}: Add one mana"
+        self.assertEqual(ScriptEditorTab._autofill_query_for(line, len(line)), "{T}: Add one mana")
+        self.assertIsNone(ScriptEditorTab._autofill_query_for("A:AB$ Add one mana", 18))
+        self.assertIsNone(ScriptEditorTab._autofill_query_for("Auto:", 5))
+
 
 if __name__ == "__main__":
     unittest.main()
