@@ -21,3 +21,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+forge_content_manager = ["help_pages/**/*.md"]

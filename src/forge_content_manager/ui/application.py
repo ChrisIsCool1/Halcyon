@@ -16,8 +16,10 @@ from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.services.settings_service import SettingsService
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
 from forge_content_manager.services.documentation_pack import validate_pack
+from forge_content_manager.services.help_wiki_service import default_help_root, load_help_wiki
 from forge_content_manager.ui.tabs.card_browser_tab import CardBrowserTab
 from forge_content_manager.ui.tabs.card_import_tab import CardImportTab
+from forge_content_manager.ui.tabs.help_tab import HelpTab
 from forge_content_manager.ui.tabs.settings_tab import SettingsTab
 from forge_content_manager.ui.tabs.set_manager_tab import SetManagerTab
 from forge_content_manager.ui.tabs.script_editor_tab import ScriptEditorTab
@@ -88,7 +90,7 @@ class ForgeContentManagerApp(ctk.CTk):
         )
         self.tabview.grid(row=1, column=0, sticky="nsew", padx=18, pady=(0, 18))
 
-        for tab_name in ("Sets", "Import", "Cards", "Script Editor", "Settings"):
+        for tab_name in ("Sets", "Import", "Cards", "Script Editor", "Settings", "Help"):
             self.tabview.add(tab_name)
             self.tabview.tab(tab_name).grid_columnconfigure(0, weight=1)
             self.tabview.tab(tab_name).grid_rowconfigure(0, weight=1)
@@ -132,6 +134,12 @@ class ForgeContentManagerApp(ctk.CTk):
             on_documentation_pack_reset=self._handle_documentation_pack_reset,
         )
         self.settings_tab.grid(row=0, column=0, sticky="nsew")
+
+        self.help_tab = HelpTab(
+            master=self.tabview.tab("Help"),
+            groups=load_help_wiki(default_help_root()),
+        )
+        self.help_tab.grid(row=0, column=0, sticky="nsew")
 
         self.refresh_data_views()
 

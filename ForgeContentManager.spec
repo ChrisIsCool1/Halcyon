@@ -12,6 +12,7 @@ a = Analysis(
         ("logo.png", "."),
         ("scripting_docs/catalog", "scripting_docs/catalog"),
         ("scripting_docs/*.sqlite3", "scripting_docs"),
+        ("src/forge_content_manager/help_pages", "forge_content_manager/help_pages"),
     ],
     hiddenimports=hiddenimports,
     hookspath=[],
