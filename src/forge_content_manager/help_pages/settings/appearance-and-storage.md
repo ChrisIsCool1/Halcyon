@@ -2,9 +2,10 @@
 title: Appearance and application storage
 summary: Change the theme and understand where Halcyon keeps your custom content.
 ---
+
 # Appearance and application storage
 
-Settings contains the controls that affect Halcyon itself rather than one particular card.
+Settings contains the controls that affect Halcyon itself rather than one particular card or set.
 
 ## Appearance
 
@@ -12,7 +13,9 @@ Choose **System**, **Light**, or **Dark** from the Appearance menu. The choice i
 
 ## Custom content paths
 
-The Forge Paths panel shows where Halcyon stores custom cards, editions, starter decks, images, backups, and settings. These locations are created or used by the content services and are separate from the help pages shipped with the application.
+The Forge Paths panel shows where Halcyon stores custom cards, editions, starter decks, images, backups, and settings. These locations are either defined by Forge or automatically created by Halcyon. You can change the paths to any writable location on your system.
+
+**NOTE:** Be aware that Forge itself will not recognize custom content stored outside of its default locations!
 
 ## Optional reference and documentation sources
 
