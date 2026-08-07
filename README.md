@@ -9,10 +9,20 @@ Named after the Thran capital, this is a small desktop application for managing 
 ## Features
 
 - **Begone, File Explorer:** Create, edit, rename, delete, import, and export custom Forge sets, all in app!
+<img width="1358" height="929" alt="image" src="https://github.com/user-attachments/assets/4b7ea5a8-9968-4f0e-b15f-cafc137a84e1" />
+
 - **Create a Set in Two Clicks:** One click to name and date it, and another to create it! Switch to the Import tab to quickly populate it with cards and images.
-- **Easy Set Editing:** Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
+<img width="1356" height="927" alt="image" src="https://github.com/user-attachments/assets/ec1eca56-005a-435a-a6e6-f635f97b9468" />
+
+- **Easy Card Editing:** Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
+<img width="1358" height="925" alt="image" src="https://github.com/user-attachments/assets/78507a70-412e-4a0e-b8d1-4caa97e15173" />
+
 - **Import and Export Packages:** Import and export custom sets as `.forgepkg.zip` packages with collision handling. Share your wacky card sets with your friends!
+<img width="1355" height="925" alt="image" src="https://github.com/user-attachments/assets/4e87085c-0ce2-47da-a002-00a5c7d136da" />
+
 - **The Script Editor:** Think of this as VS Code for Forge! Draft Forge card scripts with syntax highlighting, keyword help, and autocompletion. If you import a cardsfolder from Forge, it even gives you a handy crossreference search of all existing cards right in the editor. The Script Editor also comes with some basic validation for things like SVar references.
+<img width="1361" height="929" alt="image" src="https://github.com/user-attachments/assets/462768d3-68f0-4256-b683-5c8d6f078cfd" />
+
 
 ## Requirements
 
