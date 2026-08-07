@@ -102,6 +102,7 @@ class HelpTab(ctk.CTkFrame):
                 text=self._group_label(group),
                 anchor="w",
                 fg_color="transparent",
+                text_color=("#000000", "#ffffff"),
                 command=lambda group_id=group.group_id: self._toggle_group(group_id),
             )
             button.pack(fill="x", pady=(4, 0))
@@ -113,7 +114,8 @@ class HelpTab(ctk.CTkFrame):
                         text=page.title,
                         anchor="w",
                         fg_color="transparent",
-                        hover_color=("#dce8fb", "#263b5d"),
+                        text_color=("#000000", "#ffffff"),
+                        hover_color=("#dce8fb", "#7594c5"),
                         command=lambda selected=page: self._select_page(selected),
                     )
                     page_button.pack(fill="x", padx=(14, 0), pady=1)
@@ -162,7 +164,7 @@ class HelpTab(ctk.CTkFrame):
 
     def _highlight_selected_page(self) -> None:
         for slug, button in self._page_buttons.items():
-            button.configure(fg_color=("#c8dcfb", "#294c80") if slug == self._selected_slug else "transparent")
+            button.configure(fg_color=("#c8dcfb", "#7594c5") if slug == self._selected_slug else "transparent")
 
     def _render_markdown(self, content: str) -> None:
         in_code = False
