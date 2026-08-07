@@ -11,8 +11,10 @@ from pathlib import Path
 import customtkinter as ctk
 from PIL import Image, ImageTk
 
-from forge_content_manager.constants import APP_NAME
+from forge_content_manager.constants import APP_NAME, LOG_FILENAME
+from forge_content_manager.logging_config import configure_logging
 from forge_content_manager.services.content_service import ForgeContentService
+from forge_content_manager.models import ForgePaths
 from forge_content_manager.services.settings_service import SettingsService
 from forge_content_manager.services.script_authoring_service import ScriptAuthoringService
 from forge_content_manager.services.documentation_pack import validate_pack
@@ -129,6 +131,7 @@ class ForgeContentManagerApp(ctk.CTk):
             settings_service=self._settings_service,
             current_settings=self._settings,
             on_appearance_changed=self._handle_appearance_mode_change,
+            on_forge_paths_changed=self._handle_forge_paths_changed,
             on_reference_cards_changed=self._handle_reference_cards_changed,
             on_documentation_pack_imported=self._handle_documentation_pack_imported,
             on_documentation_pack_reset=self._handle_documentation_pack_reset,
@@ -187,6 +190,19 @@ class ForgeContentManagerApp(ctk.CTk):
         self._settings_service.save(self._settings)
         ctk.set_appearance_mode(appearance_mode)
         self._logger.info("Appearance mode changed to %s", appearance_mode)
+
+    def _handle_forge_paths_changed(self, paths: ForgePaths) -> bool:
+        """Apply a new Forge folder configuration to every content tab."""
+        try:
+            configure_logging(paths.logs_dir / LOG_FILENAME)
+            self._content_service.reconfigure(paths)
+        except OSError as exc:
+            show_error("Forge Paths", f"Could not use the selected folder:\n{exc}")
+            return False
+        self._settings_service.set_paths(paths)
+        self.refresh_data_views()
+        self._logger.info("Forge paths changed")
+        return True
 
     def _handle_reference_cards_changed(self, directory) -> None:
         """Apply the optional Script Editor reference-card location."""

@@ -10,7 +10,7 @@ from forge_content_manager.logging_config import configure_logging
 from forge_content_manager.services.backup_service import BackupService
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.services.edition_service import EditionService
-from forge_content_manager.services.forge_paths import get_forge_paths
+from forge_content_manager.services.forge_paths import ensure_directories, get_configured_forge_paths, get_forge_paths
 from forge_content_manager.services.image_service import ImageService
 from forge_content_manager.services.package_service import PackageService
 from forge_content_manager.services.settings_service import SettingsService
@@ -19,7 +19,7 @@ from forge_content_manager.models import CardImportInput
 
 def _build_content_service() -> ForgeContentService:
     """Build the content service without starting the desktop UI."""
-    paths = get_forge_paths()
+    paths = get_configured_forge_paths()
     backup_service = BackupService(paths)
     edition_service = EditionService(paths, backup_service)
     image_service = ImageService(paths, backup_service)
@@ -84,7 +84,12 @@ def start() -> None:
     """Start the desktop application."""
     from forge_content_manager.ui.application import ForgeContentManagerApp
 
-    paths = get_forge_paths()
+    default_paths = get_forge_paths()
+    settings_service = SettingsService(default_paths)
+    settings = settings_service.load()
+    paths = settings_service.resolve_paths(settings)
+    settings_service.set_paths(paths)
+    ensure_directories(paths)
     configure_logging(paths.logs_dir / LOG_FILENAME)
     backup_service = BackupService(paths)
     edition_service = EditionService(paths, backup_service)
@@ -97,7 +102,6 @@ def start() -> None:
         image_service=image_service,
         package_service=package_service,
     )
-    settings_service = SettingsService(paths)
     app = ForgeContentManagerApp(content_service=content_service, settings_service=settings_service)
     app.mainloop()
 

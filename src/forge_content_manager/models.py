@@ -152,3 +152,11 @@ class AppSettings:
     appearance_mode: AppearanceMode = "System"
     reference_cards_dir: Path | None = None
     documentation_pack_source: Path | None = None
+    custom_cards_dir: Path | None = None
+    custom_tokens_dir: Path | None = None
+    custom_editions_dir: Path | None = None
+    custom_starter_decks_dir: Path | None = None
+    card_images_dir: Path | None = None
+    token_images_dir: Path | None = None
+    backups_dir: Path | None = None
+    logs_dir: Path | None = None

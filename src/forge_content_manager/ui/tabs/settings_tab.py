@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from dataclasses import replace
 from pathlib import Path
 from tkinter import filedialog
 
 import customtkinter as ctk
 
 from forge_content_manager.constants import APPEARANCE_MODES
-from forge_content_manager.models import AppSettings
+from forge_content_manager.models import AppSettings, ForgePaths
 from forge_content_manager.services.settings_service import SettingsService
 from forge_content_manager.ui.dialogs import CardsFolderHelpDialog
 from forge_content_manager.ui.widgets import LabeledValue
@@ -24,6 +25,7 @@ class SettingsTab(ctk.CTkFrame):
         settings_service: SettingsService,
         current_settings: AppSettings,
         on_appearance_changed: Callable[[str], None],
+        on_forge_paths_changed: Callable[[ForgePaths], bool],
         on_reference_cards_changed: Callable[[Path | None], None],
         on_documentation_pack_imported: Callable[[Path], bool],
         on_documentation_pack_reset: Callable[[], None],
@@ -33,6 +35,7 @@ class SettingsTab(ctk.CTkFrame):
         self._settings_service = settings_service
         self._settings = current_settings
         self._on_appearance_changed = on_appearance_changed
+        self._on_forge_paths_changed = on_forge_paths_changed
         self._on_reference_cards_changed = on_reference_cards_changed
         self._on_documentation_pack_imported = on_documentation_pack_imported
         self._on_documentation_pack_reset = on_documentation_pack_reset
@@ -73,22 +76,35 @@ class SettingsTab(ctk.CTkFrame):
         path_frame = ctk.CTkFrame(scrollable_frame)
         path_frame.grid(row=0, column=1, sticky="nsew", padx=(8, 16), pady=16)
         path_frame.grid_columnconfigure(0, weight=1)
+        path_frame.grid_columnconfigure(1, weight=0)
 
         path_title = ctk.CTkLabel(path_frame, text="Forge Paths", font=ctk.CTkFont(size=20, weight="bold"))
         path_title.grid(row=0, column=0, sticky="w", padx=16, pady=(16, 8))
 
-        paths = settings_service._paths
+        self._path_widgets: dict[str, LabeledValue] = {}
         values = [
-            ("Custom Cards", str(paths.custom_cards_dir)),
-            ("Custom Editions", str(paths.custom_editions_dir)),
-            ("Starter Decks", str(paths.custom_starter_decks_dir)),
-            ("Card Images", str(paths.card_images_dir)),
-            ("Backups", str(paths.backups_dir)),
-            ("Settings File", str(paths.settings_file)),
+            ("custom_cards_dir", "Custom Cards"),
+            ("custom_tokens_dir", "Custom Tokens"),
+            ("custom_editions_dir", "Custom Editions"),
+            ("custom_starter_decks_dir", "Starter Decks"),
+            ("card_images_dir", "Card Images"),
+            ("token_images_dir", "Token Images"),
+            ("backups_dir", "Backups"),
+            ("logs_dir", "Logs"),
         ]
-        for row, (label, value) in enumerate(values, start=1):
-            widget = LabeledValue(path_frame, label=label, value=value)
+        for row, (field_name, label) in enumerate(values, start=1):
+            widget = LabeledValue(path_frame, label=label, value=str(getattr(settings_service.paths, field_name)))
             widget.grid(row=row, column=0, sticky="ew", padx=16, pady=8)
+            self._path_widgets[field_name] = widget
+            ctk.CTkButton(
+                path_frame,
+                text="Choose",
+                width=90,
+                command=lambda name=field_name: self._choose_forge_path(name),
+            ).grid(row=row, column=1, sticky="e", padx=(0, 16), pady=8)
+
+        settings_file = LabeledValue(path_frame, label="Settings File", value=str(settings_service.paths.settings_file))
+        settings_file.grid(row=len(values) + 1, column=0, columnspan=2, sticky="ew", padx=16, pady=8)
 
         reference_frame = ctk.CTkFrame(scrollable_frame)
         reference_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=16, pady=(0, 16))
@@ -125,6 +141,25 @@ class SettingsTab(ctk.CTkFrame):
         self._settings.appearance_mode = appearance_mode  # type: ignore[assignment]
         self._settings_service.save(self._settings)
         self._on_appearance_changed(appearance_mode)
+
+    def _choose_forge_path(self, field_name: str) -> None:
+        """Choose and apply one of the configurable Forge folders."""
+        current_path = getattr(self._settings_service.paths, field_name)
+        initial_dir = current_path if current_path.is_dir() else current_path.parent if current_path.parent.is_dir() else None
+        display_name = field_name.removesuffix("_dir").replace("_", " ").title()
+        dialog_options = {"title": f"Choose {display_name} Folder"}
+        if initial_dir is not None:
+            dialog_options["initialdir"] = str(initial_dir)
+        directory = filedialog.askdirectory(**dialog_options)
+        if not directory:
+            return
+        new_settings = replace(self._settings, **{field_name: Path(directory)})
+        new_paths = self._settings_service.resolve_paths(new_settings)
+        if not self._on_forge_paths_changed(new_paths):
+            return
+        self._settings = new_settings
+        self._settings_service.save(self._settings)
+        self._path_widgets[field_name].set_value(str(getattr(new_paths, field_name)))
 
     def _choose_reference_cards(self) -> None:
         """Persist an optional Forge cardsfolder used by Script Editor search."""

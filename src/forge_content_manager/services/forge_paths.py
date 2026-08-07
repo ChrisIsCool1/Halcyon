@@ -30,6 +30,17 @@ def get_forge_paths() -> ForgePaths:
     return paths
 
 
+def get_configured_forge_paths() -> ForgePaths:
+    """Resolve Forge paths using the user's saved folder choices when available."""
+    from forge_content_manager.services.settings_service import SettingsService
+
+    defaults = get_forge_paths()
+    settings_service = SettingsService(defaults)
+    paths = settings_service.resolve_paths(settings_service.load())
+    ensure_directories(paths)
+    return paths
+
+
 def ensure_directories(paths: ForgePaths) -> None:
     """Create any required Forge directories that do not already exist."""
     for directory in (

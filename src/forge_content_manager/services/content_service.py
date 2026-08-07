@@ -21,6 +21,7 @@ from forge_content_manager.services.backup_service import BackupService
 from forge_content_manager.services.edition_service import EditionService
 from forge_content_manager.services.image_service import ImageService
 from forge_content_manager.services.package_service import PackageService
+from forge_content_manager.services.forge_paths import ensure_directories
 from forge_content_manager.services.script_service import (
     extract_card_name,
     extract_card_face_names,
@@ -52,6 +53,19 @@ class ForgeContentService:
         self.image_service = image_service
         self.package_service = package_service
         self._logger = logging.getLogger(self.__class__.__name__)
+
+    def reconfigure(self, paths: ForgePaths) -> None:
+        """Switch all content workflows to a newly selected set of folders."""
+        ensure_directories(paths)
+        backup_service = BackupService(paths)
+        edition_service = EditionService(paths, backup_service)
+        image_service = ImageService(paths, backup_service)
+        package_service = PackageService(paths, backup_service, edition_service)
+        self.paths = paths
+        self.backup_service = backup_service
+        self.edition_service = edition_service
+        self.image_service = image_service
+        self.package_service = package_service
 
     def list_sets(self) -> list[ForgeSetRecord]:
         """Return all custom sets currently installed in Forge."""
