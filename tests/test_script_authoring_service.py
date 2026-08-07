@@ -34,7 +34,7 @@ class ScriptAuthoringServiceTests(unittest.TestCase):
     def test_missing_reference_folder_is_safe(self) -> None:
         service = ScriptAuthoringService(reference_cards_dir=Path("does-not-exist"), database_path=Path("does-not-exist.sqlite3"))
         self.assertEqual(service.search_reference_cards("anything"), [])
-        self.assertIn("unavailable", service.reference_status())
+        self.assertIn("Settings", service.reference_status())
 
     def test_contextual_parameters_prefer_family_records_and_fall_back_to_global_records(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
