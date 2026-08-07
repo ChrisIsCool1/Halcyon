@@ -10,6 +10,26 @@ import customtkinter as ctk
 from forge_content_manager.services.help_wiki_service import HelpGroup, HelpPage
 
 
+def _markdown_segments(text: str) -> list[tuple[str, tuple[str, ...]]]:
+    """Return display text and tags for the supported inline Markdown styles."""
+    segments: list[tuple[str, tuple[str, ...]]] = []
+    cursor = 0
+    pattern = re.compile(r"\*\*\*([^*]+?)\*\*\*|\*\*([^*]+?)\*\*|\*([^*]+?)\*")
+    for match in pattern.finditer(text):
+        if match.start() > cursor:
+            segments.append((text[cursor : match.start()], ()))
+        if match.group(1) is not None:
+            segments.append((match.group(1), ("bold", "italic")))
+        elif match.group(2) is not None:
+            segments.append((match.group(2), ("bold",)))
+        else:
+            segments.append((match.group(3), ("italic",)))
+        cursor = match.end()
+    if cursor < len(text):
+        segments.append((text[cursor:], ()))
+    return segments
+
+
 class HelpTab(ctk.CTkFrame):
     """Searchable, read-only help wiki with collapsible page groups."""
 
@@ -84,6 +104,18 @@ class HelpTab(ctk.CTkFrame):
     def _configure_text_tags(self) -> None:
         self._page_view.tag_configure("heading", font=("Segoe UI", 18, "bold"), spacing1=14, spacing3=6)
         self._page_view.tag_configure("subheading", font=("Segoe UI", 13, "bold"), spacing1=10, spacing3=4)
+        self._page_view.tag_configure("body-bold", font=("Segoe UI", 11, "bold"))
+        self._page_view.tag_configure("body-italic", font=("Segoe UI", 11, "italic"))
+        self._page_view.tag_configure("body-bold-italic", font=("Segoe UI", 11, "bold italic"))
+        self._page_view.tag_configure("bullet-bold", font=("Segoe UI", 11, "bold"))
+        self._page_view.tag_configure("bullet-italic", font=("Segoe UI", 11, "italic"))
+        self._page_view.tag_configure("bullet-bold-italic", font=("Segoe UI", 11, "bold italic"))
+        self._page_view.tag_configure("heading-bold", font=("Segoe UI", 18, "bold"))
+        self._page_view.tag_configure("heading-italic", font=("Segoe UI", 18, "italic"))
+        self._page_view.tag_configure("heading-bold-italic", font=("Segoe UI", 18, "bold italic"))
+        self._page_view.tag_configure("subheading-bold", font=("Segoe UI", 13, "bold"))
+        self._page_view.tag_configure("subheading-italic", font=("Segoe UI", 13, "italic"))
+        self._page_view.tag_configure("subheading-bold-italic", font=("Segoe UI", 13, "bold italic"))
         self._page_view.tag_configure("body", spacing3=8)
         self._page_view.tag_configure("bullet", lmargin1=18, lmargin2=34, spacing3=5)
         self._page_view.tag_configure("code", font=("Cascadia Mono", 10), lmargin1=18, lmargin2=18, spacing1=5, spacing3=5)
@@ -176,12 +208,20 @@ class HelpTab(ctk.CTkFrame):
             if in_code:
                 self._page_view.insert("end", f"{line}\n", "code")
             elif line.startswith("# "):
-                self._page_view.insert("end", f"{line[2:]}\n", "heading")
+                self._insert_inline_markdown(line[2:], "heading")
             elif line.startswith("## "):
-                self._page_view.insert("end", f"{line[3:]}\n", "subheading")
+                self._insert_inline_markdown(line[3:], "subheading")
             elif line.startswith(("- ", "* ")):
-                self._page_view.insert("end", f"• {line[2:]}\n", "bullet")
+                self._page_view.insert("end", "• ", "bullet")
+                self._insert_inline_markdown(line[2:], "bullet")
             elif line:
-                self._page_view.insert("end", f"{line}\n", "body")
+                self._insert_inline_markdown(line, "body")
             else:
                 self._page_view.insert("end", "\n", "body")
+
+    def _insert_inline_markdown(self, text: str, base_tag: str) -> None:
+        for segment, inline_tags in _markdown_segments(text):
+            style_tag = f"{base_tag}-{'-'.join(inline_tags)}" if inline_tags else base_tag
+            tags = (base_tag, style_tag)
+            self._page_view.insert("end", segment, tags)
+        self._page_view.insert("end", "\n", base_tag)
