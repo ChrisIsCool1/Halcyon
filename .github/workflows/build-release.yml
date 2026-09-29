@@ -1,0 +1,49 @@
+# .github/workflows/release.yml
+name: Build release
+
+on:
+  release:
+    types: [created, published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\python.exe -m pip install --upgrade pip
+          .\.venv\Scripts\python.exe -m pip install . pyinstaller
+
+      - name: Build ZIP
+        shell: pwsh
+        run: .\scripts\Build-Release.ps1 -Clean
+
+      - name: Upload ZIP to GitHub Release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $version = (Select-String -Path pyproject.toml -Pattern '^version\s*=\s*"([^"]+)"').Matches[0].Groups[1].Value
+          gh release upload "${{ github.event.release.tag_name }}" "release/Halcyon-$version-windows.zip" --clobber
+
+      - name: Keep ZIP as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Halcyon-windows
+          path: release/Halcyon-*-windows.zip
