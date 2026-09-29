@@ -178,7 +178,10 @@ class ForgeContentService:
         for set_record in self.list_sets():
             document = self.edition_service.parse_edition_file(set_record.file_path)
             for token in document.tokens:
-                script_path = resolve_token_script_path(self.paths.custom_tokens_dir, token.script_name)
+                script_path = next(
+                    (path for path in self.paths.custom_tokens_dir.rglob("*.txt") if path.stem.casefold() == token.script_name.casefold()),
+                    resolve_token_script_path(self.paths.custom_tokens_dir, token.script_name),
+                )
                 if not script_path.exists():
                     continue
                 script_text = script_path.read_text(encoding="utf-8")
@@ -341,3 +344,11 @@ class ForgeContentService:
     def import_set_package(self, package_file: Path, strategy: CollisionStrategy) -> PackageImportSummary:
         """Import a Forge package archive into the local custom content directories."""
         return self.package_service.import_set_package(package_file, strategy)
+
+    def export_set_pack(self, set_records: list[ForgeSetRecord], output_path: Path) -> Path:
+        """Export multiple selected sets in Forge's custom/pics folder layout."""
+        return self.package_service.export_set_pack([record.file_path for record in set_records], output_path)
+
+    def import_set_pack(self, source: Path, strategy: CollisionStrategy) -> PackageImportSummary:
+        """Import a Forge-style custom/pics set pack."""
+        return self.package_service.import_set_pack(source, strategy)

@@ -18,6 +18,8 @@ _FORGE_PATH_FIELDS = (
     "token_images_dir",
     "backups_dir",
     "logs_dir",
+    "custom_root_dir",
+    "pics_dir",
 )
 
 

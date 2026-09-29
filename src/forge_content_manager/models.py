@@ -24,6 +24,8 @@ class ForgePaths:
     backups_dir: Path
     logs_dir: Path
     settings_file: Path
+    custom_root_dir: Path | None = None
+    pics_dir: Path | None = None
 
 
 @dataclass(slots=True)
@@ -160,3 +162,5 @@ class AppSettings:
     token_images_dir: Path | None = None
     backups_dir: Path | None = None
     logs_dir: Path | None = None
+    custom_root_dir: Path | None = None
+    pics_dir: Path | None = None

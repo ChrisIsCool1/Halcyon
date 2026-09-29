@@ -84,10 +84,12 @@ class SettingsTab(ctk.CTkFrame):
         self._path_widgets: dict[str, LabeledValue] = {}
         values = [
             ("custom_cards_dir", "Custom Cards"),
+            ("custom_root_dir", "Forge Custom Folder (Pack Import)"),
             ("custom_tokens_dir", "Custom Tokens"),
             ("custom_editions_dir", "Custom Editions"),
             ("custom_starter_decks_dir", "Starter Decks"),
             ("card_images_dir", "Card Images"),
+            ("pics_dir", "Forge Pics Folder (Pack Import)"),
             ("token_images_dir", "Token Images"),
             ("backups_dir", "Backups"),
             ("logs_dir", "Logs"),

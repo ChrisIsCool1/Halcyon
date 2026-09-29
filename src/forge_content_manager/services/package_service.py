@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import logging
+import shutil
+import tempfile
 from dataclasses import asdict
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -65,6 +67,111 @@ class PackageService:
                         archive.write(image_path, f"images/{image_path.name}")
         self._logger.info("Exported set package %s", output_file)
         return output_file
+
+    def export_set_pack(self, set_files: list[Path], output_path: Path) -> Path:
+        """Export selected sets in the folder layout used by Forge GitHub packs."""
+        output_file = output_path if output_path.suffix.casefold() == ".zip" else output_path.with_suffix(".zip")
+        written: set[str] = set()
+        scripts_by_name: dict[str, list[Path]] = {}
+        for script in self._paths.custom_cards_dir.rglob("*.txt"):
+            name = extract_card_name(script.read_text(encoding="utf-8"))
+            if name:
+                scripts_by_name.setdefault(name.casefold(), []).append(script)
+        with ZipFile(output_file, "w", compression=ZIP_DEFLATED) as archive:
+            for set_file in set_files:
+                document = self._edition_service.parse_edition_file(set_file)
+                archive.write(set_file, f"custom/editions/{set_file.name}")
+                code = sanitize_display_filename(document.metadata.get("Code", ""))
+                for image in (self._paths.card_images_dir / code).glob("*"):
+                    archive_name = f"pics/cards/{code}/{image.name}"
+                    if image.is_file() and archive_name not in written:
+                        archive.write(image, archive_name)
+                        written.add(archive_name)
+                token_image_dir = self._paths.token_images_dir / code
+                if token_image_dir.is_dir():
+                    for image in token_image_dir.glob("*"):
+                        archive_name = f"pics/tokens/{code}/{image.name}"
+                        if image.is_file() and archive_name not in written:
+                            archive.write(image, archive_name)
+                            written.add(archive_name)
+                for card in document.cards:
+                    scripts = scripts_by_name.get(card.card_name.casefold(), [])
+                    for script in scripts:
+                        archive_name = f"custom/cards/{script.relative_to(self._paths.custom_cards_dir).as_posix()}"
+                        if archive_name not in written:
+                            archive.write(script, archive_name)
+                            written.add(archive_name)
+                        text = script.read_text(encoding="utf-8")
+                for token in document.tokens:
+                    for script in self._paths.custom_tokens_dir.rglob("*.txt"):
+                        if script.stem.casefold() == token.script_name.casefold():
+                            archive_name = f"custom/tokens/{script.relative_to(self._paths.custom_tokens_dir).as_posix()}"
+                            if archive_name not in written:
+                                archive.write(script, archive_name)
+                                written.add(archive_name)
+        return output_file
+
+    def import_set_pack(self, source: Path, strategy: CollisionStrategy) -> PackageImportSummary:
+        """Import a folder or ZIP containing Forge-style custom/ and pics/ trees."""
+        with tempfile.TemporaryDirectory(prefix="halcyon-set-pack-") as temp_name:
+            root = Path(temp_name)
+            if source.is_dir():
+                pack_root = source
+            else:
+                with ZipFile(source) as archive:
+                    for member in archive.infolist():
+                        parts = Path(member.filename.replace("\\", "/")).parts
+                        if ".." in parts or Path(member.filename).is_absolute():
+                            raise ValueError("Pack contains an unsafe path.")
+                    archive.extractall(root)
+                pack_root = root
+            custom_dir, pics_dir = self._find_pack_folders(pack_root)
+            if custom_dir is None and pics_dir is None:
+                raise ValueError("Pack must contain a custom folder, a pics folder, or both.")
+            installed_cards = installed_images = 0
+            skipped: list[str] = []
+            warnings: list[str] = []
+            for source_dir, target_dir, category in (
+                (custom_dir, self._paths.custom_root_dir or self._paths.custom_cards_dir.parent, "custom"),
+                (pics_dir, self._paths.pics_dir or self._paths.card_images_dir.parent, "pics"),
+            ):
+                if source_dir is None:
+                    continue
+                for file in source_dir.rglob("*"):
+                    if not file.is_file():
+                        continue
+                    relative = file.relative_to(source_dir)
+                    target = target_dir / relative
+                    if target.exists() and strategy == "skip":
+                        skipped.append(f"Skipped existing {category}/{relative.as_posix()}")
+                        continue
+                    if target.exists() and strategy == "replace":
+                        self._backup_service.backup_file(target)
+                    if target.exists() and strategy == "rename":
+                        target = self._unique_named_path(target)
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(file, target)
+                    if category == "custom" and "cards" in relative.parts and file.suffix.casefold() == ".txt":
+                        installed_cards += 1
+                    elif category == "pics":
+                        installed_images += 1
+            return PackageImportSummary(
+                imported_set_name=f"Set pack ({installed_cards} card scripts)", imported_set_code="",
+                installed_cards=installed_cards, installed_images=installed_images,
+                skipped_items=skipped, warnings=warnings,
+            )
+
+    @staticmethod
+    def _find_pack_folders(root: Path) -> tuple[Path | None, Path | None]:
+        """Find the custom and pics directories, allowing a GitHub ZIP wrapper folder."""
+        if root.name.casefold() in {"custom", "pics"}:
+            sibling = root.parent / ("pics" if root.name.casefold() == "custom" else "custom")
+            return (root if root.name.casefold() == "custom" else sibling if sibling.is_dir() else None,
+                    root if root.name.casefold() == "pics" else sibling if sibling.is_dir() else None)
+        candidates = [root, *[item for item in root.iterdir() if item.is_dir()]]
+        custom = next((item / "custom" for item in candidates if (item / "custom").is_dir()), None)
+        pics = next((item / "pics" for item in candidates if (item / "pics").is_dir()), None)
+        return custom, pics
 
     def import_set_package(self, package_file: Path, strategy: CollisionStrategy) -> PackageImportSummary:
         """Install a Forge package archive using the chosen collision strategy."""

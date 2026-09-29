@@ -17,10 +17,12 @@ def get_forge_paths() -> ForgePaths:
     logs_dir = forge_custom_root / "logs"
     paths = ForgePaths(
         custom_cards_dir=forge_custom_root / "cards",
+        custom_root_dir=appdata / "Forge" / "custom",
         custom_tokens_dir=forge_custom_root / "tokens",
         custom_editions_dir=forge_custom_root / "editions",
         custom_starter_decks_dir=forge_custom_root / "starterdecks",
         card_images_dir=localappdata / "Forge" / "Cache" / "pics" / "cards",
+        pics_dir=localappdata / "Forge" / "Cache" / "pics",
         token_images_dir=localappdata / "Forge" / "Cache" / "pics" / "tokens",
         backups_dir=forge_custom_root / "backups",
         logs_dir=logs_dir,
@@ -45,10 +47,12 @@ def ensure_directories(paths: ForgePaths) -> None:
     """Create any required Forge directories that do not already exist."""
     for directory in (
         paths.custom_cards_dir,
+        paths.custom_root_dir or paths.custom_cards_dir.parent,
         paths.custom_tokens_dir,
         paths.custom_editions_dir,
         paths.custom_starter_decks_dir,
         paths.card_images_dir,
+        paths.pics_dir or paths.card_images_dir.parent,
         paths.token_images_dir,
         paths.backups_dir,
         paths.logs_dir,

@@ -10,6 +10,7 @@ from tkinter import filedialog
 import customtkinter as ctk
 from tkinter import ttk
 
+from forge_content_manager.models import CollisionStrategy
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.ui.dialogs import SetMetadataDialog, confirm_action, show_error, show_info
 
@@ -38,10 +39,13 @@ class SetManagerTab(ctk.CTkFrame):
             ("Delete Set", self._delete_set),
             ("Export Package", self._export_set),
             ("Import Package", self._import_package),
+            ("Export Set Pack", self._export_pack),
+            ("Import Set Pack", self._import_pack),
+            ("Import Pack Folder", self._import_pack_folder),
         ]
-        for column, (label, command) in enumerate(buttons):
+        for index, (label, command) in enumerate(buttons):
             button = ctk.CTkButton(toolbar, text=label, command=command, width=130)
-            button.grid(row=0, column=column, padx=8, pady=12)
+            button.grid(row=index // 5, column=index % 5, padx=8, pady=8)
 
         tree_frame = ctk.CTkFrame(self)
         tree_frame.grid(row=1, column=0, sticky="nsew", padx=16, pady=(0, 16))
@@ -50,6 +54,7 @@ class SetManagerTab(ctk.CTkFrame):
 
         columns = ("name", "code", "date", "card_count", "path")
         self.tree = ttk.Treeview(tree_frame, columns=columns, show="headings", height=20)
+        self.tree.configure(selectmode="extended")
         headings = {
             "name": "Set Name",
             "code": "Set Code",
@@ -209,3 +214,63 @@ class SetManagerTab(ctk.CTkFrame):
             detail_lines.append("Warnings:")
             detail_lines.extend(summary.warnings)
         show_info("Package Imported", "\n".join(detail_lines))
+
+    def _export_pack(self) -> None:
+        """Export all selected rows into one Forge custom/pics pack ZIP."""
+        selection = self.tree.selection()
+        if not selection:
+            show_error("Selection Required", "Select one or more sets first.")
+            return
+        selected_paths = {Path(item) for item in selection}
+        records = [record for record in self._content_service.list_sets() if record.file_path in selected_paths]
+        file_name = filedialog.asksaveasfilename(
+            title="Export Forge Set Pack", defaultextension=".zip",
+            filetypes=[("Forge Set Pack", "*.zip")], initialfile="forge-set-pack.zip",
+        )
+        if not file_name:
+            return
+        try:
+            output = self._content_service.export_set_pack(records, Path(file_name))
+        except Exception as exc:
+            show_error("Set Pack Export Failed", str(exc))
+            return
+        show_info("Set Pack Exported", f"Exported {len(records)} sets to:\n{output}")
+
+    def _import_pack(self) -> None:
+        """Import a downloaded GitHub ZIP or an extracted pack folder."""
+        from forge_content_manager.ui.dialogs import CollisionStrategyDialog
+
+        filename = filedialog.askopenfilename(
+            title="Import Forge Set Pack", filetypes=[("ZIP archives", "*.zip"), ("All Files", "*.*")],
+        )
+        if not filename:
+            return
+        collision_dialog = CollisionStrategyDialog(self)
+        self.wait_window(collision_dialog)
+        if collision_dialog.result is None:
+            return
+        self._finish_pack_import(Path(filename), collision_dialog.result)
+
+    def _import_pack_folder(self) -> None:
+        """Import an extracted repository containing custom/ and/or pics/."""
+        from forge_content_manager.ui.dialogs import CollisionStrategyDialog
+
+        folder = filedialog.askdirectory(title="Choose Extracted Forge Set Pack")
+        if not folder:
+            return
+        collision_dialog = CollisionStrategyDialog(self)
+        self.wait_window(collision_dialog)
+        if collision_dialog.result is not None:
+            self._finish_pack_import(Path(folder), collision_dialog.result)
+
+    def _finish_pack_import(self, source: Path, strategy: CollisionStrategy) -> None:
+        try:
+            summary = self._content_service.import_set_pack(source, strategy)
+        except Exception as exc:
+            show_error("Set Pack Import Failed", str(exc))
+            return
+        self._on_sets_changed()
+        details = [f"Installed card scripts: {summary.installed_cards}", f"Installed images: {summary.installed_images}"]
+        if summary.skipped_items:
+            details.extend(["Skipped files:", *summary.skipped_items])
+        show_info("Set Pack Imported", "\n".join(details))
