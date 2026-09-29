@@ -175,6 +175,7 @@ class ForgeContentService:
                     image_paths=image_paths,
                 )
             )
+        token_records_by_path: dict[Path, CardRecord] = {}
         for set_record in self.list_sets():
             document = self.edition_service.parse_edition_file(set_record.file_path)
             for token in document.tokens:
@@ -184,14 +185,22 @@ class ForgeContentService:
                 )
                 if not script_path.exists():
                     continue
+                existing_record = token_records_by_path.get(script_path)
+                if existing_record is not None:
+                    set_names = existing_record.set_name.split(", ")
+                    if set_record.name not in set_names:
+                        existing_record.set_name = f"{existing_record.set_name}, {set_record.name}"
+                    continue
                 script_text = script_path.read_text(encoding="utf-8")
                 name = extract_card_name(script_text) or token.script_name
                 image_path = self.image_service.find_token_image(set_record.code, token.script_name, token.collector_number)
-                records.append(CardRecord(
+                record = CardRecord(
                     name=name, normalized_name=normalize_card_name(token.script_name), script_path=script_path,
                     image_path=image_path, image_present=image_path is not None, set_name=set_record.name,
                     set_code=set_record.code, content_type="token", token_script_name=token.script_name,
-                ))
+                )
+                token_records_by_path[script_path] = record
+                records.append(record)
         return records
 
     def get_card_rarity(self, set_file_path: Path, card_name: str) -> str:
