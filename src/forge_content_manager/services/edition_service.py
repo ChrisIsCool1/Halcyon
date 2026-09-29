@@ -8,7 +8,7 @@ from pathlib import Path
 from forge_content_manager.constants import SET_TYPE_CUSTOM
 from forge_content_manager.models import EditionCardEntry, EditionDocument, EditionTokenEntry, ForgePaths, ForgeSetRecord
 from forge_content_manager.services.backup_service import BackupService
-from forge_content_manager.services.script_service import make_set_filename
+from forge_content_manager.services.script_service import make_set_filename, normalize_card_name
 
 
 class EditionService:
@@ -144,7 +144,8 @@ class EditionService:
     def add_or_update_card(self, file_path: Path, card_name: str, rarity_code: str) -> EditionCardEntry:
         """Add a new card to a set or update the existing rarity if it is already present."""
         document = self.parse_edition_file(file_path)
-        existing = next((card for card in document.cards if card.card_name.casefold() == card_name.casefold()), None)
+        normalized_name = normalize_card_name(card_name)
+        existing = next((card for card in document.cards if normalize_card_name(card.card_name) == normalized_name), None)
         if existing is not None:
             existing.rarity_code = rarity_code
             self.write_document(document)

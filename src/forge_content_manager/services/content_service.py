@@ -199,7 +199,8 @@ class ForgeContentService:
         from forge_content_manager.constants import RARITY_CODES_REVERSED
 
         document = self.edition_service.parse_edition_file(set_file_path)
-        entry = next((card for card in document.cards if card.card_name.casefold() == card_name.casefold()), None)
+        normalized_name = normalize_card_name(card_name)
+        entry = next((card for card in document.cards if normalize_card_name(card.card_name) == normalized_name), None)
         if entry is None:
             raise ValueError(f"Card '{card_name}' is not in the selected set.")
         return RARITY_CODES_REVERSED.get(entry.rarity_code.upper(), entry.rarity_code)
