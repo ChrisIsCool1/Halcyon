@@ -27,6 +27,7 @@ from forge_content_manager.services.script_service import (
     extract_card_face_names,
     make_script_filename,
     normalize_card_name,
+    normalize_edition_card_name,
     resolve_script_path,
     resolve_token_script_path,
     validate_script,
@@ -148,7 +149,7 @@ class ForgeContentService:
         for set_record in self.list_sets():
             document = self.edition_service.parse_edition_file(set_record.file_path)
             for card in document.cards:
-                key = normalize_card_name(card.card_name)
+                key = normalize_edition_card_name(card.card_name)
                 set_lookup.setdefault(key, []).append(set_record)
         records: list[CardRecord] = []
         for script_path in sorted(self.paths.custom_cards_dir.rglob("*.txt")):
@@ -209,7 +210,7 @@ class ForgeContentService:
 
         document = self.edition_service.parse_edition_file(set_file_path)
         normalized_name = normalize_card_name(card_name)
-        entry = next((card for card in document.cards if normalize_card_name(card.card_name) == normalized_name), None)
+        entry = next((card for card in document.cards if normalize_edition_card_name(card.card_name) == normalized_name), None)
         if entry is None:
             raise ValueError(f"Card '{card_name}' is not in the selected set.")
         return RARITY_CODES_REVERSED.get(entry.rarity_code.upper(), entry.rarity_code)

@@ -118,6 +118,12 @@ def normalize_card_name(card_name: str) -> str:
     return normalized or "card"
 
 
+def normalize_edition_card_name(card_name: str) -> str:
+    """Normalize an edition name while ignoring a trailing ``@artist`` credit."""
+    card_name_without_credit = card_name.partition(" @")[0]
+    return normalize_card_name(card_name_without_credit)
+
+
 def make_script_filename(card_name: str) -> str:
     """Build the canonical ``.txt`` filename for a custom card script.
 
