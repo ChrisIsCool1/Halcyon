@@ -267,7 +267,7 @@ class ForgeContentService:
                 for old_face_name, new_face_name in zip(old_face_names, new_face_names):
                     existing_image = self.image_service.find_image(card.set_code, old_face_name)
                     if existing_image is not None:
-                        self.image_service.rename_image(existing_image, card.set_code, new_face_name)
+                        self.image_service.rename_image(existing_image, card.set_code, new_face_name, old_face_name)
                 self.image_service.rename_alternate_arts(card.set_code, old_name, new_name)
         return CardRecord(
             name=new_name,
@@ -283,6 +283,38 @@ class ForgeContentService:
             image_paths=[self.image_service.find_image(card.set_code, face_name) if card.set_code else None for face_name in new_face_names],
             alternate_art_paths=self.image_service.find_alternate_arts(card.set_code, new_name) if card.set_code else [],
         )
+
+    def get_card_art_labels(self, card: CardRecord) -> list[str]:
+        """Return the edition caption for each art entry associated with a card."""
+        if card.content_type != "card" or not card.set_code:
+            return [card.name]
+        set_record = next((item for item in self.list_sets() if item.code == card.set_code), None)
+        return self.edition_service.get_card_art_labels(set_record.file_path, card.name) if set_record else [card.name]
+
+    def get_card_art_entry_paths(self, card: CardRecord) -> list[Path | None]:
+        """Return the front-face image path matching each edition art row."""
+        labels = self.get_card_art_labels(card)
+        if not card.set_code:
+            return [card.image_path]
+        front_name = (card.face_names or [card.name])[0]
+        return [
+            self.image_service.find_art_variant(card.set_code, front_name, index)
+            for index in range(1, len(labels) + 1)
+        ]
+
+    def replace_card_art_entry(self, card: CardRecord, image_source: Path, art_index: int) -> None:
+        """Replace the front-face image for a selected edition art entry."""
+        if card.content_type != "card" or not card.set_code:
+            raise ValueError("Card art cannot be resolved for the selected entry.")
+        face_names = card.face_names or [card.name]
+        self.image_service.replace_art_variant(image_source, card.set_code, face_names[0], art_index)
+
+    def delete_card_art_entry(self, card: CardRecord, set_file_path: Path, art_index: int) -> None:
+        """Delete a selected edition art row and its corresponding image variants."""
+        if card.content_type != "card" or not card.set_code:
+            raise ValueError("Only card art entries can be deleted.")
+        self.edition_service.remove_card_art_entry(set_file_path, card.name, art_index)
+        self.image_service.delete_art_variant(card.set_code, card.face_names or [card.name], art_index)
 
     def replace_image(self, card: CardRecord, image_source: Path, face_index: int = 0) -> CardRecord:
         """Replace or install the image associated with a card."""
@@ -315,18 +347,25 @@ class ForgeContentService:
             image_paths=image_paths,
         )
 
-    def replace_alternate_art(self, card: CardRecord, image_source: Path) -> CardRecord:
+    def replace_alternate_art(self, card: CardRecord, image_source: Path, set_file_path: Path, rarity_code: str) -> CardRecord:
         """Install alternate art for a card independently of its faces."""
         if card.content_type != "card":
             raise ValueError("Tokens cannot have alternate card art.")
         if not card.set_code:
             raise ValueError("Card is not associated with a set, so its image target cannot be resolved.")
-        path = self.image_service.install_alternate_art(image_source, card.set_code, card.name)
+        self.image_service.install_alternate_art(image_source, card.set_code, card.name, card.face_names)
+        alternate_art_paths = self.image_service.find_alternate_arts(card.set_code, card.name)
+        self.edition_service.add_alternate_art_entries(
+            set_file_path,
+            card.name,
+            rarity_code,
+            [path.name.removesuffix(".fullborder.jpg") for path in alternate_art_paths],
+        )
         return CardRecord(
             name=card.name, normalized_name=card.normalized_name, script_path=card.script_path,
             image_path=card.image_path, image_present=card.image_present, set_name=card.set_name,
             set_code=card.set_code, face_names=card.face_names, image_paths=card.image_paths,
-            alternate_art_paths=[*card.alternate_art_paths, path], content_type=card.content_type,
+            alternate_art_paths=alternate_art_paths, content_type=card.content_type,
         )
 
     def delete_card(self, card: CardRecord) -> None:
@@ -337,6 +376,9 @@ class ForgeContentService:
         image_paths = {path for path in card.image_paths if path is not None}
         if card.image_path is not None:
             image_paths.add(card.image_path)
+        if card.content_type == "card" and card.set_code:
+            for face_name in card.face_names or [card.name]:
+                image_paths.update(self.image_service.find_numbered_art_paths(card.set_code, face_name))
         for image_path in image_paths:
             if image_path.exists():
                 self.backup_service.backup_file(image_path)
@@ -356,19 +398,30 @@ class ForgeContentService:
     def delete_set(self, set_record: ForgeSetRecord) -> None:
         """Delete a custom set and remove uniquely-owned assets referenced by it."""
         document = self.edition_service.parse_edition_file(set_record.file_path)
+        seen_cards: set[str] = set()
         for card_entry in document.cards:
-            other_sets = [record for record in self.edition_service.find_sets_for_card(card_entry.card_name) if record.file_path != set_record.file_path]
-            script_path = resolve_script_path(self.paths.custom_cards_dir, card_entry.card_name)
+            card_name = card_entry.card_name.partition("@")[0].rstrip()
+            normalized_name = normalize_edition_card_name(card_name)
+            if normalized_name in seen_cards:
+                continue
+            seen_cards.add(normalized_name)
+            other_sets = [record for record in self.edition_service.find_sets_for_card(card_name) if record.file_path != set_record.file_path]
+            script_path = resolve_script_path(self.paths.custom_cards_dir, card_name)
             script_text = script_path.read_text(encoding="utf-8") if script_path.exists() else ""
             if not other_sets and script_path.exists():
                 self.backup_service.backup_file(script_path)
                 script_path.unlink()
-            for face_name in extract_card_face_names(script_text) or [card_entry.card_name]:
+            face_names = extract_card_face_names(script_text) or [card_name]
+            for face_name in face_names:
                 image_path = self.image_service.find_image(set_record.code, face_name)
                 if image_path is not None and image_path.exists():
                     self.backup_service.backup_file(image_path)
                     image_path.unlink()
-            for alternate_art in self.image_service.find_alternate_arts(set_record.code, card_entry.card_name):
+                for image_path in self.image_service.find_numbered_art_paths(set_record.code, face_name):
+                    if image_path.exists():
+                        self.backup_service.backup_file(image_path)
+                        image_path.unlink()
+            for alternate_art in self.image_service.find_alternate_arts(set_record.code, card_name):
                 self.backup_service.backup_file(alternate_art)
                 alternate_art.unlink()
         for token_entry in document.tokens:

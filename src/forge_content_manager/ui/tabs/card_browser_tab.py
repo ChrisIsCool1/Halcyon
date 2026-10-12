@@ -10,7 +10,7 @@ from tkinter import ttk
 import customtkinter as ctk
 from PIL import Image, ImageOps
 
-from forge_content_manager.constants import RARITY_LABELS
+from forge_content_manager.constants import RARITY_CODES, RARITY_LABELS
 from forge_content_manager.models import CardRecord, ForgeSetRecord
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.ui.dialogs import confirm_action, show_error, show_info
@@ -27,7 +27,13 @@ class CardBrowserTab(ctk.CTkFrame):
         self._records: dict[str, CardRecord] = {}
         self._sets: list[ForgeSetRecord] = []
         self._editor_image_source: Path | None = None
-        self._editor_image_face_index = 0
+        self._editor_art_index = 1
+        self._editor_image_is_alternate_art = False
+        self._editor_selected_art_label = ""
+        self._art_gallery_items: list[tuple[str, ctk.CTkFrame]] = []
+        self._art_entry_paths: list[Path | None] = []
+        self._fullscreen_window: ctk.CTkToplevel | None = None
+        self._fullscreen_image: ctk.CTkImage | None = None
         self._editor_original_script = ""
         self._editor_original_rarity = ""
 
@@ -87,7 +93,6 @@ class CardBrowserTab(ctk.CTkFrame):
         editor_frame = self.editor_frame
         editor_frame.grid_columnconfigure(0, weight=1)
         editor_frame.grid_rowconfigure(1, weight=1)
-        editor_frame.grid_rowconfigure(2, weight=1)
 
         self.selection_label = ctk.CTkLabel(
             editor_frame,
@@ -97,13 +102,18 @@ class CardBrowserTab(ctk.CTkFrame):
         self.selection_label.grid(row=0, column=0, sticky="w", padx=12, pady=(12, 8))
 
         editor_controls = ctk.CTkFrame(editor_frame, fg_color="transparent")
-        editor_controls.grid(row=4, column=0, sticky="ew", padx=12, pady=(0, 12))
+        editor_controls.grid(row=3, column=0, sticky="ew", padx=12, pady=(0, 12))
         self.rarity_menu = ctk.CTkOptionMenu(editor_controls, values=list(RARITY_LABELS))
         self.rarity_menu.pack(side="left")
-        self.face_menu = ctk.CTkOptionMenu(editor_controls, values=["Front"], command=lambda _value: self._update_image_preview_for_selected_face())
+        self.face_menu = ctk.CTkOptionMenu(editor_controls, values=["Card Art"], command=lambda _value: self._update_image_target_for_selected_face())
         self.face_menu.pack(side="left", padx=(8, 0))
+        self.image_status = ctk.CTkLabel(editor_controls, text="")
+        self.image_status.pack(side="left", padx=(8, 0))
         ctk.CTkButton(editor_controls, text="Replace Image", command=self.replace_image, width=120).pack(side="left", padx=8)
         ctk.CTkButton(editor_controls, text="Upload Alternate Art", command=self.replace_alternate_art, width=150).pack(side="left", padx=8)
+        self.delete_art_button = ctk.CTkButton(editor_controls, text="Delete Selected Art", command=self.delete_selected_art, width=150)
+        self.delete_art_button.pack(side="left", padx=8)
+        self.delete_art_button.pack_forget()
         ctk.CTkButton(editor_controls, text="Save Changes", command=self.save_changes, width=120).pack(side="right")
         ctk.CTkButton(editor_controls, text="Back", command=self.show_table, width=90).pack(side="right", padx=8)
 
@@ -112,13 +122,9 @@ class CardBrowserTab(ctk.CTkFrame):
         self.script_editor = ctk.CTkTextbox(editor_frame, wrap="none", activate_scrollbars=True)
         self.script_editor.grid(row=1, column=0, sticky="nsew", padx=12, pady=(0, 6))
 
-        self.image_preview = ctk.CTkLabel(editor_frame, text="No image available")
-        self.image_preview.grid(row=2, column=0, sticky="nsew", padx=12, pady=(6, 12))
-        self._image_preview: ctk.CTkImage | None = None
-        self._image_preview_cache: dict[Path, tuple[int, ctk.CTkImage]] = {}
-        self.alternate_art_gallery = ctk.CTkScrollableFrame(editor_frame, orientation="horizontal", height=215, label_text="Alternate Art")
-        self.alternate_art_gallery.grid(row=3, column=0, sticky="ew", padx=12, pady=(0, 10))
-        self._alternate_art_gallery_images: list[ctk.CTkImage] = []
+        self.art_gallery = ctk.CTkScrollableFrame(editor_frame, orientation="horizontal", height=215, label_text="Card Art")
+        self.art_gallery.grid(row=2, column=0, sticky="ew", padx=12, pady=(6, 10))
+        self._art_gallery_images: list[ctk.CTkImage] = []
 
         self.refresh()
 
@@ -148,7 +154,7 @@ class CardBrowserTab(ctk.CTkFrame):
             if selection:
                 selected_record = self._records.get(selection[0])
                 selected_script_path = selected_record.script_path if selected_record is not None else None
-        self._clear_image_preview()
+        self._clear_image_status()
         self._records.clear()
         for item in self.tree.get_children():
             self.tree.delete(item)
@@ -221,27 +227,33 @@ class CardBrowserTab(ctk.CTkFrame):
         self.refresh(selected_script_path=updated_record.script_path)
         self._on_cards_changed()
 
-    def replace_image(self) -> None:
+    def replace_image(self, *, title: str = "Choose Replacement Image") -> None:
         """Prompt for a new image and replace the selected card art."""
         record = self._selected_record()
         if record is None:
             return
         file_name = filedialog.askopenfilename(
-            title="Choose Replacement Image",
+            title=title,
             filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.webp;*.bmp")],
         )
         if not file_name:
             return
         self._editor_image_source = Path(file_name)
-        self.image_preview.configure(text=f"New image selected: {self._editor_image_source.name}")
+        self._editor_image_is_alternate_art = False
+        self.image_status.configure(text=f"Replacement selected: {self._editor_image_source.name}")
 
     def replace_alternate_art(self) -> None:
         """Select an alternate art image for the current card."""
         record = self._selected_record()
         if record is None or record.content_type != "card":
             return
-        self._editor_image_face_index = -1
-        self.replace_image()
+        previous_source = self._editor_image_source
+        previous_is_alternate = self._editor_image_is_alternate_art
+        self.replace_image(title="Choose Alternate Art")
+        if self._editor_image_source is not None and self._editor_image_source != previous_source:
+            self._editor_image_is_alternate_art = True
+        elif self._editor_image_source == previous_source:
+            self._editor_image_is_alternate_art = previous_is_alternate
 
     def save_changes(self) -> None:
         """Save the script, rarity, and optional replacement image together."""
@@ -262,18 +274,53 @@ class CardBrowserTab(ctk.CTkFrame):
             if updated.content_type == "card":
                 self._content_service.update_card_rarity(selected.file_path, updated.name, self.rarity_menu.get())
             if self._editor_image_source is not None:
-                if self._editor_image_face_index == -1:
-                    self._content_service.replace_alternate_art(updated, self._editor_image_source)
+                if self._editor_image_is_alternate_art:
+                    self._content_service.replace_alternate_art(
+                        updated,
+                        self._editor_image_source,
+                        selected.file_path,
+                        RARITY_CODES[self.rarity_menu.get()],
+                    )
                 else:
-                    self._content_service.replace_image(updated, self._editor_image_source, self._editor_image_face_index)
+                    self._content_service.replace_card_art_entry(updated, self._editor_image_source, self._editor_art_index)
         except Exception as exc:
             show_error("Save Failed", str(exc))
             return
         self._editor_image_source = None
+        self._editor_image_is_alternate_art = False
+        self.image_status.configure(text="")
         self._editor_original_script = new_text
         self._editor_original_rarity = self.rarity_menu.get()
         self._on_cards_changed()
         self.show_table()
+
+    def delete_selected_art(self) -> None:
+        """Remove the selected art entry and its indexed image files."""
+        record = self._selected_record()
+        if record is None:
+            return
+        set_record = next((item for item in self._sets if item.code == record.set_code), None)
+        if set_record is None:
+            show_error("Set Required", "The selected card's edition file could not be found.")
+            return
+        label = self._editor_selected_art_label or record.name
+        if not confirm_action("Delete Card Art", f"Delete art entry '{label}' for '{record.name}'?"):
+            return
+        try:
+            self._content_service.delete_card_art_entry(record, set_record.file_path, self._editor_art_index)
+        except Exception as exc:
+            show_error("Delete Failed", str(exc))
+            return
+        self._editor_image_source = None
+        self._editor_image_is_alternate_art = False
+        self.image_status.configure(text="")
+        labels = self._content_service.get_card_art_labels(record)
+        self._editor_art_index = min(self._editor_art_index, len(labels))
+        self._editor_selected_art_label = labels[self._editor_art_index - 1]
+        self.face_menu.configure(values=labels)
+        self.face_menu.set(self._editor_selected_art_label)
+        self._update_art_gallery(record)
+        self._on_cards_changed()
 
     def delete_selected_card(self) -> None:
         """Delete the selected card and update any edition references."""
@@ -289,7 +336,7 @@ class CardBrowserTab(ctk.CTkFrame):
             return
         self.script_editor.delete("1.0", "end")
         self.selection_label.configure(text="Select a card to view or edit its Forge script.")
-        self._clear_image_preview()
+        self._clear_image_status()
         self._on_cards_changed()
         show_info("Card Deleted", f"Deleted '{record.name}'.")
 
@@ -322,12 +369,14 @@ class CardBrowserTab(ctk.CTkFrame):
         self._editor_original_script = script_text.rstrip()
         self._editor_original_rarity = self.rarity_menu.get()
         self._editor_image_source = None
-        self._editor_image_face_index = 0
-        face_names = record.face_names or [record.name]
-        self.face_menu.configure(values=[*face_names, *(["Alternate Art"] if record.alternate_art_path else [])])
-        self.face_menu.set(face_names[0])
-        self._update_image_preview(record)
-        self._update_alternate_art_gallery(record)
+        self._editor_art_index = 1
+        self._editor_image_is_alternate_art = False
+        labels = self._content_service.get_card_art_labels(record)
+        self._editor_selected_art_label = labels[0]
+        self.face_menu.configure(values=labels)
+        self.face_menu.set(labels[0])
+        self.image_status.configure(text="")
+        self._update_art_gallery(record)
 
     def has_unsaved_changes(self) -> bool:
         """Return whether the open editor contains changes not yet saved."""
@@ -370,71 +419,113 @@ class CardBrowserTab(ctk.CTkFrame):
         self._on_cards_changed()
         show_info("Rarity Updated", f"Updated '{record.name}' to {self.rarity_menu.get()}.")
 
-    def _clear_image_preview(self) -> None:
-        """Remove the currently displayed card image."""
-        self._image_preview = None
-        self.image_preview.configure(image=None, text="No image available")
+    def _clear_image_status(self) -> None:
+        """Clear any pending image replacement status."""
+        self.image_status.configure(text="")
 
-    def _update_image_preview(self, record: CardRecord) -> None:
-        """Display a scaled preview when the selected card has an image."""
-        self._clear_image_preview()
-        face_names = record.face_names or [record.name]
-        selected_face = self.face_menu.get()
-        if selected_face == "Alternate Art":
-            self._editor_image_face_index = -1
-            image_path = record.alternate_art_path
-        else:
-            face_index = face_names.index(selected_face) if selected_face in face_names else 0
-            self._editor_image_face_index = face_index
-            image_path = record.image_paths[face_index] if face_index < len(record.image_paths) else record.image_path
-        if image_path is None or not image_path.exists():
-            return
-        try:
-            image_mtime = image_path.stat().st_mtime_ns
-            cached_preview = self._image_preview_cache.get(image_path)
-            if cached_preview is None or cached_preview[0] != image_mtime:
-                with Image.open(image_path) as source_image:
-                    preview_image = ImageOps.contain(source_image.convert("RGB"), (260, 360), Image.Resampling.LANCZOS)
-                self._image_preview_cache[image_path] = (
-                    image_mtime,
-                    ctk.CTkImage(
-                        light_image=preview_image,
-                        dark_image=preview_image,
-                        size=preview_image.size,
-                    ),
-                )
-            self._image_preview = self._image_preview_cache[image_path][1]
-        except (OSError, ValueError):
-            self.image_preview.configure(text="Unable to load image")
-            return
-        self.image_preview.configure(image=self._image_preview, text="")
-
-    def _update_alternate_art_gallery(self, record: CardRecord) -> None:
-        """Display every numbered alternate art in a horizontal scroll group."""
-        for child in self.alternate_art_gallery.winfo_children():
+    def _update_art_gallery(self, record: CardRecord) -> None:
+        """Display one selectable thumbnail for each edition art entry."""
+        for child in self.art_gallery.winfo_children():
             child.destroy()
-        self._alternate_art_gallery_images.clear()
-        if not record.alternate_art_paths:
-            ctk.CTkLabel(self.alternate_art_gallery, text="No alternate art available").pack(side="left", padx=12, pady=12)
-            return
-        for path in record.alternate_art_paths:
-            if not path.exists():
-                continue
-            try:
-                with Image.open(path) as source_image:
-                    preview = ImageOps.contain(source_image.convert("RGB"), (125, 175), Image.Resampling.LANCZOS)
-                art_image = ctk.CTkImage(light_image=preview, dark_image=preview, size=preview.size)
-            except (OSError, ValueError):
-                continue
-            self._alternate_art_gallery_images.append(art_image)
-            item = ctk.CTkFrame(self.alternate_art_gallery)
+        self._art_gallery_images.clear()
+        self._art_gallery_items.clear()
+        labels = self._content_service.get_card_art_labels(record)
+        self._art_entry_paths = self._content_service.get_card_art_entry_paths(record)
+        self.face_menu.configure(values=labels)
+        if self._editor_selected_art_label not in labels:
+            self._editor_art_index = 1
+            self._editor_selected_art_label = labels[0]
+        self.face_menu.set(self._editor_selected_art_label)
+        if len(labels) > 1:
+            self.delete_art_button.pack(side="left", padx=8)
+        else:
+            self.delete_art_button.pack_forget()
+        for art_index, art_label in enumerate(labels, start=1):
+            path = self._art_entry_paths[art_index - 1] if art_index <= len(self._art_entry_paths) else None
+            item = ctk.CTkFrame(
+                self.art_gallery,
+                cursor="hand2",
+                border_width=2 if len(labels) > 1 and art_label == self._editor_selected_art_label else 0,
+                border_color="#77C8FF",
+            )
             item.pack(side="left", padx=6, pady=6)
-            ctk.CTkLabel(item, image=art_image, text="").pack(padx=5, pady=(5, 2))
-            art_label = path.name.removesuffix(".fullborder.jpg")
-            ctk.CTkLabel(item, text=art_label).pack(padx=5, pady=(0, 5))
+            self._art_gallery_items.append((art_label, item))
+            image_label = None
+            if path is not None and path.exists():
+                try:
+                    with Image.open(path) as source_image:
+                        preview = ImageOps.contain(source_image.convert("RGB"), (125, 175), Image.Resampling.LANCZOS)
+                    art_image = ctk.CTkImage(light_image=preview, dark_image=preview, size=preview.size)
+                    self._art_gallery_images.append(art_image)
+                    image_label = ctk.CTkLabel(item, image=art_image, text="", cursor="hand2")
+                except (OSError, ValueError):
+                    pass
+            if image_label is None:
+                image_label = ctk.CTkLabel(item, text="No image", width=125, height=175, cursor="hand2")
+            image_label.pack(padx=5, pady=(5, 2))
+            text_label = ctk.CTkLabel(item, text=art_label, cursor="hand2")
+            text_label.pack(padx=5, pady=(0, 5))
+            select_art = lambda _event=None, label=art_label, index=art_index: self._select_gallery_art(label, index)
+            for widget in (item, image_label, text_label):
+                widget.bind("<Button-1>", select_art)
+            if path is not None and path.exists():
+                show_fullscreen = lambda _event=None, image_path=path: self._open_art_fullscreen(image_path)
+                image_label.bind("<Double-Button-1>", show_fullscreen)
+                item.bind("<Double-Button-1>", show_fullscreen)
+        self._refresh_gallery_selection()
 
-    def _update_image_preview_for_selected_face(self) -> None:
-        """Refresh the preview and replacement target when the selected face changes."""
-        record = self._selected_record()
-        if record is not None:
-            self._update_image_preview(record)
+    def _select_gallery_art(self, label: str, art_index: int) -> None:
+        """Select a gallery tile as the replacement and deletion target."""
+        self._editor_art_index = art_index
+        self._editor_image_is_alternate_art = False
+        self._editor_selected_art_label = label
+        self.face_menu.set(label)
+        self._refresh_gallery_selection()
+
+    def _refresh_gallery_selection(self) -> None:
+        """Draw a light blue border around the selected thumbnail when choices exist."""
+        show_border = len(self._art_gallery_items) > 1
+        for label, item in self._art_gallery_items:
+            item.configure(border_width=2 if show_border and label == self._editor_selected_art_label else 0)
+
+    def _update_image_target_for_selected_face(self) -> None:
+        """Synchronize the selected art index with the caption dropdown."""
+        labels = self.face_menu.cget("values")
+        selected_label = self.face_menu.get()
+        if selected_label not in labels:
+            return
+        self._editor_art_index = list(labels).index(selected_label) + 1
+        self._editor_selected_art_label = selected_label
+        self._editor_image_is_alternate_art = False
+        self._refresh_gallery_selection()
+
+    def _open_art_fullscreen(self, image_path: Path) -> None:
+        """Show a dimmed full-screen preview that closes on an outside click."""
+        if self._fullscreen_window is not None and self._fullscreen_window.winfo_exists():
+            self._fullscreen_window.destroy()
+        window = ctk.CTkToplevel(self.winfo_toplevel())
+        self._fullscreen_window = window
+        window.overrideredirect(True)
+        width, height = window.winfo_screenwidth(), window.winfo_screenheight()
+        window.geometry(f"{width}x{height}+0+0")
+        window.configure(fg_color="#101820")
+        window.attributes("-alpha", 0.9)
+        backdrop = ctk.CTkFrame(window, fg_color="transparent", corner_radius=0)
+        backdrop.pack(fill="both", expand=True)
+        backdrop.bind("<Button-1>", lambda _event: window.destroy())
+        try:
+            with Image.open(image_path) as source_image:
+                preview = ImageOps.contain(
+                    source_image.convert("RGB"),
+                    (max(1, int(width * 0.84)), max(1, int(height * 0.88))),
+                    Image.Resampling.LANCZOS,
+                )
+            self._fullscreen_image = ctk.CTkImage(light_image=preview, dark_image=preview, size=preview.size)
+            image_label = ctk.CTkLabel(backdrop, image=self._fullscreen_image, text="", fg_color="transparent")
+            image_label.place(relx=0.5, rely=0.5, anchor="center")
+        except (OSError, ValueError) as exc:
+            window.destroy()
+            show_error("Image Preview Failed", str(exc))
+            return
+        window.bind("<Escape>", lambda _event: window.destroy())
+        window.focus_force()

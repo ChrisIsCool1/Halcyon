@@ -120,7 +120,7 @@ def normalize_card_name(card_name: str) -> str:
 
 def normalize_edition_card_name(card_name: str) -> str:
     """Normalize an edition name while ignoring a trailing ``@artist`` credit."""
-    card_name_without_credit = card_name.partition(" @")[0]
+    card_name_without_credit = card_name.partition("@")[0].rstrip()
     return normalize_card_name(card_name_without_credit)
 
 

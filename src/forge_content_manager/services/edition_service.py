@@ -156,10 +156,81 @@ class EditionService:
         self.write_document(document)
         return new_entry
 
+    def add_alternate_art_entries(self, file_path: Path, card_name: str, rarity_code: str, art_labels: list[str]) -> list[EditionCardEntry]:
+        """Add one same-name edition row for each unlisted alternate-art label."""
+        document = self.parse_edition_file(file_path)
+        existing_names = {entry.card_name.casefold() for entry in document.cards}
+        next_number = max((entry.collector_number for entry in document.cards), default=0) + 1
+        added: list[EditionCardEntry] = []
+        for label in art_labels:
+            entry_name = f"{card_name} @{label}"
+            if entry_name.casefold() in existing_names:
+                continue
+            entry = EditionCardEntry(collector_number=next_number, rarity_code=rarity_code, card_name=entry_name)
+            document.cards.append(entry)
+            added.append(entry)
+            existing_names.add(entry_name.casefold())
+            next_number += 1
+        if added:
+            self.write_document(document)
+        return added
+
+    def get_card_art_labels(self, file_path: Path, card_name: str) -> list[str]:
+        """Return display labels for each same-name art entry in edition order."""
+        document = self.parse_edition_file(file_path)
+        normalized_name = normalize_card_name(card_name)
+        entries = sorted(
+            (entry for entry in document.cards if normalize_edition_card_name(entry.card_name) == normalized_name),
+            key=lambda entry: entry.collector_number,
+        )
+        if not entries:
+            return [card_name]
+
+        credits = [entry.card_name.partition("@")[2].strip() for entry in entries]
+        credit_counts: dict[str, int] = {}
+        for credit in credits:
+            if credit:
+                key = credit.casefold()
+                credit_counts[key] = credit_counts.get(key, 0) + 1
+        credit_occurrences: dict[str, int] = {}
+        plain_count = sum(not credit for credit in credits)
+        plain_index = 0
+        labels: list[str] = []
+        for credit in credits:
+            if credit:
+                key = credit.casefold()
+                occurrence = credit_occurrences.get(key, 0) + 1
+                credit_occurrences[key] = occurrence
+                labels.append(f"{credit} ({occurrence})" if credit_counts[key] > 1 else credit)
+            elif plain_count > 1:
+                plain_index += 1
+                labels.append(f"{card_name} [{plain_index}]")
+            else:
+                labels.append(card_name)
+        return labels
+
+    def remove_card_art_entry(self, file_path: Path, card_name: str, art_index: int) -> None:
+        """Remove one same-name art entry by its one-based art index."""
+        document = self.parse_edition_file(file_path)
+        normalized_name = normalize_card_name(card_name)
+        entries = sorted(
+            (entry for entry in document.cards if normalize_edition_card_name(entry.card_name) == normalized_name),
+            key=lambda entry: entry.collector_number,
+        )
+        if len(entries) <= 1:
+            raise ValueError("The only art entry for a card cannot be deleted.")
+        if art_index < 1 or art_index > len(entries):
+            raise ValueError("The selected card art entry no longer exists.")
+        document.cards.remove(entries[art_index - 1])
+        for number, entry in enumerate(sorted(document.cards, key=lambda item: item.collector_number), start=1):
+            entry.collector_number = number
+        self.write_document(document)
+
     def remove_card(self, file_path: Path, card_name: str) -> bool:
         """Remove a card entry from the provided edition file."""
         document = self.parse_edition_file(file_path)
-        remaining_cards = [card for card in document.cards if card.card_name.casefold() != card_name.casefold()]
+        normalized_name = normalize_card_name(card_name)
+        remaining_cards = [card for card in document.cards if normalize_edition_card_name(card.card_name) != normalized_name]
         if len(remaining_cards) == len(document.cards):
             return False
         for index, card in enumerate(remaining_cards, start=1):
@@ -204,8 +275,9 @@ class EditionService:
             document = self.parse_edition_file(set_record.file_path)
             changed = False
             for entry in document.cards:
-                if entry.card_name.casefold() == old_name.casefold():
-                    entry.card_name = new_name
+                if normalize_edition_card_name(entry.card_name) == normalize_card_name(old_name):
+                    credit = entry.card_name.partition("@")[2].strip()
+                    entry.card_name = f"{new_name} @{credit}" if credit else new_name
                     changed = True
             if changed:
                 self.write_document(document)
@@ -217,6 +289,6 @@ class EditionService:
         matches: list[ForgeSetRecord] = []
         for set_record in self.list_sets():
             document = self.parse_edition_file(set_record.file_path)
-            if any(entry.card_name.casefold() == card_name.casefold() for entry in document.cards):
+            if any(normalize_edition_card_name(entry.card_name) == normalize_card_name(card_name) for entry in document.cards):
                 matches.append(set_record)
         return matches
