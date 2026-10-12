@@ -97,12 +97,13 @@ class CardBrowserTab(ctk.CTkFrame):
         self.selection_label.grid(row=0, column=0, sticky="w", padx=12, pady=(12, 8))
 
         editor_controls = ctk.CTkFrame(editor_frame, fg_color="transparent")
-        editor_controls.grid(row=3, column=0, sticky="ew", padx=12, pady=(0, 12))
+        editor_controls.grid(row=4, column=0, sticky="ew", padx=12, pady=(0, 12))
         self.rarity_menu = ctk.CTkOptionMenu(editor_controls, values=list(RARITY_LABELS))
         self.rarity_menu.pack(side="left")
         self.face_menu = ctk.CTkOptionMenu(editor_controls, values=["Front"], command=lambda _value: self._update_image_preview_for_selected_face())
         self.face_menu.pack(side="left", padx=(8, 0))
         ctk.CTkButton(editor_controls, text="Replace Image", command=self.replace_image, width=120).pack(side="left", padx=8)
+        ctk.CTkButton(editor_controls, text="Upload Alternate Art", command=self.replace_alternate_art, width=150).pack(side="left", padx=8)
         ctk.CTkButton(editor_controls, text="Save Changes", command=self.save_changes, width=120).pack(side="right")
         ctk.CTkButton(editor_controls, text="Back", command=self.show_table, width=90).pack(side="right", padx=8)
 
@@ -115,6 +116,9 @@ class CardBrowserTab(ctk.CTkFrame):
         self.image_preview.grid(row=2, column=0, sticky="nsew", padx=12, pady=(6, 12))
         self._image_preview: ctk.CTkImage | None = None
         self._image_preview_cache: dict[Path, tuple[int, ctk.CTkImage]] = {}
+        self.alternate_art_gallery = ctk.CTkScrollableFrame(editor_frame, orientation="horizontal", height=215, label_text="Alternate Art")
+        self.alternate_art_gallery.grid(row=3, column=0, sticky="ew", padx=12, pady=(0, 10))
+        self._alternate_art_gallery_images: list[ctk.CTkImage] = []
 
         self.refresh()
 
@@ -231,6 +235,14 @@ class CardBrowserTab(ctk.CTkFrame):
         self._editor_image_source = Path(file_name)
         self.image_preview.configure(text=f"New image selected: {self._editor_image_source.name}")
 
+    def replace_alternate_art(self) -> None:
+        """Select an alternate art image for the current card."""
+        record = self._selected_record()
+        if record is None or record.content_type != "card":
+            return
+        self._editor_image_face_index = -1
+        self.replace_image()
+
     def save_changes(self) -> None:
         """Save the script, rarity, and optional replacement image together."""
         record = self._selected_record()
@@ -250,7 +262,10 @@ class CardBrowserTab(ctk.CTkFrame):
             if updated.content_type == "card":
                 self._content_service.update_card_rarity(selected.file_path, updated.name, self.rarity_menu.get())
             if self._editor_image_source is not None:
-                self._content_service.replace_image(updated, self._editor_image_source, self._editor_image_face_index)
+                if self._editor_image_face_index == -1:
+                    self._content_service.replace_alternate_art(updated, self._editor_image_source)
+                else:
+                    self._content_service.replace_image(updated, self._editor_image_source, self._editor_image_face_index)
         except Exception as exc:
             show_error("Save Failed", str(exc))
             return
@@ -309,9 +324,10 @@ class CardBrowserTab(ctk.CTkFrame):
         self._editor_image_source = None
         self._editor_image_face_index = 0
         face_names = record.face_names or [record.name]
-        self.face_menu.configure(values=face_names)
+        self.face_menu.configure(values=[*face_names, *(["Alternate Art"] if record.alternate_art_path else [])])
         self.face_menu.set(face_names[0])
         self._update_image_preview(record)
+        self._update_alternate_art_gallery(record)
 
     def has_unsaved_changes(self) -> bool:
         """Return whether the open editor contains changes not yet saved."""
@@ -364,9 +380,13 @@ class CardBrowserTab(ctk.CTkFrame):
         self._clear_image_preview()
         face_names = record.face_names or [record.name]
         selected_face = self.face_menu.get()
-        face_index = face_names.index(selected_face) if selected_face in face_names else 0
-        self._editor_image_face_index = face_index
-        image_path = record.image_paths[face_index] if face_index < len(record.image_paths) else record.image_path
+        if selected_face == "Alternate Art":
+            self._editor_image_face_index = -1
+            image_path = record.alternate_art_path
+        else:
+            face_index = face_names.index(selected_face) if selected_face in face_names else 0
+            self._editor_image_face_index = face_index
+            image_path = record.image_paths[face_index] if face_index < len(record.image_paths) else record.image_path
         if image_path is None or not image_path.exists():
             return
         try:
@@ -388,6 +408,30 @@ class CardBrowserTab(ctk.CTkFrame):
             self.image_preview.configure(text="Unable to load image")
             return
         self.image_preview.configure(image=self._image_preview, text="")
+
+    def _update_alternate_art_gallery(self, record: CardRecord) -> None:
+        """Display every numbered alternate art in a horizontal scroll group."""
+        for child in self.alternate_art_gallery.winfo_children():
+            child.destroy()
+        self._alternate_art_gallery_images.clear()
+        if not record.alternate_art_paths:
+            ctk.CTkLabel(self.alternate_art_gallery, text="No alternate art available").pack(side="left", padx=12, pady=12)
+            return
+        for path in record.alternate_art_paths:
+            if not path.exists():
+                continue
+            try:
+                with Image.open(path) as source_image:
+                    preview = ImageOps.contain(source_image.convert("RGB"), (125, 175), Image.Resampling.LANCZOS)
+                art_image = ctk.CTkImage(light_image=preview, dark_image=preview, size=preview.size)
+            except (OSError, ValueError):
+                continue
+            self._alternate_art_gallery_images.append(art_image)
+            item = ctk.CTkFrame(self.alternate_art_gallery)
+            item.pack(side="left", padx=6, pady=6)
+            ctk.CTkLabel(item, image=art_image, text="").pack(padx=5, pady=(5, 2))
+            art_label = path.name.removesuffix(".fullborder.jpg")
+            ctk.CTkLabel(item, text=art_label).pack(padx=5, pady=(0, 5))
 
     def _update_image_preview_for_selected_face(self) -> None:
         """Refresh the preview and replacement target when the selected face changes."""

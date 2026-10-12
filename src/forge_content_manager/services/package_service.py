@@ -65,6 +65,18 @@ class PackageService:
                     image_path = self._paths.card_images_dir / sanitize_display_filename(manifest.code) / make_image_filename(face_name)
                     if image_path.exists():
                         archive.write(image_path, f"images/{image_path.name}")
+                image_dir = self._paths.card_images_dir / sanitize_display_filename(manifest.code)
+                card_image_name = make_image_filename(card.card_name)
+                card_stem = card_image_name[:-len(".fullborder.jpg")] if card_image_name.casefold().endswith(".fullborder.jpg") else Path(card_image_name).stem
+                for alternate in image_dir.glob(f"{card_stem}*.fullborder.jpg"):
+                    suffix = alternate.name[len(card_stem):-len(".fullborder.jpg")]
+                    if suffix.isdigit():
+                        archive_name = f"images/{alternate.name}"
+                        if archive_name not in archive.namelist():
+                            archive.write(alternate, archive_name)
+                legacy = image_dir / f"{card_stem}.fullborder_alternate.jpg"
+                if legacy.exists():
+                    archive.write(legacy, f"images/{legacy.name}")
         self._logger.info("Exported set package %s", output_file)
         return output_file
 

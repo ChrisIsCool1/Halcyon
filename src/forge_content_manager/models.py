@@ -82,6 +82,12 @@ class CardRecord:
     image_paths: list[Path | None] = field(default_factory=list)
     content_type: Literal["card", "token"] = "card"
     token_script_name: str | None = None
+    alternate_art_paths: list[Path] = field(default_factory=list)
+
+    @property
+    def alternate_art_path(self) -> Path | None:
+        """Keep a single-image accessor for older view code."""
+        return self.alternate_art_paths[0] if self.alternate_art_paths else None
 
 
 @dataclass(slots=True)
@@ -94,6 +100,8 @@ class CardImportInput:
     alternate_image_source: Path | None = None
     content_type: Literal["card", "token"] = "card"
     token_script_name: str | None = None
+    alternate_art_source: Path | None = None
+    alternate_art_sources: list[Path] = field(default_factory=list)
 
 
 @dataclass(slots=True)

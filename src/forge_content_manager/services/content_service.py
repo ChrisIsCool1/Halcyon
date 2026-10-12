@@ -16,6 +16,7 @@ from forge_content_manager.models import (
     ForgeSetRecord,
     ImportCardResult,
     PackageImportSummary,
+    ValidationMessage,
 )
 from forge_content_manager.services.backup_service import BackupService
 from forge_content_manager.services.edition_service import EditionService
@@ -93,9 +94,13 @@ class ForgeContentService:
         total = len(cards)
         for index, card in enumerate(cards, start=1):
             card_name = extract_card_name(card.script_text) or f"Card {index}"
+            alternate_art_sources = [*card.alternate_art_sources, *([card.alternate_art_source] if card.alternate_art_source else [])]
             if progress_callback is not None:
                 progress_callback(index - 1, total, f"Importing {card_name}")
             messages = validate_script(card.script_text, destination_set.name, card.image_source, card.alternate_image_source)
+            for alternate_source in alternate_art_sources:
+                if not alternate_source.exists():
+                    messages.append(ValidationMessage(level="error", message=f"Alternate art image does not exist: {alternate_source}"))
             errors = [message.message for message in messages if message.level == "error"]
             warnings = [message.message for message in messages if message.level == "warning"]
             if errors:
@@ -106,6 +111,10 @@ class ForgeContentService:
             token_script_name = (card.token_script_name or "").strip()
             if is_token and card.alternate_image_source is not None:
                 results.append(ImportCardResult(card_name=card_name, success=False, warnings=warnings, error="Tokens cannot have an alternate card image."))
+                failed_count += 1
+                continue
+            if is_token and alternate_art_sources:
+                results.append(ImportCardResult(card_name=card_name, success=False, warnings=warnings, error="Tokens cannot have alternate card art."))
                 failed_count += 1
                 continue
             if is_token and not token_script_name:
@@ -130,6 +139,8 @@ class ForgeContentService:
                 face_names = extract_card_face_names(card.script_text)
                 if card.alternate_image_source is not None:
                     self.image_service.install_image(card.alternate_image_source, destination_set.code, face_names[1])
+                for alternate_source in alternate_art_sources:
+                    self.image_service.install_alternate_art(alternate_source, destination_set.code, card_name)
                 self.edition_service.add_or_update_card(destination_set.file_path, card_name, RARITY_CODES[card.rarity])
             results.append(ImportCardResult(card_name=card_name, success=True, warnings=warnings))
             imported_count += 1
@@ -174,6 +185,7 @@ class ForgeContentService:
                     set_code=set_code,
                     face_names=face_names,
                     image_paths=image_paths,
+                    alternate_art_paths=self.image_service.find_alternate_arts(set_code, card_name) if set_code else [],
                 )
             )
         token_records_by_path: dict[Path, CardRecord] = {}
@@ -256,6 +268,7 @@ class ForgeContentService:
                     existing_image = self.image_service.find_image(card.set_code, old_face_name)
                     if existing_image is not None:
                         self.image_service.rename_image(existing_image, card.set_code, new_face_name)
+                self.image_service.rename_alternate_arts(card.set_code, old_name, new_name)
         return CardRecord(
             name=new_name,
             normalized_name=normalize_card_name(new_name),
@@ -268,6 +281,7 @@ class ForgeContentService:
             token_script_name=card.token_script_name,
             face_names=new_face_names,
             image_paths=[self.image_service.find_image(card.set_code, face_name) if card.set_code else None for face_name in new_face_names],
+            alternate_art_paths=self.image_service.find_alternate_arts(card.set_code, new_name) if card.set_code else [],
         )
 
     def replace_image(self, card: CardRecord, image_source: Path, face_index: int = 0) -> CardRecord:
@@ -301,6 +315,20 @@ class ForgeContentService:
             image_paths=image_paths,
         )
 
+    def replace_alternate_art(self, card: CardRecord, image_source: Path) -> CardRecord:
+        """Install alternate art for a card independently of its faces."""
+        if card.content_type != "card":
+            raise ValueError("Tokens cannot have alternate card art.")
+        if not card.set_code:
+            raise ValueError("Card is not associated with a set, so its image target cannot be resolved.")
+        path = self.image_service.install_alternate_art(image_source, card.set_code, card.name)
+        return CardRecord(
+            name=card.name, normalized_name=card.normalized_name, script_path=card.script_path,
+            image_path=card.image_path, image_present=card.image_present, set_name=card.set_name,
+            set_code=card.set_code, face_names=card.face_names, image_paths=card.image_paths,
+            alternate_art_paths=[*card.alternate_art_paths, path], content_type=card.content_type,
+        )
+
     def delete_card(self, card: CardRecord) -> None:
         """Delete a card script and its associated image, while updating edition files."""
         self.backup_service.backup_file(card.script_path)
@@ -313,6 +341,11 @@ class ForgeContentService:
             if image_path.exists():
                 self.backup_service.backup_file(image_path)
                 image_path.unlink()
+        alternate_arts = card.alternate_art_paths or (self.image_service.find_alternate_arts(card.set_code, card.name) if card.set_code else [])
+        for alternate_art in alternate_arts:
+            if alternate_art.exists():
+                self.backup_service.backup_file(alternate_art)
+                alternate_art.unlink()
         if card.content_type == "token":
             for set_record in self.edition_service.find_sets_for_token(card.token_script_name or card.script_path.stem):
                 self.edition_service.remove_token(set_record.file_path, card.token_script_name or card.script_path.stem)
@@ -335,6 +368,9 @@ class ForgeContentService:
                 if image_path is not None and image_path.exists():
                     self.backup_service.backup_file(image_path)
                     image_path.unlink()
+            for alternate_art in self.image_service.find_alternate_arts(set_record.code, card_entry.card_name):
+                self.backup_service.backup_file(alternate_art)
+                alternate_art.unlink()
         for token_entry in document.tokens:
             other_sets = [record for record in self.edition_service.find_sets_for_token(token_entry.script_name) if record.file_path != set_record.file_path]
             script_path = resolve_token_script_path(self.paths.custom_tokens_dir, token_entry.script_name)
