@@ -78,9 +78,9 @@ class CardImportEntryFrame(ctk.CTkFrame):
 
         self.image_label = ctk.CTkLabel(footer, text="No image selected", width=320, anchor="w")
         self.image_label.grid(row=0, column=6, sticky="ew")
-        alternate_image_button = ctk.CTkButton(footer, text="Choose Alternate Image", command=self._pick_alternate_image, width=170)
+        alternate_image_button = ctk.CTkButton(footer, text="Choose Back Image", command=self._pick_alternate_image, width=170)
         alternate_image_button.grid(row=1, column=5, sticky="e", padx=(12, 12), pady=(8, 0))
-        self.alternate_image_label = ctk.CTkLabel(footer, text="No alternate image selected", width=320, anchor="w")
+        self.alternate_image_label = ctk.CTkLabel(footer, text="No back image selected", width=320, anchor="w")
         self.alternate_image_label.grid(row=1, column=6, sticky="ew", pady=(8, 0))
         ctk.CTkButton(footer, text="Choose Alternate Art", command=self._pick_alternate_art, width=170).grid(row=2, column=5, sticky="e", padx=(12, 12), pady=(8, 0))
         self.alternate_art_label = ctk.CTkLabel(footer, text="No alternate art selected", width=320, anchor="w")
@@ -126,7 +126,7 @@ class CardImportEntryFrame(ctk.CTkFrame):
     def _pick_alternate_image(self) -> None:
         """Choose the image for the script's Alternate face, when it has one."""
         file_name = filedialog.askopenfilename(
-            title="Choose Alternate Card Image",
+            title="Choose Back Image",
             filetypes=[("Image Files", "*.png;*.jpg;*.jpeg;*.webp;*.bmp")],
         )
         if not file_name:

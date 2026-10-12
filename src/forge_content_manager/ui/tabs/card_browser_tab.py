@@ -28,6 +28,7 @@ class CardBrowserTab(ctk.CTkFrame):
         self._sets: list[ForgeSetRecord] = []
         self._editor_image_source: Path | None = None
         self._editor_art_index = 1
+        self._editor_face_index = 0
         self._editor_image_is_alternate_art = False
         self._editor_selected_art_label = ""
         self._art_gallery_items: list[tuple[str, ctk.CTkFrame]] = []
@@ -105,11 +106,15 @@ class CardBrowserTab(ctk.CTkFrame):
         editor_controls.grid(row=3, column=0, sticky="ew", padx=12, pady=(0, 12))
         self.rarity_menu = ctk.CTkOptionMenu(editor_controls, values=list(RARITY_LABELS))
         self.rarity_menu.pack(side="left")
+        self.flip_button = ctk.CTkButton(editor_controls, text="Show Back", command=self.flip_card, width=100)
+        self.flip_button.pack(side="left", padx=(8, 0))
+        self.flip_button.pack_forget()
         self.face_menu = ctk.CTkOptionMenu(editor_controls, values=["Card Art"], command=lambda _value: self._update_image_target_for_selected_face())
         self.face_menu.pack(side="left", padx=(8, 0))
         self.image_status = ctk.CTkLabel(editor_controls, text="")
         self.image_status.pack(side="left", padx=(8, 0))
-        ctk.CTkButton(editor_controls, text="Replace Image", command=self.replace_image, width=120).pack(side="left", padx=8)
+        self.replace_image_button = ctk.CTkButton(editor_controls, text="Replace Image", command=self.replace_image, width=140)
+        self.replace_image_button.pack(side="left", padx=8)
         ctk.CTkButton(editor_controls, text="Upload Alternate Art", command=self.replace_alternate_art, width=150).pack(side="left", padx=8)
         self.delete_art_button = ctk.CTkButton(editor_controls, text="Delete Selected Art", command=self.delete_selected_art, width=150)
         self.delete_art_button.pack(side="left", padx=8)
@@ -247,6 +252,9 @@ class CardBrowserTab(ctk.CTkFrame):
         record = self._selected_record()
         if record is None or record.content_type != "card":
             return
+        if self._editor_face_index != 0:
+            show_error("Front Face Required", "Flip to the front face before uploading a new alternate art print.")
+            return
         previous_source = self._editor_image_source
         previous_is_alternate = self._editor_image_is_alternate_art
         self.replace_image(title="Choose Alternate Art")
@@ -282,7 +290,9 @@ class CardBrowserTab(ctk.CTkFrame):
                         RARITY_CODES[self.rarity_menu.get()],
                     )
                 else:
-                    self._content_service.replace_card_art_entry(updated, self._editor_image_source, self._editor_art_index)
+                    self._content_service.replace_card_art_entry(
+                        updated, self._editor_image_source, self._editor_art_index, self._editor_face_index
+                    )
         except Exception as exc:
             show_error("Save Failed", str(exc))
             return
@@ -370,6 +380,7 @@ class CardBrowserTab(ctk.CTkFrame):
         self._editor_original_rarity = self.rarity_menu.get()
         self._editor_image_source = None
         self._editor_art_index = 1
+        self._editor_face_index = 0
         self._editor_image_is_alternate_art = False
         labels = self._content_service.get_card_art_labels(record)
         self._editor_selected_art_label = labels[0]
@@ -424,13 +435,26 @@ class CardBrowserTab(ctk.CTkFrame):
         self.image_status.configure(text="")
 
     def _update_art_gallery(self, record: CardRecord) -> None:
-        """Display one selectable thumbnail for each edition art entry."""
+        """Display each print's image for the currently viewed card face."""
         for child in self.art_gallery.winfo_children():
             child.destroy()
         self._art_gallery_images.clear()
         self._art_gallery_items.clear()
         labels = self._content_service.get_card_art_labels(record)
-        self._art_entry_paths = self._content_service.get_card_art_entry_paths(record)
+        faces = record.face_names or [record.name]
+        has_back = len(faces) > 1
+        self._editor_face_index = min(self._editor_face_index, len(faces) - 1)
+        if has_back:
+            self.flip_button.pack(side="left", padx=(8, 0), before=self.face_menu)
+            viewing_back = self._editor_face_index > 0
+            self.flip_button.configure(text="Show Front" if viewing_back else "Show Back")
+            self.replace_image_button.configure(text="Replace Back Image" if viewing_back else "Replace Front Image")
+        else:
+            self.flip_button.pack_forget()
+            self._editor_face_index = 0
+            self.replace_image_button.configure(text="Replace Image")
+        self._art_entry_paths = self._content_service.get_card_art_entry_paths(record, self._editor_face_index)
+        self.art_gallery.configure(label_text=f"{faces[self._editor_face_index]} Art")
         self.face_menu.configure(values=labels)
         if self._editor_selected_art_label not in labels:
             self._editor_art_index = 1
@@ -473,6 +497,16 @@ class CardBrowserTab(ctk.CTkFrame):
                 image_label.bind("<Double-Button-1>", show_fullscreen)
                 item.bind("<Double-Button-1>", show_fullscreen)
         self._refresh_gallery_selection()
+
+    def flip_card(self) -> None:
+        """Switch the displayed card face while keeping the selected print."""
+        selection = self.tree.selection()
+        record = self._records.get(selection[0]) if selection else None
+        if record is None or len(record.face_names) < 2:
+            return
+        self._editor_face_index = 1 - self._editor_face_index
+        self.image_status.configure(text="")
+        self._update_art_gallery(record)
 
     def _select_gallery_art(self, label: str, art_index: int) -> None:
         """Select a gallery tile as the replacement and deletion target."""

@@ -140,7 +140,7 @@ class ForgeContentService:
                 if card.alternate_image_source is not None:
                     self.image_service.install_image(card.alternate_image_source, destination_set.code, face_names[1])
                 for alternate_source in alternate_art_sources:
-                    self.image_service.install_alternate_art(alternate_source, destination_set.code, card_name)
+                    self.image_service.install_alternate_art(alternate_source, destination_set.code, card_name, face_names)
                 self.edition_service.add_or_update_card(destination_set.file_path, card_name, RARITY_CODES[card.rarity])
             results.append(ImportCardResult(card_name=card_name, success=True, warnings=warnings))
             imported_count += 1
@@ -291,23 +291,28 @@ class ForgeContentService:
         set_record = next((item for item in self.list_sets() if item.code == card.set_code), None)
         return self.edition_service.get_card_art_labels(set_record.file_path, card.name) if set_record else [card.name]
 
-    def get_card_art_entry_paths(self, card: CardRecord) -> list[Path | None]:
-        """Return the front-face image path matching each edition art row."""
+    def get_card_art_entry_paths(self, card: CardRecord, face_index: int = 0) -> list[Path | None]:
+        """Return the selected face image path matching each edition art row."""
         labels = self.get_card_art_labels(card)
         if not card.set_code:
             return [card.image_path]
-        front_name = (card.face_names or [card.name])[0]
+        face_names = card.face_names or [card.name]
+        if face_index < 0 or face_index >= len(face_names):
+            raise ValueError("Selected card face does not exist.")
+        face_name = face_names[face_index]
         return [
-            self.image_service.find_art_variant(card.set_code, front_name, index)
+            self.image_service.find_art_variant(card.set_code, face_name, index)
             for index in range(1, len(labels) + 1)
         ]
 
-    def replace_card_art_entry(self, card: CardRecord, image_source: Path, art_index: int) -> None:
-        """Replace the front-face image for a selected edition art entry."""
+    def replace_card_art_entry(self, card: CardRecord, image_source: Path, art_index: int, face_index: int = 0) -> None:
+        """Replace one face image for a selected edition art entry."""
         if card.content_type != "card" or not card.set_code:
             raise ValueError("Card art cannot be resolved for the selected entry.")
         face_names = card.face_names or [card.name]
-        self.image_service.replace_art_variant(image_source, card.set_code, face_names[0], art_index)
+        if face_index < 0 or face_index >= len(face_names):
+            raise ValueError("Selected card face does not exist.")
+        self.image_service.replace_art_variant(image_source, card.set_code, face_names[face_index], art_index)
 
     def delete_card_art_entry(self, card: CardRecord, set_file_path: Path, art_index: int) -> None:
         """Delete a selected edition art row and its corresponding image variants."""
