@@ -155,20 +155,18 @@ class CardsFolderHelpDialog(ctk.CTkToplevel):
             "the Forge launcher or application files.\n\n"
             "2. Copy the ZIP somewhere convenient\n"
             "Copy `cardsfolder.zip` to a location you can keep, such as a folder under Documents. "
-            "Copy it rather than moving it out of the Forge release.\n\n"
-            "3. Extract the ZIP\n"
-            "Right-click the copied ZIP and choose Extract All. Keep the extracted folder. The folder you "
-            "choose below should contain Forge card-script `.txt` files, either directly or somewhere inside it.\n\n"
-            "4. Point Halcyon to the extracted folder\n"
-            "Return to Settings, under Script Editor Reference Cards, click Choose cardsfolder, and select "
-            "the extracted folder. Do not select the ZIP file itself.\n\n"
-            "5. Wait for indexing\n"
+            "Do not remove it out of the Forge release, as this may cause errors with your Forge installation.\n\n"
+            "3. Choose how to import it\n"
+            "In Settings, under Script Editor Reference Cards, click \"Choose cardsfolder\". Select \"Zipped "
+            "cardsfolder\" to choose the ZIP, or \"Unzipped folder\" to choose a folder that has already been "
+            "extracted. Halcyon extracts a selected ZIP into its own managed folder and leaves the archive "
+            "unchanged. Card scripts may be nested in letter-named folders inside the archive.\n\n"
+            "4. Wait for indexing\n"
             "Halcyon builds a searchable index in the background. When it finishes, open Script Editor and "
             "use Reference Cards to search the Forge card scripts. Large releases can take a little while.\n\n"
             "If it does not find any cards\n"
-            "Check that you selected the extracted folder and that it contains `.txt` card scripts. If the "
-            "archive extracted into another `cardsfolder` subfolder, select that inner folder instead. You can "
-            "return here and choose a different folder at any time.",
+            "Check that the selected folder or ZIP contains `.txt` card scripts. You can return here and "
+            "choose a different source at any time.",
         )
         instructions.configure(state="disabled")
 
@@ -178,6 +176,49 @@ class CardsFolderHelpDialog(ctk.CTkToplevel):
         self.protocol("WM_DELETE_WINDOW", self.destroy)
         self.wait_visibility()
         self.focus()
+
+
+class CardsFolderImportDialog(ctk.CTkToplevel):
+    """Let the user choose an extracted cardsfolder or a ZIP archive."""
+
+    def __init__(self, master: tk.Misc) -> None:
+        """Build a modal chooser and store the selected source format."""
+        super().__init__(master)
+        self.title("Choose cardsfolder format")
+        self.geometry("420x220")
+        self.resizable(False, False)
+        self.transient(master)
+        self.grab_set()
+        self.result: str | None = None
+
+        ctk.CTkLabel(
+            self,
+            text="How would you like to import the Forge cardsfolder?",
+            justify="left",
+            wraplength=370,
+        ).pack(fill="x", padx=20, pady=(24, 18))
+
+        buttons = ctk.CTkFrame(self, fg_color="transparent")
+        buttons.pack(fill="x", padx=20, pady=(0, 20))
+        ctk.CTkButton(
+            buttons,
+            text="Unzipped folder",
+            command=lambda: self._submit("folder"),
+        ).pack(fill="x", pady=(0, 10))
+        ctk.CTkButton(
+            buttons,
+            text="Zipped cardsfolder (.zip)",
+            command=lambda: self._submit("zip"),
+        ).pack(fill="x")
+
+        self.protocol("WM_DELETE_WINDOW", self.destroy)
+        self.wait_visibility()
+        self.focus()
+
+    def _submit(self, source_type: str) -> None:
+        """Store the chosen source format and close the modal."""
+        self.result = source_type
+        self.destroy()
 
 
 class ProgressDialog(ctk.CTkToplevel):

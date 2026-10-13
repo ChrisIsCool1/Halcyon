@@ -11,8 +11,9 @@ import customtkinter as ctk
 
 from forge_content_manager.constants import APPEARANCE_MODES
 from forge_content_manager.models import AppSettings, ForgePaths
+from forge_content_manager.services.reference_cards_import_service import extract_reference_cards_zip
 from forge_content_manager.services.settings_service import SettingsService
-from forge_content_manager.ui.dialogs import CardsFolderHelpDialog
+from forge_content_manager.ui.dialogs import CardsFolderHelpDialog, CardsFolderImportDialog, show_error
 from forge_content_manager.ui.widgets import LabeledValue
 
 
@@ -164,11 +165,35 @@ class SettingsTab(ctk.CTkFrame):
         self._path_widgets[field_name].set_value(str(getattr(new_paths, field_name)))
 
     def _choose_reference_cards(self) -> None:
-        """Persist an optional Forge cardsfolder used by Script Editor search."""
-        directory = filedialog.askdirectory(title="Choose Forge cardsfolder")
-        if not directory:
+        """Choose an extracted cardsfolder or ZIP for Script Editor search."""
+        choice = CardsFolderImportDialog(self.winfo_toplevel())
+        self.wait_window(choice)
+        if choice.result == "folder":
+            directory = filedialog.askdirectory(title="Choose Forge cardsfolder")
+            path = Path(directory) if directory else None
+        elif choice.result == "zip":
+            filename = filedialog.askopenfilename(
+                title="Choose Forge cardsfolder ZIP",
+                filetypes=[("ZIP archives", "*.zip"), ("All Files", "*.*")],
+            )
+            path = Path(filename) if filename else None
+            if path is not None:
+                storage = self._settings_service.paths.settings_file.parent / "reference_cards_imports"
+                try:
+                    path = extract_reference_cards_zip(path, storage)
+                except (OSError, ValueError) as exc:
+                    show_error("Import cardsfolder", str(exc))
+                    return
+        else:
             return
-        path = Path(directory)
+        if path is None:
+            return
+        if not path.is_dir():
+            show_error("Import cardsfolder", "Choose a folder containing Forge card-script .txt files.")
+            return
+        if not any(script.is_file() and script.suffix.casefold() == ".txt" for script in path.rglob("*.txt")):
+            show_error("Import cardsfolder", "The selected folder does not contain any card-script .txt files.")
+            return
         self._settings.reference_cards_dir = path
         self._settings_service.save(self._settings)
         self._reference_label.configure(text=self._reference_text())
