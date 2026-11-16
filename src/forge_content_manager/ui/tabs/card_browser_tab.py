@@ -14,6 +14,7 @@ from forge_content_manager.constants import RARITY_CODES, RARITY_LABELS
 from forge_content_manager.models import CardRecord, ForgeSetRecord
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.ui.dialogs import confirm_action, show_error, show_info
+from forge_content_manager.ui.widgets import bind_file_location_context_menu
 
 
 class CardBrowserTab(ctk.CTkFrame):
@@ -82,6 +83,11 @@ class CardBrowserTab(ctk.CTkFrame):
             self.tree.heading(column, text=headings[column])
             self.tree.column(column, width=widths[column], anchor="w")
         self.tree.grid(row=0, column=0, sticky="nsew")
+        bind_file_location_context_menu(
+            self.tree,
+            "#5",
+            lambda item: self._records[item].script_path if item in self._records else None,
+        )
         self.tree.bind("<<TreeviewSelect>>", self._handle_selection_changed)
         self.tree.bind("<ButtonRelease-1>", self._handle_click)
 

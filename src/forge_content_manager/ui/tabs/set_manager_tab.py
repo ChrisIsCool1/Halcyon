@@ -13,6 +13,7 @@ from tkinter import ttk
 from forge_content_manager.models import CollisionStrategy
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.ui.dialogs import SetMetadataDialog, confirm_action, show_error, show_info
+from forge_content_manager.ui.widgets import bind_file_location_context_menu
 
 
 class SetManagerTab(ctk.CTkFrame):
@@ -67,6 +68,7 @@ class SetManagerTab(ctk.CTkFrame):
             self.tree.heading(column, text=headings[column])
             self.tree.column(column, width=widths[column], anchor="w")
         self.tree.grid(row=0, column=0, sticky="nsew")
+        bind_file_location_context_menu(self.tree, "#5", lambda item: Path(item))
 
         scrollbar = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
         scrollbar.grid(row=0, column=1, sticky="ns")
