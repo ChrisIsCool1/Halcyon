@@ -275,6 +275,8 @@ class CardBrowserTab(ctk.CTkFrame):
             return
         label = self.set_menu.get()
         selected = next((item for item in self._sets if label == f"{item.name} [{item.code}]"), None)
+        if selected is None and label == "All Sets":
+            selected = next((item for item in self._sets if item.code == record.set_code), None)
         if selected is None:
             show_error("Set Required", "Choose a specific set before saving changes.")
             return
