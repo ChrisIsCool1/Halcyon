@@ -233,7 +233,7 @@ class CardBrowserTab(ctk.CTkFrame):
         self.refresh(selected_script_path=updated_record.script_path)
         self._on_cards_changed()
 
-    def replace_image(self, *, title: str = "Choose Replacement Image") -> None:
+    def replace_image(self, *, title: str = "Choose Replacement Image", status_label: str = "Replacement selected") -> None:
         """Prompt for a new image and replace the selected card art."""
         record = self._selected_record()
         if record is None:
@@ -246,7 +246,7 @@ class CardBrowserTab(ctk.CTkFrame):
             return
         self._editor_image_source = Path(file_name)
         self._editor_image_is_alternate_art = False
-        self.image_status.configure(text=f"Replacement selected: {self._editor_image_source.name}")
+        self.image_status.configure(text=f"{status_label}: {self._editor_image_source.name}")
 
     def replace_alternate_art(self) -> None:
         """Select an alternate art image for the current card."""
@@ -258,7 +258,7 @@ class CardBrowserTab(ctk.CTkFrame):
             return
         previous_source = self._editor_image_source
         previous_is_alternate = self._editor_image_is_alternate_art
-        self.replace_image(title="Choose Alternate Art")
+        self.replace_image(title="Choose Alternate Art", status_label="New art uploaded")
         if self._editor_image_source is not None and self._editor_image_source != previous_source:
             self._editor_image_is_alternate_art = True
         elif self._editor_image_source == previous_source:
