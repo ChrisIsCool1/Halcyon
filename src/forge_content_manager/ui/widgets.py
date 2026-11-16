@@ -4,12 +4,52 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
+import subprocess
+import sys
+from tkinter import Menu, messagebox
 from tkinter import filedialog
 
 import customtkinter as ctk
 
 from forge_content_manager.constants import RARITY_LABELS
 from forge_content_manager.models import CardImportInput
+
+
+def bind_file_location_context_menu(
+    tree,
+    file_column: str,
+    path_for_item: Callable[[str], Path | None],
+) -> None:
+    """Add a right-click menu to a Treeview file-path column."""
+    menu = Menu(tree, tearoff=False)
+
+    def open_file_location(path: Path) -> None:
+        try:
+            if sys.platform == "win32":
+                subprocess.Popen(["explorer.exe", "/select,", str(path)])
+            elif sys.platform == "darwin":
+                subprocess.Popen(["open", "-R", str(path)])
+            else:
+                subprocess.Popen(["xdg-open", str(path.parent)])
+        except OSError as exc:
+            messagebox.showerror("Open File Location Failed", str(exc), parent=tree.winfo_toplevel())
+
+    def show_menu(event) -> None:
+        item = tree.identify_row(event.y)
+        column = tree.identify_column(event.x)
+        if not item or tree.identify_region(event.x, event.y) != "cell" or column != file_column:
+            return
+        path = path_for_item(item)
+        if path is None:
+            return
+        menu.delete(0, "end")
+        menu.add_command(label="Open File Location", command=lambda: open_file_location(path))
+        try:
+            menu.tk_popup(event.x_root, event.y_root)
+        finally:
+            menu.grab_release()
+
+    tree.bind("<Button-3>", show_menu)
 
 
 class LabeledValue(ctk.CTkFrame):
