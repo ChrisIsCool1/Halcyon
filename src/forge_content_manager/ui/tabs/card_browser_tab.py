@@ -111,8 +111,6 @@ class CardBrowserTab(ctk.CTkFrame):
         self.flip_button.pack_forget()
         self.face_menu = ctk.CTkOptionMenu(editor_controls, values=["Card Art"], command=lambda _value: self._update_image_target_for_selected_face())
         self.face_menu.pack(side="left", padx=(8, 0))
-        self.image_status = ctk.CTkLabel(editor_controls, text="")
-        self.image_status.pack(side="left", padx=(8, 0))
         self.replace_image_button = ctk.CTkButton(editor_controls, text="Replace Image", command=self.replace_image, width=140)
         self.replace_image_button.pack(side="left", padx=8)
         ctk.CTkButton(editor_controls, text="Upload Alternate Art", command=self.replace_alternate_art, width=150).pack(side="left", padx=8)
@@ -121,6 +119,9 @@ class CardBrowserTab(ctk.CTkFrame):
         self.delete_art_button.pack_forget()
         ctk.CTkButton(editor_controls, text="Save Changes", command=self.save_changes, width=120).pack(side="right")
         ctk.CTkButton(editor_controls, text="Back", command=self.show_table, width=90).pack(side="right", padx=8)
+
+        self.image_status = ctk.CTkLabel(editor_frame, text="", anchor="w")
+        self.image_status.grid(row=4, column=0, sticky="ew", padx=12, pady=(0, 10))
 
         self.editor_frame.grid_remove()
 
