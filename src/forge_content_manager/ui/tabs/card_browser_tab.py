@@ -445,8 +445,16 @@ class CardBrowserTab(ctk.CTkFrame):
         faces = record.face_names or [record.name]
         has_back = len(faces) > 1
         self._editor_face_index = min(self._editor_face_index, len(faces) - 1)
+        if len(labels) > 1:
+            if not self.face_menu.winfo_manager():
+                self.face_menu.pack(side="left", padx=(8, 0))
+        else:
+            self.face_menu.pack_forget()
         if has_back:
-            self.flip_button.pack(side="left", padx=(8, 0), before=self.face_menu)
+            if self.face_menu.winfo_manager():
+                self.flip_button.pack(side="left", padx=(8, 0), before=self.face_menu)
+            else:
+                self.flip_button.pack(side="left", padx=(8, 0))
             viewing_back = self._editor_face_index > 0
             self.flip_button.configure(text="Show Front" if viewing_back else "Show Back")
             self.replace_image_button.configure(text="Replace Back Image" if viewing_back else "Replace Front Image")
