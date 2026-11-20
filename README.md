@@ -15,7 +15,8 @@ Named after the Thran capital, this is a small desktop application for managing 
 <img width="1356" height="927" alt="image" src="https://github.com/user-attachments/assets/ec1eca56-005a-435a-a6e6-f635f97b9468" />
 
 - **Easy Card Editing:** Browse installed custom cards, edit scripts in place, replace images, and delete cards. No more going back and forth constantly between different folders.
-<img width="1358" height="925" alt="image" src="https://github.com/user-attachments/assets/78507a70-412e-4a0e-b8d1-4caa97e15173" />
+<img width="1357" height="927" alt="image" src="https://github.com/user-attachments/assets/cfe4cc9a-7180-4f11-b8e7-53071f024327" />
+
 
 - **Import and Export Packages:** Import and export custom sets as `.forgepkg.zip` packages with collision handling. Share your wacky card sets with your friends!
 <img width="1355" height="925" alt="image" src="https://github.com/user-attachments/assets/4e87085c-0ce2-47da-a002-00a5c7d136da" />
