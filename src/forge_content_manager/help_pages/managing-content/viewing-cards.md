@@ -33,4 +33,4 @@ You can edit most of a card's properties via this view.
 If you want to see where your imported cards are stored:
 
 - On the table on the Cards tab, right click the script file path and click Open File Location to view the script file.
-- On the Cards tab, right click on an image preview and click Open File Location to view the card image.
+- On the Cards tab, right click on a card image and click Open File Location to view the card image.
