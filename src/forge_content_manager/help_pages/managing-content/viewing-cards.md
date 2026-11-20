@@ -26,6 +26,7 @@ You can edit most of a card's properties via this view.
 
 - Edit the card's script by typing in the input field. You can paste from the Script Editor if you want to as well.
 - Add or remove alternate art entries by using the buttons on the bottom.
+  - New alternate art entries will be imported after you click Save Changes.
 - For any art entry, you can edit its art by selecting it and then clicking Replace Image. If the back side of the card is currently visible when you do this, you'll replace the back side instead for double sided cards.
 
 ## Opening the file locations of your stuff
