@@ -14,7 +14,10 @@ from forge_content_manager.constants import RARITY_CODES, RARITY_LABELS
 from forge_content_manager.models import CardRecord, ForgeSetRecord
 from forge_content_manager.services.content_service import ForgeContentService
 from forge_content_manager.ui.dialogs import confirm_action, show_error, show_info
-from forge_content_manager.ui.widgets import bind_file_location_context_menu
+from forge_content_manager.ui.widgets import (
+    bind_file_location_context_menu,
+    bind_file_location_context_menu_to_widget,
+)
 
 
 class CardBrowserTab(ctk.CTkFrame):
@@ -513,6 +516,7 @@ class CardBrowserTab(ctk.CTkFrame):
                 show_fullscreen = lambda _event=None, image_path=path: self._open_art_fullscreen(image_path)
                 image_label.bind("<Double-Button-1>", show_fullscreen)
                 item.bind("<Double-Button-1>", show_fullscreen)
+                bind_file_location_context_menu_to_widget(image_label, path)
         self._refresh_gallery_selection()
 
     def flip_card(self) -> None:

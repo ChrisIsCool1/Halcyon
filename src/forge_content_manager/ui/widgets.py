@@ -23,17 +23,6 @@ def bind_file_location_context_menu(
     """Add a right-click menu to a Treeview file-path column."""
     menu = Menu(tree, tearoff=False)
 
-    def open_file_location(path: Path) -> None:
-        try:
-            if sys.platform == "win32":
-                subprocess.Popen(["explorer.exe", "/select,", str(path)])
-            elif sys.platform == "darwin":
-                subprocess.Popen(["open", "-R", str(path)])
-            else:
-                subprocess.Popen(["xdg-open", str(path.parent)])
-        except OSError as exc:
-            messagebox.showerror("Open File Location Failed", str(exc), parent=tree.winfo_toplevel())
-
     def show_menu(event) -> None:
         item = tree.identify_row(event.y)
         column = tree.identify_column(event.x)
@@ -42,14 +31,41 @@ def bind_file_location_context_menu(
         path = path_for_item(item)
         if path is None:
             return
-        menu.delete(0, "end")
-        menu.add_command(label="Open File Location", command=lambda: open_file_location(path))
-        try:
-            menu.tk_popup(event.x_root, event.y_root)
-        finally:
-            menu.grab_release()
+        _show_file_location_menu(tree, menu, path, event)
 
     tree.bind("<Button-3>", show_menu)
+
+
+def bind_file_location_context_menu_to_widget(widget, path: Path) -> None:
+    """Add the standard right-click file-location menu to a widget."""
+    menu = Menu(widget, tearoff=False)
+    widget.bind(
+        "<Button-3>",
+        lambda event: _show_file_location_menu(widget, menu, path, event),
+    )
+
+
+def _show_file_location_menu(widget, menu: Menu, path: Path, event) -> None:
+    """Display the shared file-location menu at a widget event's pointer."""
+    menu.delete(0, "end")
+    menu.add_command(label="Open File Location", command=lambda: _open_file_location(widget, path))
+    try:
+        menu.tk_popup(event.x_root, event.y_root)
+    finally:
+        menu.grab_release()
+
+
+def _open_file_location(widget, path: Path) -> None:
+    """Open the containing folder and select the file where supported."""
+    try:
+        if sys.platform == "win32":
+            subprocess.Popen(["explorer.exe", "/select,", str(path)])
+        elif sys.platform == "darwin":
+            subprocess.Popen(["open", "-R", str(path)])
+        else:
+            subprocess.Popen(["xdg-open", str(path.parent)])
+    except OSError as exc:
+        messagebox.showerror("Open File Location Failed", str(exc), parent=widget.winfo_toplevel())
 
 
 class LabeledValue(ctk.CTkFrame):
